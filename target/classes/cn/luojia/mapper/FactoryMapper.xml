@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.luojia.mapper.FactoryMapper">
+    <resultMap id="factoryRM" type="cn.luojia.domain.Factory">
+		<id property="id" column="FACTORY_ID"/>
+		<result property="fullName" column="FULL_NAME"/>
+		<result property="factoryName" column="FACTORY_NAME"/>
+		<result property="contacts" column="CONTACTS"/>
+		<result property="phone" column="PHONE"/>
+		<result property="mobile" column="MOBILE"/>
+		<result property="fax" column="FAX"/>
+		<result property="cnote" column="CNOTE"/>
+		<result property="inspector" column="INSPECTOR"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="state" column="STATE"/>
+		
+		<result property="createBy" column="CREATE_BY"/>
+		<result property="createDept" column="CREATE_DEPT"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+	
+	<!-- 带条件分页查询 -->
+	<select id="findPage" parameterType="cn.luojia.pagination.Page" resultMap="factoryRM">  
+		select * from FACTORY_C
+		where 1=1
+		<if test="params.fullName != null">and FULL_NAME like #{params.fullName}</if>
+		<if test="params.state != null">and STATE = #{params.state}</if>
+		order by ORDER_NO
+	</select> 
+	
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="factoryRM">
+	    select * from factory_c
+	    where 1=1
+	    <if test="state != null">and STATE=#{state}</if>
+	</select>
+	
+</mapper>

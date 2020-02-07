@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd 
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.3.xsd 
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.3.xsd 
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
+	
+	<!-- 1.加载数据库配置的属性文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<!-- 2.包扫描 dao service-->
+	<context:component-scan base-package="cn.luojia.dao,cn.luojia.service"/>
+	
+	<!-- 3.配置数据源 c3p0 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}"></property>
+	    <property name="jdbcUrl" value="${jdbc.url}"></property>
+	    <property name="user" value="${jdbc.username}"></property>
+	    <property name="password" value="${jdbc.password}"></property>
+	    
+	    <property name="maxPoolSize" value="${c3p0.pool.maxPoolSize}"></property>
+	    <property name="minPoolSize" value="${c3p0.pool.minPoolSize}"></property>
+	    <property name="initialPoolSize" value="${c3p0.pool.initialPoolSize}"></property>
+	    <property name="acquireIncrement" value="${c3p0.pool.acquireIncrement}"></property>
+	</bean>
+	
+	<!-- 4.SessionFactory -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 整和MyBatis，包扫描mapper文件 -->
+		<property name="configLocation" value="classpath:sqlMapperConfig.xml"/>
+	    <property name="mapperLocations" value="classpath:cn/luojia/mapper/*.xml"/>
+	</bean>
+	
+</beans>
+			
