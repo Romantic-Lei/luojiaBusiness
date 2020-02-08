@@ -13,7 +13,7 @@
 }
 
 .eXtremeTable .tableRegion {
-	border: 1px solid #c1e1dd;
+	border: 1px solid #ddeede;
 	padding: 2px;
 	font-family: verdana, arial, helvetica, sans-serif;
 	font-size: 9pt;
@@ -68,17 +68,21 @@
 }
 
 .eXtremeTable .tableHeader {
-	background:#daf2ef;
+	background:#ddeede;
 	filter:progid:DXImageTransform.Microsoft.gradient(enabled='ture',startColorstr=#effaf9, endColorstr='#daf2ef');
 	border-top:1px solid #b7dad6;
     border-bottom:1px solid #c1e1dd;
-	color: #00554a;
+	color: #eb6b12;
 	font-family: verdana, arial, helvetica, sans-serif;
 	font-size: 9pt;
 	font-weight: bold;
 	text-align: left;
     padding:6px;
 	margin: 0px;
+	TEXT-ALIGN: left;	
+	filter: alpha(opacity = 500);
+	background-color: rgba(221,238,222,0.3);
+	background-attachment: fixed;
 }
 
 .eXtremeTable .tableHeader input{
@@ -129,6 +133,10 @@
 	background-color: #FFFFFF;
 	font-family: verdana, arial, helvetica, sans-serif;
 	font-size: 9pt;
+	TEXT-ALIGN: left;	
+	filter: alpha(opacity = 50);
+	background-color: rgba(225,225,225,0.2);
+	background-attachment: fixed;
 }
 
 .eXtremeTable .even {
@@ -145,7 +153,7 @@
 	padding-bottom: 4px;
 	padding-left: 3px;
 	vertical-align: middle;
-	background-color: #e1f1ef;
+	background-color: #ddeede;
 	font-family: verdana, arial, helvetica, sans-serif;
 	border-bottom:1px solid #c1e1dd;
 }

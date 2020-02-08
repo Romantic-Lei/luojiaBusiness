@@ -199,8 +199,9 @@ hr {
     margin: 10px;
 }
 #innerWrapper {}
+/** 系统位置，货运管理，导航条颜色 */
 .navMenu{
-	background: url("../images/title/nav_menu_bg.jpg") repeat-x left;
+	background: url("../images/title/1.jpg") repeat-x left;
 	margin-top:96px;
 	height:29px;
 	float:left;
@@ -478,13 +479,13 @@ hr {
 
 .textbox-title {
 	font-family: 微软雅黑, Tahoma, Arial;
- 	border-bottom: 1px solid #e1f1ef;
+ 	border-bottom: 1px solid #16e9d9;
 	text-align: left;
     padding: 5px;
     margin: 5px;
     font-size:16px;
 	font-weight:bold;
-	color:#00544a;
+	color:#8470ff;
 }
 .textbox-title h2 {font-size:16px;margin:0;padding:0}
 .textbox-content {
@@ -899,4 +900,4 @@ menu a:hover,menu a:active{
 }
 
 /* 框架  */
-#left_frame{padding:5px 8px 8px 6px; background:#2B927D; border-left:1px solid #7ECFC0; border-right:1px solid #7ECFC0;}
+#left_frame{padding:5px 8px 8px 6px; background:#0a9fbd; border-left:1px solid #7ECFC0; border-right:1px solid #7ECFC0;}

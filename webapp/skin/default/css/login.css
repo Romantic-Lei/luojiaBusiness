@@ -1,4 +1,4 @@
-body{background:#00716B url(../images/login/bg.png) no-repeat 50% -190; margin:0px; padding:0px; font-size:12px; color:#FFFFFF; text-align:center; }
+body{background:#00716B url(../images/login/bg.png) no-repeat 50%; margin:0px; padding:0px; font-size:12px; color:#FFFFFF; text-align:center; }
 #warpbox{height:500px;  width:630px; margin:0 auto; position:relative;}
 
 a:link,a:visited, a:active{ color:#bee7e5; text-decoration:none;}

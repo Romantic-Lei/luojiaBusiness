@@ -20,14 +20,47 @@
 	TEXT-ALIGN: left;
 	padding-top:5px;
 }
+.subModelTitle0 {
+ 	PADDING-LEFT: 10pt;
+	BACKGROUND: #ffffff; 
+	FONT: bold 11pt 微软雅黑, 宋体;
+	COLOR: #00ff00; 
+	HEIGHT: 20pt; 
+	TEXT-ALIGN: left;	
+	filter: alpha(opacity = 50);
+background-color: rgba(0,0,0,0.1);
+	background-attachment: fixed;
+}
 .subModelTitle {
  	PADDING-LEFT: 10pt;
-	BACKGROUND: #f0fcfa; 
+	BACKGROUND: #ffffff; 
 	FONT: bold 9pt 微软雅黑, 宋体;
 	COLOR: #369e92; 
 	HEIGHT: 20pt; 
-	TEXT-ALIGN: left;	
+	TEXT-ALIGN: center;	
+	filter: alpha(opacity = 50);
+	background-color: rgba(0,0,0,0.0);
+	background-attachment: fixed;
 }
+span0{
+	PADDING-LEFT: 10pt;
+	FONT: bold 11pt 微软雅黑, 宋体;
+	COLOR: 	#8470FF; 
+	HEIGHT: 20pt; 
+}
+span{
+	PADDING-LEFT: 1pt;
+	FONT: bold 9pt 微软雅黑, 楷体;
+	COLOR: 	#CD8500; 
+	HEIGHT: 100pt; 
+}
+span1{
+	PADDING-LEFT: 10pt;
+	FONT: bold 9pt 微软雅黑, 宋体;
+	COLOR: 	#0e22bb; 
+	HEIGHT: 20pt; 
+}
+
 .model_intro_left {
 	white-space: nowrap;
 	text-align: left;
@@ -35,11 +68,21 @@
 	border-bottom:1px solid #e1f1ef;
 	width: 130px;
 	height:20pt;
+	TEXT-ALIGN: center;	
+	filter: alpha(opacity = 50);
+	background-color: rgba(0,0,0,0.0);
+	background-attachment: fixed;
 }
 .model_intro_right {
-	background: #fff;
+	background: #c5ff8a;
 	border-bottom:1px solid #e1f1ef;
 	line-height:22px;
+	filter: alpha(opacity = 50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+	width: 100%;
+	background-attachment: fixed;
 }
 .modelTable td {
 	padding: 5px;
