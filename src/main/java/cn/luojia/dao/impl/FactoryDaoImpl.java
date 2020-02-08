@@ -14,4 +14,8 @@ import cn.luojia.domain.Factory;
 @Repository
 public class FactoryDaoImpl extends BaseDaoImpl<Factory> implements FactoryDao {
 
+	public FactoryDaoImpl() {
+		// 设置命令空间
+		super.setNs("cn.luojia.mapper.FactoryMapper");
+	}
 }

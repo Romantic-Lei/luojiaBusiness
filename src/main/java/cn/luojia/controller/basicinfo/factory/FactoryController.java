@@ -24,10 +24,10 @@ public class FactoryController extends BaseController {
 	FactoryService factoryService;
 	
 	// 列表
-	@RequestMapping("/basicinfo/factory/jFactoryList.action")
+	@RequestMapping("/basicinfo/factory/list.action")
 	public String list(Model model) {
 		List<Factory> dataList = factoryService.find(null);
 		model.addAttribute("dataList", dataList); // 将数据传递到页面
-		return "basicinfo/factory/jFactoryList.jsp";
+		return "/basicinfo/factory/jFactoryList.jsp"; // 转向页面
 	}
 }
