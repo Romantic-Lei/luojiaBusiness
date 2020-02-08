@@ -38,4 +38,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    <if test="state != null">and STATE=#{state}</if>
 	</select>
 	
+	<!-- 新增   -->
+	<!-- 使用oracle 的jdbc驱动时，当这个为null时，必须告诉它当前字段的默认值类型jdbcType=VARCHAR
+	jdbcType=VARCHAR 这种写法是 mybatis定义的，必须要这么写,我们才能将null变成空字符串,mysql就不用写 -->
+	<insert id="insert" parameterType="cn.luojia.domain.Factory">
+		insert into factory_c
+		(FACTORY_ID,FULL_NAME,FACTORY_NAME,CONTACTS,PHONE,MOBILE,FAX,CNOTE,INSPECTOR,ORDER_NO,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		values
+		(
+			#{id},
+			#{fullName,jdbcType=VARCHAR},
+			#{factoryName,jdbcType=VARCHAR},
+			#{contacts,jdbcType=VARCHAR},
+			#{phone,jdbcType=VARCHAR},
+			#{mobile,jdbcType=VARCHAR},
+			#{fax,jdbcType=VARCHAR},
+			#{cnote,jdbcType=VARCHAR},
+			#{inspector,jdbcType=VARCHAR},
+			#{orderNo,jdbcType=INTEGER},
+			#{state,jdbcType=VARCHAR},
+			#{createBy,jdbcType=VARCHAR},
+			#{createDept,jdbcType=VARCHAR},
+			#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
 </mapper>

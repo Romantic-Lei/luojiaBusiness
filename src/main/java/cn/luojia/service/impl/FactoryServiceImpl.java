@@ -43,8 +43,7 @@ public class FactoryServiceImpl implements FactoryService {
 
 	@Override
 	public void insert(Factory factory) {
-		// TODO Auto-generated method stub
-		
+		factoryDao.insert(factory);
 	}
 
 	@Override

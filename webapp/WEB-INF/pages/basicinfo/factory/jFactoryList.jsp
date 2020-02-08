@@ -17,6 +17,8 @@
 						<ul>
 							<li id="view"><a href="#"
 								onclick="formSubmit('toview.action','_self');this.blur();">查看</a></li>
+							<li id="new"><a href="#"
+								onclick="formSubmit('tocreate.action','_self');this.blur();">新增</a></li>
 
 						</ul>
 					</div>
