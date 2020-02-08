@@ -198,7 +198,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>luojia</finalName>
+		<finalName>luojiaBusiness</finalName>
 	</build>
 	
 </project>

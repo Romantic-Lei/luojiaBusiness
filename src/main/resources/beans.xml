@@ -43,5 +43,29 @@
 	    <property name="mapperLocations" value="classpath:cn/luojia/mapper/*.xml"/>
 	</bean>
 	
+	<!-- 5.事务 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 6.事务通知 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			
+			<!-- 只读 -->
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="view*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* cn.luojia.service.*.*(..))" id="txPoint"/>
+	    <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+	</aop:config>
 </beans>
 			
