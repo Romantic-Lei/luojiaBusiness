@@ -40,7 +40,7 @@ public class ContractController extends BaseController {
 		Contract obj = contractService.get(id);
 		model.addAttribute("obj", obj);
 		
-		return /cargo/contract/jContractView.jsp;
+		return "/cargo/contract/jContractView.jsp";
 	}
 	
 	@RequestMapping("/cargo/contract/insert.action")
