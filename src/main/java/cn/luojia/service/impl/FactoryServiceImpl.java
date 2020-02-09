@@ -1,8 +1,10 @@
 package cn.luojia.service.impl;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,31 +39,46 @@ public class FactoryServiceImpl implements FactoryService {
 
 	@Override
 	public Factory get(Serializable id) {
-		// TODO Auto-generated method stub
-		return null;
+		return factoryDao.get(id);
 	}
 
 	@Override
 	public void insert(Factory factory) {
+		// 设置UUID
+		factory.setId(UUID.randomUUID().toString());
+		factory.setState("1"); // 设置默认状态为启动
 		factoryDao.insert(factory);
 	}
 
 	@Override
 	public void update(Factory factory) {
-		// TODO Auto-generated method stub
-		
+		factoryDao.update(factory);
 	}
 
 	@Override
 	public void deleteById(Serializable id) {
-		// TODO Auto-generated method stub
-		
+		factoryDao.deleteById(id);
 	}
 
 	@Override
 	public void delete(Serializable[] ids) {
-		// TODO Auto-generated method stub
-		
+		factoryDao.delete(ids);
+	}
+
+	@Override
+	public void start(Serializable[] ids) {
+		Map map = new HashMap();
+		map.put("state", 1); // 1 为启用
+		map.put("ids", ids);
+		factoryDao.updateState(map);
+	}
+
+	@Override
+	public void stop(Serializable[] ids) {
+		Map map = new HashMap();
+		map.put("state", 0); // 0 为停用
+		map.put("ids", ids);
+		factoryDao.updateState(map);		
 	}
 
 }

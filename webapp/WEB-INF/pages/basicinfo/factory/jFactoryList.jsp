@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ include file="../../baselist.jsp"%>
 <%@ include file="../../specialEffects.jsp"%>
 
-<%@ include file="../../baselist.jsp"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title></title>
@@ -19,7 +19,16 @@
 								onclick="formSubmit('toview.action','_self');this.blur();">查看</a></li>
 							<li id="new"><a href="#"
 								onclick="formSubmit('tocreate.action','_self');this.blur();">新增</a></li>
-
+							<li id="update"><a href="#"
+								onclick="formSubmit('toupdate.action','_self');this.blur();">修改</a></li>
+							<li id="delete"><a href="#"
+								onclick="formSubmit('deleteById.action','_self');this.blur();">删除</a></li>
+							<li id="delete"><a href="#"
+								onclick="formSubmit('delete.action','_self');this.blur();">删除n</a></li>
+							<li id="new"><a href="#"
+								onclick="formSubmit('start.action','_self');this.blur();">启用n</a></li>
+							<li id="new"><a href="#"
+								onclick="formSubmit('stop.action','_self');this.blur();">停用n</a></li>
 						</ul>
 					</div>
 				</div>
@@ -50,6 +59,7 @@
 								<td class="tableHeader">手机</td>
 								<td class="tableHeader">传真</td>
 								<td class="tableHeader">验货员</td>
+								<td class="tableHeader">状态</td>
 							</tr>
 						</thead>
 						<tbody class="tableBody">
@@ -66,6 +76,10 @@
 									<td>${o.mobile}</td>
 									<td>${o.fax}</td>
 									<td>${o.inspector}</td>
+									<td>
+										<c:if test="${o.state == 1}"><a href="stop.action?id=${o.id}"><font color="green">启动</font></a></c:if>
+										<c:if test="${o.state == 0}"><a href="start.action?id=${o.id}">停用</a></c:if>
+									</td>
 
 								</tr>
 							</c:forEach>

@@ -38,6 +38,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    <if test="state != null">and STATE=#{state}</if>
 	</select>
 	
+	<!-- 查询一个 -->
+	<select id="get" parameterType="string" resultMap="factoryRM">
+		select * from factory_c
+		where factory_id=#{pid}
+	</select>
+	
 	<!-- 新增   -->
 	<!-- 使用oracle 的jdbc驱动时，当这个为null时，必须告诉它当前字段的默认值类型jdbcType=VARCHAR
 	jdbcType=VARCHAR 这种写法是 mybatis定义的，必须要这么写,我们才能将null变成空字符串,mysql就不用写 -->
@@ -62,5 +68,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
+	
+	<!-- 修改 动态SQL语句 -->
+	<update id="update" parameterType="cn.luojia.domain.Factory">
+		update factory_c
+		<set>
+			<if test="fullName != null">FULL_NAME=#{fullName,jdbcType=VARCHAR},</if>
+			<if test="factoryName != null">FACTORY_NAME=#{factoryName,jdbcType=VARCHAR},</if>
+			<if test="contacts != null">CONTACTS=#{contacts,jdbcType=VARCHAR},</if>
+			<if test="phone != null">PHONE=#{phone,jdbcType=VARCHAR},</if>
+			<if test="mobile != null">MOBILE=#{mobile,jdbcType=VARCHAR},</if>
+			<if test="fax != null">FAX=#{fax,jdbcType=VARCHAR},</if>
+			<if test="cnote != null">CNOTE=#{cnote,jdbcType=VARCHAR},</if>
+			<if test="inspector != null">INSPECTOR=#{inspector,jdbcType=VARCHAR},</if>
+			<if test="orderNo != null">ORDER_NO=#{orderNo,jdbcType=INTEGER},</if>
+			<if test="state != null">STATE=#{state,jdbcType=VARCHAR},</if>
+		</set>
+		where FACTORY_ID=#{id}
+	</update>
+	
+	<!-- 删除一条  -->
+	<delete id="deleteById" parameterType="string">
+		delete from factory_c
+		where factory_id=#{pid}
+	</delete>
+	
+	<!-- 批量删除 (一维数组) -->
+	<delete id="delete" parameterType="string">
+		delete from factory_c
+		where FACTORY_ID in
+		<!-- 遍历一维数组集合，参数，开始，关闭，分隔符 -->
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 修改状态 -->
+	<update id="updateState" parameterType="map">
+		update factory_c
+		set state = #{state}
+		where FACTORY_ID in
+		<!-- 如果参数类型是List,则必须在collecion中指定为list, 如果是数据组，则必须在collection属性中指定为 array. -->
+		<!-- 这里的  collection="ids" 说明我们制定的map中key为 ids -->
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</update>
 	
 </mapper>
