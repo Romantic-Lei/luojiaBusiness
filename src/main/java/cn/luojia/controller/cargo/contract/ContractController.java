@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.luojia.controller.BaseController;
 import cn.luojia.domain.Contract;
@@ -76,6 +77,20 @@ public class ContractController extends BaseController {
 	@RequestMapping("/cargo/contract/delete.action")
 	public String delete(String[] id) {
 		contractService.delete(id);
+		
+		return "redirect:/cargo/contract/list.action";
+	}
+	
+	@RequestMapping("/cargo/contract/submit.action")
+	public String submit(String[] id) {
+		contractService.submit(id);
+		
+		return "redirect:/cargo/contract/list.action";
+	}
+	
+	@RequestMapping("/cargo/contract/cancel.action")
+	public String cancel(@RequestParam("id") String[] ids) {
+		contractService.cancel(ids);
 		
 		return "redirect:/cargo/contract/list.action";
 	}
