@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.luojia.mapper.ContractMapper">
+	<resultMap type="cn.luojia.domain.Contract" id="ContractRM">
+		<id property="id" column="CONTRACT_ID"/>
+		
+		<result property="offeror" column="OFFEROR"/>
+		<result property="contractNo" column="CONTRACT_NO"/>
+		<result property="signingDate" column="SIGNING_DATE"/>
+		<result property="inputBy" column="INPUT_BY"/>
+		<result property="checkBy" column="CHECK_BY"/>
+		<result property="inspector" column="INSPECTOR"/>
+		<result property="totalAmount" column="TOTAL_AMOUNT"/>
+		<result property="importNum" column="IMPORT_NUM"/>
+		<result property="crequest" column="CREQUEST"/>
+		<result property="customName" column="CUSTOM_NAME"/>
+		<result property="deliveryPeriod" column="DELIVERY_PERIOD"/>
+		<result property="shipTime" column="SHIP_TIME"/>
+		<result property="tradeTerms" column="TRADE_TERMS"/>
+		<result property="remark" column="REMARK"/>
+		<result property="printStyle" column="PRINT_STYLE"/>
+		<result property="oldState" column="OLD_STATE"/>
+		<result property="state" column="STATE"/>
+		<result property="outState" column="OUT_STATE"/>
+		
+		<result property="createBy" column="CREATE_BY"/>
+		<result property="createDept" column="CREATE_DEPT"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+	
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="ContractRM">
+		select (CONTRACT_ID,OFFEROR,CONTRACT_NO,SIGNING_DATE,INPUT_BY,CHECK_BY,INSPECTOR,TOTAL_AMOUNT,
+			IMPORT_NUM,CREQUEST,CUSTOM_NAME,DELIVERY_PERIOD,SHIP_TIME,TRADE_TERMS,REMARK,PRINT_STYLE,OLD_STATE,STATE,OUT_STATE,
+			CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		from CONTRACT_C
+		where 1 = 1
+	</select>
+	
+	<!-- 查询一条 -->
+	<select id="get" parameterType="string" resultMap="ContractRM">
+		select (CONTRACT_ID,OFFEROR,CONTRACT_NO,SIGNING_DATE,INPUT_BY,CHECK_BY,INSPECTOR,TOTAL_AMOUNT,
+			IMPORT_NUM,CREQUEST,CUSTOM_NAME,DELIVERY_PERIOD,SHIP_TIME,TRADE_TERMS,REMARK,PRINT_STYLE,OLD_STATE,STATE,OUT_STATE,
+			CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		from CONTRACT_C
+		where contract_id=#{pid}
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="cn.luojia.domain.Contract">
+		insert into CONTRACT_C
+		(CONTRACT_ID,OFFEROR,CONTRACT_NO,SIGNING_DATE,INPUT_BY,CHECK_BY,INSPECTOR,TOTAL_AMOUNT,
+			IMPORT_NUM,CREQUEST,CUSTOM_NAME,DELIVERY_PERIOD,SHIP_TIME,TRADE_TERMS,REMARK,PRINT_STYLE,OLD_STATE,STATE,OUT_STATE,
+			CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		values
+		(
+			#{id},
+			#{offeror, jdbcType=VARCHAR},
+			#{contractNo, jdbcType=VARCHAR},
+			#{signingDate, jdbcType=TIMESTAMP},
+			#{inputBy, jdbcType=VARCHAR},
+			#{checkBy, jdbcType=VARCHAR},
+			#{inspector, jdbcType=VARCHAR},
+			#{totalAmount, jdbcType=DOUBLE},
+			#{importNum, jdbcType=INTEGER},
+			#{crequest, jdbcType=VARCHAR},
+			#{customName, jdbcType=VARCHAR},
+			#{deliveryPeriod, jdbcType=TIMESTAMP},
+			#{shipTime, jdbcType=TIMESTAMP},
+			#{tradeTerms, jdbcType=VARCHAR},
+			#{remark, jdbcType=VARCHAR},
+			#{printStyle, jdbcType=CHAR},
+			#{oldState, jdbcType=INTEGER},
+			#{state, jdbcType=INTEGER},
+			#{outState, jdbcType=INTEGER},
+			#{createBy, jdbcType=VARCHAR},
+			#{createDept, jdbcType=VARCHAR},
+			#{createTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<!-- 新增	 -->
+	<update id="update" parameterType="cn.luojia.domain.Contract">
+		update CONTRACT_C
+		<set>
+			<!-- 这里没有必要去写后面的jdbcType， 也没有必要在前面加上一个判断，
+			因为在插入的时候我们已经有了一个判断，这里取值就不会为空，加上空的判断仅仅是编程的一个习惯 -->
+			<if test="offeror != null">OFFEROR=#{offeror,jdbcType=VARCHAR},</if>
+			<if test="contractNo != null">CONTRACT_NO=#{contractNo},</if>
+			<if test="signingDate != null">SIGNING_DATE=#{signingDate},</if>
+			<if test="inputBy != null">INPUT_BY=#{inputBy},</if>
+			<if test="checkBy != null">CHECK_BY=#{checkBy},</if>
+			<if test="inspector != null">INSPECTOR=#{inspector},</if>
+			<if test="totalAmount != null">TOTAL_AMOUNT=#{totalAmount},</if>
+			<if test="importNum != null">IMPORT_NUM=#{importNum},</if>
+			<if test="crequest != null">CREQUEST=#{crequest},</if>
+			<if test="customName != null">CUSTOM_NAME=#{customName},</if>
+			<if test="deliveryPeriod != null">DELIVERY_PERIOD=#{deliveryPeriod},</if>
+			<if test="shipTime != null">SHIP_TIME=#{shipTime},</if>
+			<if test="tradeTerms != null">TRADE_TERMS=#{tradeTerms},</if>
+			<if test="remark != null">REMARK=#{remark},</if>
+			<if test="printStyle != null">PRINT_STYLE=#{printStyle},</if>
+			<if test="oldState != null">OLD_STATE=#{oldState},</if>
+			<if test="state != null">STATE=#{state},</if>
+			<if test="outState != null">OUT_STATE=#{outState},</if>
+		</set>
+		where CONTRACT_ID=#{id}
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from CONTRACT_C
+		where CONTRACT_ID = #{pid}
+	</delete>
+	
+	<!-- 删除多条(一维字符串数组的形式) -->
+	<delete id="delete" parameterType="string">
+		delete from CONTRACT_C
+		where CONTRACT_ID in
+		<!-- 遍历一维数组集合，参数，开始，关闭，分隔符 -->
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 修改状态 -->
+	<update id="updateState" parameterType="map">
+		update CONTRACT_C
+		set state = #{state}
+		where CONTRACT_ID in
+		<!-- 如果参数类型是List,则必须在collecion中指定为list, 如果是数据组，则必须在collection属性中指定为 array. 此处为dao层他的变量名 -->
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</update> 
+	
+</mapper>
