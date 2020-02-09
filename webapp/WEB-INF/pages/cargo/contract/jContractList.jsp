@@ -22,7 +22,9 @@
 							<li id="update"><a href="#"
 								onclick="formSubmit('toupdate.action','_self');this.blur();">修改</a></li>
 							<li id="delete"><a href="#"
-								onclick="formSubmit('delete.action','_self');this.blur();">删除</a></li>
+								onclick="formSubmit('deleteById.action','_self');this.blur();">删除</a></li>
+							<li id="delete"><a href="#"
+								onclick="formSubmit('delete.action','_self');this.blur();">删除n</a></li>
 							<li id="new"><a href="#"
 								onclick="formSubmit('submit.action','_self');this.blur();">上报</a></li>
 							<li id="new"><a href="#"

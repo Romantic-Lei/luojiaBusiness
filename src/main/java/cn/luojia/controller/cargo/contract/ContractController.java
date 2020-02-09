@@ -29,4 +29,54 @@ public class ContractController extends BaseController {
 		
 		return "/cargo/contract/jContractList.jsp";
 	}
+	
+	@RequestMapping("/cargo/contract/tocreate.action")
+	public String tocreate() {
+		return "/cargo/contract/jContractCreate.jsp";
+	}
+	
+	@RequestMapping("/cargo/contract/toview.action")
+	public String toview(String id, Model model) {
+		Contract obj = contractService.get(id);
+		model.addAttribute("obj", obj);
+		
+		return /cargo/contract/jContractView.jsp;
+	}
+	
+	@RequestMapping("/cargo/contract/insert.action")
+	public String insert(Contract contract) {
+		contractService.insert(contract);
+		
+		return "redirect:/cargo/contract/list.action";
+	}
+	
+	@RequestMapping("/cargo/contract/toupdate.action")
+	public String toupdate(String id, Model model) {
+		Contract obj = contractService.get(id);
+		model.addAttribute("obj", obj);
+		
+		return "/cargo/contract/jContractUpdate.jsp";
+	}
+	
+	@RequestMapping("/cargo/contract/update.action")
+	public String update(Contract contract) {
+		contractService.update(contract);
+		
+		return "redirect:/cargo/contract/list.action";
+	}
+	
+	@RequestMapping("/cargo/contract/deleteById.action")
+	public String deleteById(String id) {
+		contractService.deleteById(id);
+		
+		return "redirect:/cargo/contract/list.action";
+	}
+	
+	// 参数名字要和 SQL xml文件中的  item="id" 一致
+	@RequestMapping("/cargo/contract/delete.action")
+	public String delete(String[] id) {
+		contractService.delete(id);
+		
+		return "redirect:/cargo/contract/list.action";
+	}
 }
