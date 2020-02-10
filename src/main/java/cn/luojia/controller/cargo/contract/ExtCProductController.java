@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.luojia.domain.ExtCproduct;
 import cn.luojia.domain.Factory;
+import cn.luojia.domain.SysCode;
 import cn.luojia.service.ExtCproductService;
 import cn.luojia.service.FactoryService;
 
@@ -30,15 +31,20 @@ public class ExtCProductController {
 	
 	@RequestMapping("/cargo/extcproduct/tocreate.action")
 	public String tocreate(String contractProductId, Model model) {
+		model.addAttribute("contractProductId", contractProductId);
 		// 准备列表数据
 		Map paraMap = new HashMap();
 		paraMap.put("contractProductId", contractProductId);
-		extCproductService.find(paraMap);
+		List<ExtCproduct> dataList = extCproductService.find(paraMap);
+		model.addAttribute("dataList", dataList);
 		
 		//生产厂家
 		//准备生产厂家的下拉列表
 		List<Factory> factoryList = factoryService.getFactoryList();
 		model.addAttribute("factoryList", factoryList);
+		
+		List<SysCode> ctypeList = extCproductService.getCtypeList();
+		model.addAttribute("ctypeList", ctypeList);
 		
 		return "/cargo/contract/jExtCproductCreate.jsp";
 	}
@@ -48,7 +54,7 @@ public class ExtCProductController {
 		extCproductService.insert(extCproduct);
 		model.addAttribute("contractProductId", extCproduct.getContractProductId());
 		
-		return "/cargo/contract/jExtCproductCreate.jsp";
+		return "redirect:/cargo/extcproduct/tocreate.action";
 	}
 	
 }
