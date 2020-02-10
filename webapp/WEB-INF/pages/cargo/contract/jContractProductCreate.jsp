@@ -24,7 +24,7 @@
 						<ul>
 							<li id="save"><a href="#"
 								onclick="formSubmit('insert.action','_self');">确定</a></li>
-							<li id="back"><a href="list.action">返回</a></li>
+							<li id="back"><a href="${ctx}/cargo/contract/list.action">返回</a></li>
 						</ul>
 					</div>
 				</div>
