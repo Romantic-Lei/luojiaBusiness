@@ -14,6 +14,7 @@ import cn.luojia.domain.ContractProduct;
 import cn.luojia.pagination.Page;
 import cn.luojia.service.ContractProductService;
 import cn.luojia.service.ContractService;
+import cn.luojia.util.UtilFuns;
 
 /**
  * 
@@ -47,7 +48,10 @@ public class ContractProductServiceImpl implements ContractProductService {
 	public void insert(ContractProduct contractProduct) {
 		contractProduct.setId(UUID.randomUUID().toString());
 		// 自动计算总金额  = 数量 * 单价    ...修改，删除，同步合同总金额
-		contractProduct.setAmount(contractProduct.getCnumber() * contractProduct.getPrice());
+		if(UtilFuns.isNotEmpty(contractProduct.getCnumber()) && UtilFuns.isNotEmpty(contractProduct.getPrice())) {
+			contractProduct.setAmount(contractProduct.getCnumber() * contractProduct.getPrice());
+			
+		}
 		
 		contractProductDao.insert(contractProduct);
 	}

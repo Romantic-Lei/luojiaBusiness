@@ -90,7 +90,7 @@ public class ContractProductController extends BaseController {
 	
 	// 批量删除
 	@RequestMapping("/cargo/contractproduct/delete.action")
-	public void delete(String id) {
+	public void delete(String[] id) {
 		contractProductService.delete(id);
 	}
 	
