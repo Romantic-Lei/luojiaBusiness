@@ -55,15 +55,25 @@
 
 2. 有时我们在数据库中存值是想刻意换行存储，例如 ：
    和(换行 \n)
-   谐，但是我们点击查看时，会显示成**和 谐**，换行被显示成了**空格**，这时我们如果依旧想要原样显示那么我们可以在jsp中添加 <pre></pre>
+   谐，但是我们点击查看时，会显示成**和 谐**，换行被显示成了**空格**，这时我们如果依旧想要原样显示那么我们可以在jsp中添加
+   
+   ```html
+    <pre></pre> 添加此标签
    <td class="column">备注：</td>
    <td class="table"><pre>${obj.cnote}</pre></td>
+   ```
+   
+   
    
 3. 在我们的下拉框更新回显中，我们需要显示数据库中存储的信息，所以在更新回显时我们需要做一个判断才能显示，此时我们可以有两种回显判断方法，例如在我们的购销合同更新文件中：
 
+   
+
+   ```html
    <select name="tradeTerms">
    	<option value="T/T(电汇)" <c:if test="${obj.tradeTerms eq 'T/T(电汇)' }">selected</c:if>>T/T(电汇)</option>
    	<option value="L/C(远期信用)" ${obj.tradeTerms=="L/C(远期信用)"?'selected':''}>L/C(远期信用)</option>
    </select>
+   ```
 
    ​	不论我们使用 **<c:if ></c:if >标签** 还是使用  **三目运算符** 都可以达成我们的目的			
