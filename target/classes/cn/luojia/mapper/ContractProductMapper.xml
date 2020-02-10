@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.luojia.mapper.ContractProductMapper">
+	<!-- 映射合同和合同下的货物信息，一对多 -->
+	<resultMap type="cn.luojia.domain.ContractProduct" id="contractProductRM">
+		<!-- 主键 -->
+		<id property="id" column="CONTRACT_PRODUCT_ID"/>
+		
+		<!-- 外键 -->
+		<result property="contractId" column="CONTRACT_ID"/>
+		<result property="factoryId" column="FACTORY_ID"/>
+		
+		<!-- 其他属性 -->
+		<result property="factoryName" column="FACTORY_NAME"/>
+		<result property="productNo" column="PRODUCT_NO"/>
+		<result property="productImage" column="PRODUCT_IMAGE"/>
+		<result property="productDesc" column="PRODUCT_DESC"/>
+		<result property="cnumber" column="CNUMBER"/>
+		<result property="outNumber" column="OUT_NUMBER"/>
+		<result property="loadingRate" column="LOADING_RATE"/>
+		<result property="boxNum" column="BOX_NUM"/>
+		<result property="packingUnit" column="PACKING_UNIT"/>
+		<result property="price" column="PRICE"/>
+		<result property="amount" column="AMOUNT"/>
+		<result property="finished" column="FINISHED"/>
+		<result property="exts" column="EXTS"/>
+		<result property="orderNo" column="ORDER_NO"/>
+	</resultMap>
+	
+	<select id="find" parameterType="map" resultMap="contractProductRM">
+		select CONTRACT_PRODUCT_ID,CONTRACT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,
+			PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,OUT_NUMBER,LOADING_RATE,BOX_NUM,
+			PACKING_UNIT,PRICE,AMOUNT,FINISHED,EXTS,ORDER_NO
+		from CONTRACT_PRODOCT_ID
+		where 1=1
+	</select>
+	
+	<select id="get" parameterType="string" resultMap="contractProductRM">
+		select CONTRACT_PRODUCT_ID,CONTRACT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,
+			PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,OUT_NUMBER,LOADING_RATE,BOX_NUM,
+			PACKING_UNIT,PRICE,AMOUNT,FINISHED,EXTS,ORDER_NO
+		from CONTRACT_PRODUCT_C
+		where CONTRACT_PRODUCT_ID=#{pid}
+	</select>
+	
+	<insert id="insert" parameterType="cn.luojia.domain.ContractProduct">
+		insert into CONTRACT_PRODUCT_C
+		(CONTRACT_PRODUCT_ID,CONTRACT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,
+			PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,OUT_NUMBER,LOADING_RATE,BOX_NUM,
+			PACKING_UNIT,PRICE,AMOUNT,FINISHED,EXTS,ORDER_NO)
+		values(
+			#{id},
+			#{contractId},
+			#{factoryId},
+			#{factoryName, jdbcType=VARCHAR},
+			#{productNo, jdbcType=VARCHAR},
+			#{productImage, jdbcType=VARCHAR},
+			#{productDesc, jdbcType=VARCHAR},
+			#{cnumber, jdbcType=INTEGER},
+			#{outNumber, jdbcType=INTEGER},
+			#{loadingRate, jdbcType=VARCHAR},
+			#{boxNum, jdbcType=INTEGER},
+			#{packingUnit, jdbcType=VARCHAR},
+			#{price, jdbcType=DOUBLE},
+			#{amount, jdbcType=DOUBLE},
+			#{finished, jdbcType=INTEGER},
+			#{exts, jdbcType=VARCHAR},
+			#{orderNo, jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cn.luojia.domain.ContractProduct">
+		update CONTRACT_PRODUCT_C
+		<set>
+			CONTRACT_ID=#{contractId},
+			FACTORY_ID=#{factoryId},
+			<if test="factoryName != null">FACTORY_NAME=#{factoryName},</if>
+			<if test="productNo != null">PRODUCT_NO=#{productNo},</if>
+			<if test="productImage != null">PRODUCT_IMAGE=#{productImage},</if>
+			<if test="productDesc != null">PRODUCT_DESC=#{productDesc},</if>
+			<if test="cnumber != null">CNUMBER=#{cnumber},</if>
+			<if test="outNumber != null">OUT_NUMBER=#{outNumber},</if>
+			<if test="loadingRate != null">LOADING_RATE=#{loadingRate},</if>
+			<if test="boxNum != null">BOX_NUM=#{boxNum},</if>
+			<if test="packingUnit != null">PACKING_UNIT=#{packingUnit},</if>
+			<if test="price != null">PRICE=#{price},</if>
+			<if test="amount != null">AMOUNT=#{amount},</if>
+			<if test="finished != null">FINISHED=#{finished},</if>
+			<if test="exts != null">EXTS=#{exts},</if>
+			<if test="orderNo != null">ORDER_NO=#{orderNo},</if>
+		</set>
+		where CONTRACT_PRODUCT_ID=#{id}
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from contract_product_c
+		where contract_product_id=#{pid}
+	</delete>
+	
+	<!-- 删除多条（一维字符串数组） -->
+	<delete id="delete" parameterType="string">
+		delete from contract_product_c
+		where contract_product_id in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+</mapper>
