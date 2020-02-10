@@ -83,15 +83,12 @@ public class ContractProductController extends BaseController {
 	}
 	
 	// 删除
-	@RequestMapping("/cargo/contractproduct/upddeleteByIdate.action")
-	public void deleteById(String id) {
+	@RequestMapping("/cargo/contractproduct/deleteById.action")
+	public String deleteById(String id, String contractId, Model model) {
 		contractProductService.deleteById(id);
-	}
-	
-	// 批量删除
-	@RequestMapping("/cargo/contractproduct/delete.action")
-	public void delete(String[] id) {
-		contractProductService.delete(id);
+		model.addAttribute("contractId", contractId);		//传递主表ID
+		
+		return "redirect:/cargo/contractproduct/tocreate.action";
 	}
 	
 }
