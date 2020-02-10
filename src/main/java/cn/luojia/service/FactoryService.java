@@ -25,4 +25,5 @@ public interface FactoryService {
 	public void start(Serializable[] ids);				// 启用
 	public void stop(Serializable[] ids);				// 停用
 
+	public List<Factory> getFactoryList();				// 获取生产厂家列表
 }

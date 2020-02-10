@@ -81,4 +81,12 @@ public class FactoryServiceImpl implements FactoryService {
 		factoryDao.updateState(map);		
 	}
 
+	@Override
+	public List<Factory> getFactoryList() {
+		Map<String, Object> paraMap = new HashMap<String, Object>();
+		paraMap.put("state", 1); // 1 是启动，表示只查用启用的生产厂家
+		
+		return factoryDao.find(paraMap);
+	}
+
 }
