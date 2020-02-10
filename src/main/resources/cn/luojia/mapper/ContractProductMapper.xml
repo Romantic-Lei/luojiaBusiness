@@ -97,14 +97,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 删除一条 -->
 	<delete id="deleteById" parameterType="string">
-		delete from contract_product_c
-		where contract_product_id=#{pid}
+		delete from CONTRACT_PRODUCT_C
+		where CONTRACT_PRODUCT_ID=#{pid}
 	</delete>
 	
 	<!-- 删除多条（一维字符串数组） -->
 	<delete id="delete" parameterType="string">
-		delete from contract_product_c
-		where contract_product_id in
+		delete from CONTRACT_PRODUCT_C
+		where CONTRACT_PRODUCT_ID in
 		<foreach collection="array" item="id" open="(" close=")" separator=",">
 			#{id}
 		</foreach>
