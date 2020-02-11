@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.luojia.dao.ContractProductDao;
+import cn.luojia.dao.ExtCproductDao;
 import cn.luojia.domain.ContractProduct;
 import cn.luojia.pagination.Page;
 import cn.luojia.service.ContractProductService;
@@ -27,6 +28,8 @@ public class ContractProductServiceImpl implements ContractProductService {
 
 	@Autowired
 	ContractProductDao contractProductDao;
+	@Autowired
+	ExtCproductDao extCproductDao;
 	
 	@Override
 	public List<ContractProduct> findPage(Page page) {
@@ -63,11 +66,17 @@ public class ContractProductServiceImpl implements ContractProductService {
 
 	@Override
 	public void deleteById(Serializable id) {
+		// 删除当前 货物下的所有附件
+		Serializable[] ids = {id};
+		extCproductDao.deleteByContractProductById(ids);
 		contractProductDao.deleteById(id);
 	}
 
 	@Override
 	public void delete(Serializable[] ids) {
+		// 删除当前 货物下的所有附件
+		extCproductDao.deleteByContractProductById(ids);
+		// 删除当前 id 对应的货物
 		contractProductDao.delete(ids);
 	}
 
