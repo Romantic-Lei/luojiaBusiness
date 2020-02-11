@@ -68,14 +68,14 @@ public class ContractProductServiceImpl implements ContractProductService {
 	public void deleteById(Serializable id) {
 		// 删除当前 货物下的所有附件
 		Serializable[] ids = {id};
-		extCproductDao.deleteByContractProductById(ids);
+		extCproductDao.deleteByContractProductId(ids);
 		contractProductDao.deleteById(id);
 	}
 
 	@Override
 	public void delete(Serializable[] ids) {
 		// 删除当前 货物下的所有附件
-		extCproductDao.deleteByContractProductById(ids);
+		extCproductDao.deleteByContractProductId(ids);
 		// 删除当前 id 对应的货物
 		contractProductDao.delete(ids);
 	}

@@ -15,8 +15,8 @@ public class ExtCproductDaoImpl extends BaseDaoImpl<ExtCproduct> implements ExtC
 		super.setNs("cn.luojia.mapper.ExtCproductMapper");
 	}
 	
-	public void deleteByContractProductById(Serializable[] ids) {
-		super.getSqlSession().delete(this.getNs()+".deleteByContractProductById", ids);
+	public void deleteByContractProductId(Serializable[] ids) {
+		super.getSqlSession().delete(this.getNs()+".deleteByContractProductId", ids);
 	}
 	
 	public void deleteByContractId(Serializable[] contractIds) {

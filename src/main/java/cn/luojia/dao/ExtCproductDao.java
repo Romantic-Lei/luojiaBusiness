@@ -11,6 +11,6 @@ import cn.luojia.domain.ExtCproduct;
  * @Description 继承了基础的方法，可以将此接口留作扩展，以后可以添加新的方法
  */
 public interface ExtCproductDao extends BaseDao<ExtCproduct> {
-	public void deleteByContractProductById(Serializable[] ids);
+	public void deleteByContractProductId(Serializable[] ids);
 	public void deleteByContractId(Serializable[] contractIds);
 }

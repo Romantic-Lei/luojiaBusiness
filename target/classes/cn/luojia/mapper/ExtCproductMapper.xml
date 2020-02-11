@@ -102,11 +102,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 级联删除，删除某个货物下的附件 -->
-	<delete id="deleteByContractProductById" parameterType="string">
-		delete from ext_cproduct_c
+	<delete id="deleteByContractProductId" parameterType="string">
+		delete from EXT_CPRODUCT_C
 		where CONTRACT_PRODUCT_ID in
 		<foreach collection="array" item="id" open="(" close=")" separator=",">
 			#{id}
 		</foreach>
+	</delete>
+	
+	<!-- 级联删除，删除某个合同下的附件 -->
+	<delete id="deleteByContractId" parameterType="string">
+		delete from EXT_CPRODUCT_C
+		where CONTRACT_PRODUCT_ID in
+		(
+			select CONTRACT_PRODUCT_ID from CONTRACT_PRODUCT_C
+			 where CONTRACT_ID in 
+			<foreach collection="array" item="id" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+		)
 	</delete>
 </mapper>

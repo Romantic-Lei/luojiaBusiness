@@ -1,5 +1,7 @@
 package cn.luojia.dao.impl;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Repository;
 
 import cn.luojia.dao.ContractProductDao;
@@ -17,6 +19,11 @@ public class ContractProductDaoImpl extends BaseDaoImpl<ContractProduct> impleme
 	public ContractProductDaoImpl() {
 		// 设置命令空间
 		super.setNs("cn.luojia.mapper.ContractProductMapper");
+	}
+
+	@Override
+	public void deleteByContractId(Serializable[] ids) {
+		super.getSqlSession().delete(super.getNs() + ".deleteByContractId", ids);
 	}
 
 }
