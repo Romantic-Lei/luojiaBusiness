@@ -35,16 +35,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createTime" column="CREATE_TIME"/>
 	</resultMap>
 	
-	<!-- 查询 -->
+	<!-- 如果支持异构数据，必须针对每个数据库写一个SQL语句，因为使用了底层数据函数nvl  -->
 	<select id="find" parameterType="map" resultMap="ContractRM">
 		select 
 		  (select count(*) from contract_product_c
-		  		where contract_id=c.contract_id)  as cpnum,
+		  where contract_id=c.contract_id)  as cpnum,
 		  (select count(*) from ext_cproduct_c
-		        where contract_product_id in (select contract_product_id from contract_product_c where contract_id=c.contract_id)
-		   ) as extnum,
-		    c.*
-		   from contract_c c
+		          where contract_product_id in (select contract_product_id from contract_product_c where contract_id=c.contract_id)
+		      ) as extnum,
+		  ( 
+		      nvl((select sum(cnumber*price) as cptotal from contract_product_c
+		      where contract_id =c.contract_id),0)
+		      +
+		      nvl(
+		      (select sum(cnumber*price) as exttotal from ext_cproduct_c
+		       where contract_product_id in (select contract_product_id from contract_product_c where contract_id=c.contract_id))
+		       ,0)
+  		) as total_amount,
+			c.CONTRACT_ID,c.OFFEROR,c.CONTRACT_NO,c.SIGNING_DATE,c.INPUT_BY,c.CHECK_BY,c.INSPECTOR,c.IMPORT_NUM,c.CREQUEST,c.CUSTOM_NAME,c.DELIVERY_PERIOD,c.SHIP_TIME,c.TRADE_TERMS,c.REMARK,c.PRINT_STYLE,c.OLD_STATE,c.STATE,c.OUT_STATE
+		
+		from contract_c c
 		where 1 = 1
 		<if test="state!=null"> and c.state=#{state}</if>
 	</select>
