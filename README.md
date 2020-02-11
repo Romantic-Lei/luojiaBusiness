@@ -39,11 +39,33 @@
 
 
 
-购销合同的上报和取消
+#####购销合同的上报和取消
 
 上报：当销售人员录入合同后，确认无误后，点击“提交”，初次提交之后的信息都是为草稿状态，如果我们录入人员不更新状态的话下一个流程的人事看不到这个记录的。我们更改合同状态为上报后，下一个流程的工作人员就可以看见相对应的信息。
 
 取消：当提交之后，发现信息有误，我们可以点击取消上报。如果报运人员没有操作，则我们可以正常回退；当报运人员开始操作并有了相应的记录，我们无法回退只能走补录流程。
+
+
+
+#####数据字典：
+
+它是一个通用结构，和业务没有关系，数据字段使用户可以动态的扩充内容。它的分类用户不能改，分类是系统上线时，开发人员初始化。
+
+
+
+##### 两层一对多
+
+子表数据不设置外键关联时，当删除主表时，我们子表的数据就无法删除，然后就变成了脏数据
+
+**级联删除**
+
+Hibernate	多层关联关系最简单；配置关联关系时，只关心上级对象
+
+MyBatis		多层关联关系时，级联删除必须一级一级的删除。多级时要专门写mapper方法（写专门SQL进行删除）
+
+1）在MyBatis 的service，删除货物时，先调用附件的service删除方法
+
+2）通过SQL 高速删除（批量删除）
 
 
 
@@ -82,36 +104,37 @@
    </select>
    ```
 
-   ​	不论我们使用 **<c:if ></c:if >标签** 还是使用  **三目运算符** 都可以达成我们的目的		
+   ​	不论我们使用 **<c:if ></c:if >标签** 还是使用  **三目运算符** 都可以达成我们的目的
+4.有时在我们前端页面中，前端input框的name属性和我们控制层接收的参数名字不一致，会导致我们接收不到前端传递过来的参数。
+   例子：
+   
+```html
+   <td><input type="checkbox" name="id" value="${o.id}" /></td>
+```
 
-   4. 有时在我们前端页面中，前端input框的name属性和我们控制层接收的参数名字不一致，会导致我们接收不到前端传递过来的参数。
-      例子：
+```java
+   @RequestMapping("/cargo/contract/submit.action")
+   public String submit(String[] id) {
+   	contractService.submit(id);
+   		
+   	return "redirect:/cargo/contract/list.action";
+   }
+   
+   @RequestMapping("/cargo/contract/cancel.action")
+   public String cancel(@RequestParam("id") String[] ids) {
+   	contractService.cancel(ids);
+   	
+   	return "redirect:/cargo/contract/list.action";
+   }
+```
 
-      ```html
-      <td><input type="checkbox" name="id" value="${o.id}" /></td>
-      ```
+在本例中，前端 input 框中name属性为id，在我们 Controller 层中，我们有两种方式接收 input 框传递过来的参数，方法一就是和 input 框 name属性一致，方法二就是我们加上一个 @RequestParam()注解，注解的参数就是input 框中的name属性，然后他会自动帮我们装到 名为ids 的数组中。
 
-      ```java
-      @RequestMapping("/cargo/contract/submit.action")
-      public String submit(String[] id) {
-      	contractService.submit(id);
-      		
-      	return "redirect:/cargo/contract/list.action";
-      }
-      
-      @RequestMapping("/cargo/contract/cancel.action")
-      public String cancel(@RequestParam("id") String[] ids) {
-      	contractService.cancel(ids);
-      	
-      	return "redirect:/cargo/contract/list.action";
-      }
-      ```
+5.
 
-      在本例中，前端 input 框中name属性为id，在我们 Controller 层中，我们有两种方式接收 input 框传递过来的参数，方法一就是和 input 框 name属性一致，方法二就是我们加上一个 @RequestParam()注解，注解的参数就是input 框中的name属性，然后他会自动帮我们装到 名为ids 的数组中。
+   6.
 
-   5.    
-      
-   6. 
+   
 
 
 
