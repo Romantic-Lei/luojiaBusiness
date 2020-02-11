@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.luojia.mapper.ContractMapper">
-	<resultMap type="cn.luojia.domain.Contract" id="ContractRM">
+	<resultMap type="cn.luojia.domain.Contract" id="contractRM">
 		<id property="id" column="CONTRACT_ID"/>
 		
 		<!-- 虚拟字段 -->
@@ -35,8 +35,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createTime" column="CREATE_TIME"/>
 	</resultMap>
 	
+	<resultMap type="cn.luojia.vo.ContractVO" id="contractVORM" extends="contractRM">
+		<!-- 合同和货物（一对多） -->
+		<collection property="contractProduct" ofType="cn.luojia.vo.ContractProductVO">
+			<id property="id" column="CONTRACT_PRODUCT_ID"/>
+			<result property="productNo" column="PRODUCT_NO"/>
+			<result property="productImage" column="PRODUCT_IMAGE"/>
+			<result property="productDesc" column="PRODUCT_DESC"/>
+			<result property="cnumber" column="CNUMBER"/>
+			<result property="outNumber" column="OUT_NUMBER"/>
+			<result property="loadingRate" column="LOADING_RATE"/>
+			<result property="boxNum" column="BOX_NUM"/>
+			<result property="packingUnit" column="PACKING_UNIT"/>
+			<result property="price" column="PRICE"/>
+			<result property="amount" column="AMOUNT"/>
+			<result property="finished" column="FINISHED"/>
+			<result property="exts" column="EXTS"/>
+			<result property="orderNo" column="ORDER_NO"/>
+			
+			<!-- 货物和生产厂家（多对一） -->
+			<association property="factory" javaType="cn.luojia.domain.Factory">
+				<id property="id" column="FACTORY_ID"/>
+				<result property="fullName" column="FULL_NAME"/>
+				<result property="factoryName" column="FACTORY_NAME"/>
+				<result property="contacts" column="CONTACTS"/>
+			</association>
+			
+			<!-- 货物和附件（一对多） -->
+			<collection property="extCproducts" ofType="cn.luojia.vo.ExtCproductVO">
+				<id property="id" column="EXT_CPRODUCT_ID"/>
+				<result property="ctype" column="CTYPE"/>
+				<result property="productNo" column="EXT_PRODUCT_NO"/>
+				<result property="productImage" column="EXT_PRODUCT_IMAGE"/>
+				<result property="productDesc" column="EXT_PRODUCT_DESC"/>
+				<result property="cnumber" column="EXT_CNUMBER"/>
+				<result property="packingUnit" column="EXT_PACKING_UNIT"/>
+				<result property="price" column="EXT_PRICE"/>
+				<result property="amount" column="EXT_AMOUNT"/>
+				<result property="productRequest" column="PRODUCT_REQUEST"/>
+				<result property="orderNo" column="EXT_ORDER_NO"/>
+				
+				<!-- 附件和生产厂家（多对一） -->
+				<association property="factory" javaType="cn.luojia.domain.Factory">
+					<id property="id" column="EXT_FACTORY_ID"/>
+					<result property="fullName" column="EXT_FULL_NAME"/>
+					<result property="factoryName" column="EXT_FACTORY_NAME"/>
+					<result property="contacts" column="EXT_CONTACTS"/>
+				</association>
+			</collection>
+			
+		</collection>
+	</resultMap>
+	
 	<!-- 如果支持异构数据，必须针对每个数据库写一个SQL语句，因为使用了底层数据函数nvl  -->
-	<select id="find" parameterType="map" resultMap="ContractRM">
+	<select id="find" parameterType="map" resultMap="contractRM">
 		select 
 		  (select count(*) from contract_product_c
 		  where contract_id=c.contract_id)  as cpnum,
@@ -60,7 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 查询一条 -->
-	<select id="get" parameterType="string" resultMap="ContractRM">
+	<select id="get" parameterType="string" resultMap="contractRM">
 		select CONTRACT_ID,OFFEROR,CONTRACT_NO,SIGNING_DATE,INPUT_BY,CHECK_BY,INSPECTOR,TOTAL_AMOUNT,
 			IMPORT_NUM,CREQUEST,CUSTOM_NAME,DELIVERY_PERIOD,SHIP_TIME,TRADE_TERMS,REMARK,PRINT_STYLE,OLD_STATE,STATE,OUT_STATE,
 			CREATE_BY,CREATE_DEPT,CREATE_TIME
