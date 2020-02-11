@@ -16,7 +16,7 @@ import lombok.Data;
 public class ContractVO {
 	private String id;
 	
-	private List<ContractProduct> contractProduct; 	// 货物的集合
+	private List<ContractProduct> contractProducts; 	// 货物的集合
 	
 	private String cpnum;			//货物数
 	private String extnum;			//附件数

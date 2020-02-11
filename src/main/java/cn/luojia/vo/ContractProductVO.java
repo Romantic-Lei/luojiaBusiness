@@ -18,7 +18,7 @@ public class ContractProductVO {
 	private String id;
 	
 	private Contract contract;			//将复杂的关联关系变成单表操作
-	private List<ExtCproduct> extCproduct;//和附件一对多
+	private List<ExtCproduct> extCproducts;//和附件一对多
 	private Factory factory;			//和生产厂家是多对一的关系
 	
 	private String productNo;			//货号
