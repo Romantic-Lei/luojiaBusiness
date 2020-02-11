@@ -14,8 +14,8 @@ import lombok.Data;
 public class Contract {
 	private String id;
 	
-//	private String cpnum;			//货物数
-//	private String extnum;			//附件数
+	private String cpnum;			//货物数
+	private String extnum;			//附件数
 	
 	private String offeror;         //合作方
 	private String contractNo;      //合同号

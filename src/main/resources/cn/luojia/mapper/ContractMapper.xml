@@ -7,6 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="cn.luojia.domain.Contract" id="ContractRM">
 		<id property="id" column="CONTRACT_ID"/>
 		
+		<!-- 虚拟字段 -->
+		<result property="cpnum" column="CPNUM"/>
+		<result property="extnum" column="EXTNUM"/>
+		
 		<result property="offeror" column="OFFEROR"/>
 		<result property="contractNo" column="CONTRACT_NO"/>
 		<result property="signingDate" column="SIGNING_DATE"/>
@@ -33,11 +37,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 查询 -->
 	<select id="find" parameterType="map" resultMap="ContractRM">
-		select CONTRACT_ID,OFFEROR,CONTRACT_NO,SIGNING_DATE,INPUT_BY,CHECK_BY,INSPECTOR,TOTAL_AMOUNT,
-			IMPORT_NUM,CREQUEST,CUSTOM_NAME,DELIVERY_PERIOD,SHIP_TIME,TRADE_TERMS,REMARK,PRINT_STYLE,OLD_STATE,STATE,OUT_STATE,
-			CREATE_BY,CREATE_DEPT,CREATE_TIME
-		from CONTRACT_C
+		select 
+		  (select count(*) from contract_product_c
+		  		where contract_id=c.contract_id)  as cpnum,
+		  (select count(*) from ext_cproduct_c
+		        where contract_product_id in (select contract_product_id from contract_product_c where contract_id=c.contract_id)
+		   ) as extnum,
+		    c.*
+		   from contract_c c
 		where 1 = 1
+		<if test="state!=null"> and c.state=#{state}</if>
 	</select>
 	
 	<!-- 查询一条 -->
