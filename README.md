@@ -69,6 +69,56 @@ MyBatis		多层关联关系时，级联删除必须一级一级的删除。多�
 
 
 
+##### 合同总金额
+
+1）可以通过货物的新增时，同步计算货物的总金额和合同的总金额；在附件新增时，同步计算附件的总金额和合同的总金额（程序完成，修改、删除时重新计算）
+
+2）SQL计算
+
+
+
+##### 购销合同查看
+
+购销合同查看，查看合同的主信息，查看合同下的货物信息，还要查看附件信息，**货物和附件的信息要显示出它们的关联关系。**
+
+利用面向对象的关联关系来实现上面的需求非常简单。
+
+合同、货物、附件、生产厂家构建复杂多级关联的SQL时的原则：
+
+1）挑选最小的结果集
+
+2）滚雪球（一般是使用左链接），逐步往上加内容
+
+3）重复字段，需要起别名（mybatis）
+
+
+
+
+
+##### mybatis配置多对一与一对多
+
+当配置**<u>一对多</u>**时，我们使用 **collection 元素**，其中与collection 搭配使用的是 **ofType** 属性
+
+当配置**<u>多对一</u>**时，我们使用 **association元素**，其中与association搭配使用的是 **ofType** 属性
+
+```xml
+<!-- 合同和货物（一对多） -->
+<collection property="contractProduct" ofType="cn.luojia.vo.ContractProductVO">
+	<id property="id" column="CONTRACT_PRODUCT_ID"/>
+	<result property="productNo" column="PRODUCT_NO"/>
+</collection>
+
+<!-- 货物和生产厂家（多对一） -->
+<association property="factory" javaType="cn.luojia.domain.Factory">
+    <id property="id" column="FACTORY_ID"/>
+    <result property="fullName" column="FULL_NAME"/>
+    <result property="factoryName" column="FACTORY_NAME"/>
+    <result property="contacts" column="CONTACTS"/>
+</association>
+```
+
+
+
 
 
 
