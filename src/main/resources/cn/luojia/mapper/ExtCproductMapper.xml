@@ -100,4 +100,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{id}
 		</foreach>
 	</delete>
+	
+	<!-- 级联删除，删除某个货物下的附件 -->
+	<delete id="deleteByContractProductById" parameterType="string">
+		delete from ext_cproduct_c
+		where CONTRACT_PRODUCT_ID in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
 </mapper>

@@ -57,4 +57,36 @@ public class ExtCProductController {
 		return "redirect:/cargo/extcproduct/tocreate.action";
 	}
 	
+	@RequestMapping("/cargo/extcproduct/toupdate.action")
+	public String toupdate(String id, Model model) {
+		ExtCproduct obj = extCproductService.get(id);
+		model.addAttribute("obj", obj);
+		
+		//准备生产厂家的下拉列表
+		List<Factory> factoryList = factoryService.getFactoryList();
+		model.addAttribute("factoryList", factoryList);
+		
+		//准备分类下拉列表
+		List<SysCode> ctypeList = extCproductService.getCtypeList();
+		model.addAttribute("ctypeList", ctypeList);
+		
+		return "/cargo/contract/jExtCproductUpdate.jsp";
+	}
+	
+	@RequestMapping("/cargo/extcproduct/update.action")
+	public String update(ExtCproduct extCproduct, Model model) {
+		extCproductService.update(extCproduct);
+		model.addAttribute("contractProductId", extCproduct.getContractProductId());	//传递主表Id
+		
+		return "redirect:/cargo/extcproduct/tocreate.action";
+	}
+	
+	@RequestMapping("/cargo/extcproduct/deleteById.action")
+	public String deleteById(String id, String contractProductId, Model model) {
+		extCproductService.deleteById(id);
+		model.addAttribute("contractProductId", contractProductId);
+		
+		return "redirect:/cargo/extcproduct/tocreate.action";
+	}
+	
 }
