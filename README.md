@@ -73,7 +73,7 @@ MyBatis		多层关联关系时，级联删除必须一级一级的删除。多�
 
 1）可以通过货物的新增时，同步计算货物的总金额和合同的总金额；在附件新增时，同步计算附件的总金额和合同的总金额（程序完成，修改、删除时重新计算）
 
-2）SQL计算
+2）利用SQL计算
 
 
 
@@ -89,7 +89,86 @@ MyBatis		多层关联关系时，级联删除必须一级一级的删除。多�
 
 2）滚雪球（一般是使用左链接），逐步往上加内容
 
-3）重复字段，需要起别名（mybatis）
+3）重复字段，需要起别名（mybatis）。他可以把一个结果作为一个字段，这样的SQL返回结果集必须是一个列。同时在这个子查询中它的条件可以拼接动态的查询条件
+
+在实际业务中几户没有内连接的情况，直接使用左链接即可。
+
+
+
+####出货表
+
+对购销合同进行统计，按船期进行统计
+
+合同、货物、生产厂家、附件设计，关联四张表
+
+通过冗余设计，只需要从合同，货物表中获取数据；取数据更加方便，代码更加简洁
+
+##### JAVA语言操作 Excel
+
+1.POI Apache 它是用来操作 Office 所有的软件，而且支持所有的版本
+
+2.JXL 它是用来操作 Excel 2003以下版本，2007以上版本不支持
+
+**POI入门**
+
+Excel 文件
+
+POI
+
+```java
+// 带格式
+@Test
+public void HSSFStyle() throws IOException {
+    // 1.创建一个工作簿
+    Workbook wb = new HSSFWorkbook(); // 只能操作2003以下版本
+    // 2.创建一个工作表
+    Sheet sheet = wb.createSheet();
+    // 3.创建一个行对象
+    Row nRow = sheet.createRow(4); // 第五行，坐标从0开始
+    // 4.创建一个单元格对象，指定列
+    Cell nCell = nRow.createCell(5); // 第六列
+    // 创建一个单元格样式
+    CellStyle titleStyle = wb.createCellStyle();
+    // 创建一个字体对象
+    Font titleFont = wb.createFont();
+    titleFont.setFontName("华文行楷"); // 设置字体样式
+    titleFont.setFontHeightInPoints((short)26);	// 设置像素
+
+    titleStyle.setFont(titleFont);
+
+    Row xRow = sheet.createRow(5);
+    Cell xCell = xRow.createCell(7);
+    xCell.setCellValue("https://www.whu.edu.cn");
+
+    CellStyle textStyle = wb.createCellStyle();
+    Font textFont = wb.createFont();
+    textFont.setFontName("仿宋");
+    textFont.setFontHeightInPoints((short)12);
+
+    nCell.setCellStyle(titleStyle);
+    xCell.setCellStyle(textStyle);
+
+    // 5.给单元格赋值
+    nCell.setCellValue("珞珈商贸国际物流");
+    // 6.保存
+    OutputStream os = new FileOutputStream(new File("C:\\HSSF.xls"));
+    wb.write(os);
+    // 7.关闭
+    os.close();
+}
+```
+
+上面代码存在问题
+
+1）POI 创建的这些对象统统在内存中
+
+2）行对象，列队向，样式对象，字体对象都是反复创建
+
+
+
+##### 出货表开发步骤
+
+1. 
 
 
 
@@ -123,6 +202,10 @@ MyBatis		多层关联关系时，级联删除必须一级一级的删除。多�
 
 
 
+
+
+
+
 ###开发时注意点：
 
 1. 使用oracle 的jdbc驱动时，当后台传入的值为null时，必须告诉它当前字段的默认值类型jdbcType=VARCHAR
@@ -143,46 +226,63 @@ MyBatis		多层关联关系时，级联删除必须一级一级的删除。多�
    
 3. 在我们的下拉框更新回显中，我们需要显示数据库中存储的信息，所以在更新回显时我们需要做一个判断才能显示，此时我们可以有两种回显判断方法，例如在我们的购销合同更新文件中：
 
-   
-
-   ```html
-   <select name="tradeTerms">
+  ```xml
+  
+  ```
+<select name="tradeTerms">
    	<option value="T/T(电汇
-                      
+
                       )" <c:if test="${obj.tradeTerms eq 'T/T(电汇)' }">selected</c:if>>T/T(电汇)</option>
    	<option value="L/C(远期信用)" ${obj.tradeTerms=="L/C(远期信用)"?'selected':''}>L/C(远期信用)</option>
    </select>
    ```
+   
+   不论我们使用 **<c:if ></c:if >标签** 还是使用  **三目运算符** 都可以达成我们的目的
 
-   ​	不论我们使用 **<c:if ></c:if >标签** 还是使用  **三目运算符** 都可以达成我们的目的
-4.有时在我们前端页面中，前端input框的name属性和我们控制层接收的参数名字不一致，会导致我们接收不到前端传递过来的参数。
+   
+4. 有时在我们前端页面中，前端input框的name属性和我们控制层接收的参数名字不一致，会导致我们接收不到前端传递过来的参数。
    例子：
-   
-```html
-   <td><input type="checkbox" name="id" value="${o.id}" /></td>
-```
 
-```java
+   ```xml
+     <td><input type="checkbox" name="id" value="${o.id}" /></td>
+   ```
+
+   ```java
    @RequestMapping("/cargo/contract/submit.action")
-   public String submit(String[] id) {
-   	contractService.submit(id);
-   		
-   	return "redirect:/cargo/contract/list.action";
-   }
+      public String submit(String[] id) {
+      	contractService.submit(id);
+      		
+      	return "redirect:/cargo/contract/list.action";
+      }
+      
+      @RequestMapping("/cargo/contract/cancel.action")
+      public String cancel(@RequestParam("id") String[] ids) {
+      	contractService.cancel(ids);
+      	
+      	return "redirect:/cargo/contract/list.action";
+      }
+   ```
+
+   在本例中，前端 input 框中name属性为id，在我们 Controller 层中，我们有两种方式接收 input 框传递过来的参数，方法一就是和 input 框 name属性一致，方法二就是我们加上一个 @RequestParam()注解，注解的参数就是input 框中的name属性，然后他会自动帮我们装到 名为ids 的数组中。
+
    
-   @RequestMapping("/cargo/contract/cancel.action")
-   public String cancel(@RequestParam("id") String[] ids) {
-   	contractService.cancel(ids);
-   	
-   	return "redirect:/cargo/contract/list.action";
-   }
-```
 
-在本例中，前端 input 框中name属性为id，在我们 Controller 层中，我们有两种方式接收 input 框传递过来的参数，方法一就是和 input 框 name属性一致，方法二就是我们加上一个 @RequestParam()注解，注解的参数就是input 框中的name属性，然后他会自动帮我们装到 名为ids 的数组中。
+5. 
 
-5.
+6. 
 
-   6.
+7. 
+
+8. 
+
+    
+
+   
+
+
+​    
+
+
 
    
 
