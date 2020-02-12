@@ -95,6 +95,31 @@ MyBatis		多层关联关系时，级联删除必须一级一级的删除。多�
 
 
 
+##### mybatis配置多对一与一对多
+
+当配置**<u>一对多</u>**时，我们使用 **collection 元素**，其中与collection 搭配使用的是 **ofType** 属性
+
+当配置**<u>多对一</u>**时，我们使用 **association元素**，其中与association搭配使用的是 **javaType**属性
+
+```xml
+<!-- 合同和货物（一对多） -->
+<collection property="contractProduct" ofType="cn.luojia.vo.ContractProductVO">
+	<id property="id" column="CONTRACT_PRODUCT_ID"/>
+	<result property="productNo" column="PRODUCT_NO"/>
+</collection>
+
+<!-- 货物和生产厂家（多对一） -->
+<association property="factory" javaType="cn.luojia.domain.Factory">
+    <id property="id" column="FACTORY_ID"/>
+    <result property="fullName" column="FULL_NAME"/>
+    <result property="factoryName" column="FACTORY_NAME"/>
+    <result property="contacts" column="CONTACTS"/>
+</association>
+
+```
+
+
+
 ####出货表
 
 对购销合同进行统计，按船期进行统计
@@ -113,7 +138,25 @@ MyBatis		多层关联关系时，级联删除必须一级一级的删除。多�
 
 Excel 文件
 
-POI
+POI 开发步骤
+
+​		 * 开发步骤：
+
+​		 * 1、创建一个工作簿
+
+​		 * 2、创建一个工作表
+
+​		 * 3、创建一个行对象
+
+​		 * 4、创建一个单元格对象，指定它的列
+
+​		 * 5、给单元格设置内容
+
+​		 * 6、样式进行修饰
+
+​		 * 7、保存，写文件
+
+​		 * 8、关闭对象
 
 ```java
 // 带格式
@@ -164,37 +207,13 @@ public void HSSFStyle() throws IOException {
 
 2）行对象，列队向，样式对象，字体对象都是反复创建
 
+POI操作百万数据的打印
+
+1） 从数据库读取数据，LIST在构造时十分耗费内存，还占用CPU资源
+
+2）Xlsx一个单sheet可以支持1048576条数据。它加工这些数据时，都是暂时放在内存中。报内存堆溢出。
 
 
-##### 出货表开发步骤
-
-1. 
-
-
-
-
-
-##### mybatis配置多对一与一对多
-
-当配置**<u>一对多</u>**时，我们使用 **collection 元素**，其中与collection 搭配使用的是 **ofType** 属性
-
-当配置**<u>多对一</u>**时，我们使用 **association元素**，其中与association搭配使用的是 **ofType** 属性
-
-```xml
-<!-- 合同和货物（一对多） -->
-<collection property="contractProduct" ofType="cn.luojia.vo.ContractProductVO">
-	<id property="id" column="CONTRACT_PRODUCT_ID"/>
-	<result property="productNo" column="PRODUCT_NO"/>
-</collection>
-
-<!-- 货物和生产厂家（多对一） -->
-<association property="factory" javaType="cn.luojia.domain.Factory">
-    <id property="id" column="FACTORY_ID"/>
-    <result property="fullName" column="FULL_NAME"/>
-    <result property="factoryName" column="FACTORY_NAME"/>
-    <result property="contacts" column="CONTACTS"/>
-</association>
-```
 
 
 
@@ -226,20 +245,15 @@ public void HSSFStyle() throws IOException {
    
 3. 在我们的下拉框更新回显中，我们需要显示数据库中存储的信息，所以在更新回显时我们需要做一个判断才能显示，此时我们可以有两种回显判断方法，例如在我们的购销合同更新文件中：
 
-  ```xml
-  
+  ```html
+  <select name="tradeTerms">
+     	<option value="T/T(电汇 )" <c:if test="${obj.tradeTerms eq 'T/T(电汇)' }">selected</c:if>>T/T(电汇)</option>
+  	<option value="L/C(远期信用)" ${obj.tradeTerms=="L/C(远期信用)"?'selected':''}>L/C(远期信用)</option>
+  </select>
   ```
-<select name="tradeTerms">
-   	<option value="T/T(电汇
 
-                      )" <c:if test="${obj.tradeTerms eq 'T/T(电汇)' }">selected</c:if>>T/T(电汇)</option>
-   	<option value="L/C(远期信用)" ${obj.tradeTerms=="L/C(远期信用)"?'selected':''}>L/C(远期信用)</option>
-   </select>
-   ```
-   
-   不论我们使用 **<c:if ></c:if >标签** 还是使用  **三目运算符** 都可以达成我们的目的
+   	不论我们使用 **<c:if ></c:if >标签** 还是使用  **三目运算符** 都可以达成我们的目的
 
-   
 4. 有时在我们前端页面中，前端input框的name属性和我们控制层接收的参数名字不一致，会导致我们接收不到前端传递过来的参数。
    例子：
 
