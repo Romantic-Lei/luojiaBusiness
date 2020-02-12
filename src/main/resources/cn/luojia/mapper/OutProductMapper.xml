@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="tradeTerms" column="TRADE_TERMS" jdbcType="VARCHAR"/>
 	</resultMap>
 	
+	<!-- 这里 parameterType="string" 或者 parameterType="map" 均可 -->
 	<select id="find" parameterType="string" resultMap="outProductRM">
 		select
 		  c.custom_name,c.contract_no,to_char(c.delivery_period,'yyyy-MM-dd') as delivery_period,to_char(c.ship_time,'yyyy-MM-dd') as ship_time,c.trade_terms,
