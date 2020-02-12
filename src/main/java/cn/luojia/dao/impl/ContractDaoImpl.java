@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.luojia.dao.ContractDao;
 import cn.luojia.domain.Contract;
+import cn.luojia.vo.ContractVO;
 
 /**
  * 
@@ -14,6 +15,7 @@ import cn.luojia.domain.Contract;
  * @Description 购销合同持久层
  */
 @Repository
+@SuppressWarnings(value = {"rawtypes"})
 public class ContractDaoImpl extends BaseDaoImpl<Contract> implements ContractDao {
 
 	public ContractDaoImpl() {
@@ -24,5 +26,10 @@ public class ContractDaoImpl extends BaseDaoImpl<Contract> implements ContractDa
 	@Override
 	public void updateState(Map map) {
 		super.getSqlSession().update(super.getNs() + ".updateState", map);
+	}
+
+	@Override
+	public ContractVO view(String contractId) {
+		return super.getSqlSession().selectOne(super.getNs() + ".view", contractId);
 	}
 }

@@ -15,6 +15,7 @@ import cn.luojia.dao.ExtCproductDao;
 import cn.luojia.domain.Contract;
 import cn.luojia.pagination.Page;
 import cn.luojia.service.ContractService;
+import cn.luojia.vo.ContractVO;
 
 /**
  * 
@@ -96,6 +97,11 @@ public class ContractServiceImpl implements ContractService {
 		map.put("state", 0); // 0 ->  草稿
 		map.put("ids", ids);
 		contractDao.updateState(map);
+	}
+
+	@Override
+	public ContractVO view(String contractId) {
+		return contractDao.view(contractId);
 	}
 
 }

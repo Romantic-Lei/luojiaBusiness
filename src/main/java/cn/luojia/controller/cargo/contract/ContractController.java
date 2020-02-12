@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.luojia.controller.BaseController;
 import cn.luojia.domain.Contract;
 import cn.luojia.service.ContractService;
+import cn.luojia.vo.ContractVO;
 
 /**
  * 
@@ -38,7 +39,7 @@ public class ContractController extends BaseController {
 	
 	@RequestMapping("/cargo/contract/toview.action")
 	public String toview(String id, Model model) {
-		Contract obj = contractService.get(id);
+		ContractVO obj = contractService.view(id);
 		model.addAttribute("obj", obj);
 		
 		return "/cargo/contract/jContractView.jsp";
