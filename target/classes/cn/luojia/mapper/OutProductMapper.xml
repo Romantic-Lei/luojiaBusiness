@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.luojia.mapper.OutProductMapper">
+	<!-- 映射合同和合同下的货物信息一对多 -->
+	<resultMap type="cn.luojia.vo.OutProductVO" id="outProductRM">
+		
+		<result property="customName" column="CUSTOM_NAME" jdbcType="VARCHAR"/>
+		
+		<result property="contractNo" column="CONTRACT_NO" jdbcType="VARCHAR"/>
+		<result property="productNo" column="PRODUCT_NO" jdbcType="VARCHAR"/>
+		<result property="cnumber" column="CNUMBER" jdbcType="VARCHAR"/>
+		<result property="factoryName" column="FACTORY_NAME" jdbcType="VARCHAR"/>
+		<result property="exts" column="EXTS" jdbcType="VARCHAR"/>
+		<result property="deliverPeriod" column="DELIVERY_PRERIOD" jdbcType="VARCHAR"/>
+		<result property="shipTime" column="SHIP_TIME" jdbcType="VARCHAR"/>
+		<result property="tradeTerms" column="TRADE_TERMS" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- 这里 parameterType="string" 或者 parameterType="map" 均可 -->
+	<select id="find" parameterType="string" resultMap="outProductRM">
+		select
+		  c.custom_name,c.contract_no,to_char(c.delivery_period,'yyyy-MM-dd') as delivery_period,to_char(c.ship_time,'yyyy-MM-dd') as ship_time,c.trade_terms,
+		  cp.product_no,concat(cp.cnumber,cp.packing_unit) as cnumber,cp.factory_name
+		from
+		(select contract_id,custom_name,contract_no,delivery_period,ship_time,trade_terms from contract_c) c
+		left join
+		(select contract_id,product_no,cnumber,packing_unit,factory_name from contract_product_c) cp
+		on c.contract_id=cp.contract_id
+		
+		where to_char(c.ship_time,'yyyy-MM') = #{inputDate}
+	</select>
+	
+</mapper>
