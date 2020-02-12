@@ -155,7 +155,7 @@ public class OutProductController extends BaseController {
 		DownloadUtil du = new DownloadUtil();
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		wb.write(os);
-		du.download(os, response, "出货表.xls");
+		du.download(os, response, "出货表(手工修饰单元格).xls");
 		
 	}
 	
@@ -274,19 +274,6 @@ public class OutProductController extends BaseController {
 		
 		os.flush();
 		os.close();
-	}
-	
-	// 大标题样式
-	public CellStyle bigTitle(Workbook wb, CellStyle nStyle, Font nFont) {
-		nFont.setFontName("宋体");
-		nFont.setFontHeightInPoints((short)16);
-		nFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);			// 字体加粗
-		nStyle.setAlignment(CellStyle.ALIGN_CENTER);			// 横向居中
-		nStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);	// 纵向居中
-		
-		nStyle.setFont(nFont);
-		
-		return nStyle;
 	}
 	
 	// 模板开发 XSSF

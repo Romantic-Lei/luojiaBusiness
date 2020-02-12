@@ -31,8 +31,6 @@
 							onclick="linkHighlighted(this)" target="main" id="aa_1">购销合同</a></li>
 						<li><a href="${ctx}/cargo/outproduct/toedit.action"
 							onclick="linkHighlighted(this)" target="main" id="aa_1">出货表</a></li>
-						<li><a href="${ctx}/cargo/outproduct/toedit.action"
-							onclick="linkHighlighted(this)" target="main" id="aa_1">购销合同</a></li>
 					</ul>
 				</div>
 			</div>

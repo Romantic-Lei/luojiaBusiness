@@ -14,8 +14,12 @@
 				<div id="innerMenubar">
 					<div id="navMenubar">
 						<ul>
-							<li id="save"><a href="#"
-								onclick="formSubmit('print.action','_self');">打印</a></li>
+							<li id="save"><a href="#" title="手工创建单元格样式"
+								onclick="formSubmit('printHSSF1.action','_self');">打印一</a></li>
+							<li id="save" ><a href="#" title="excel 2003以下模板打印"
+								onclick="formSubmit('printHSSF.action','_self');">打印二</a></li>
+							<li id="save"><a href="#" title="excel 2007以上版本模板打印"
+								onclick="formSubmit('print.action','_self');">打印三</a></li>
 						</ul>
 					</div>
 				</div>
