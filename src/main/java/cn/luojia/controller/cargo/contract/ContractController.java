@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.luojia.controller.BaseController;
 import cn.luojia.domain.Contract;
-import cn.luojia.print.ContractPrint;
+import cn.luojia.print.ContractPrintTemplate;
 import cn.luojia.service.ContractService;
 import cn.luojia.vo.ContractVO;
 
@@ -103,7 +103,7 @@ public class ContractController extends BaseController {
 	// 打印
 	@RequestMapping("/cargo/contract/print.action")
 	public void print(String id, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ContractPrint cp = new ContractPrint();
+		ContractPrintTemplate cp = new ContractPrintTemplate();
 		
 		ContractVO obj = contractService.view(id);
 		
