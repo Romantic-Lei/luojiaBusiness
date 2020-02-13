@@ -200,6 +200,10 @@ public class ContractPrint {
 			
 			poiUtil.setLine(wb, patriarch, curRow, 2, curRow, 8);	//draw line
 			
+			//header
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(30);
+			
 			nCell   = nRow.createCell((4));
 			nCell.setCellValue("    购   销   合   同");
 			nCell.setCellStyle(titleStyle(wb));
