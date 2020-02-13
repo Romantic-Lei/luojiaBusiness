@@ -144,7 +144,401 @@ public class ContractPrint {
 		HSSFCell nCell = null;
 		int curRow = 0;
 
+		// 打印每页
+		Map<String, String> printMap = null;
+		for (int p = 0; p < pageList.size(); p++) {
+			printMap = pageList.get(p);
+
+			if (p > 0) {
+				sheet.setRowBreak(curRow++); // 在第startRow行设置分页符
+			}
+			// 设置logo图片
+			poiUtil.setPicture(wb, patriarch, path + "make/xlsprint/logo.jpg", curRow, 1, curRow + 4, 3);
+
+			// header
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(35);
+
+			nCell = nRow.createCell((4));
+			nCell.setCellValue("武漢 · 湖北");
+			nCell.setCellStyle(headStyle(wb));
+
+			//header
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(41);
+			
+			nCell   = nRow.createCell((4));
+			nCell.setCellValue("     Luojia Trade and Business ");
+			nCell.setCellStyle(tipStyle(wb));
+
+			curRow++;
+			
+			//header
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(20);
+			
+			nCell   = nRow.createCell((2));
+			nCell.setCellValue("                         武汉市洪山区光谷软件园A3栋");
+			nCell.setCellStyle(addressStyle(wb));
+			
+			//header
+			nCell   = nRow.createCell((6));
+			nCell.setCellValue(" CO., LTD.");
+			nCell.setCellStyle(ltdStyle(wb));
+
+			//header
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(15);
+			
+			nCell   = nRow.createCell((1));
+			nCell.setCellValue("                   TEL: 68775506              FAX: 68775833                        E-MAIL: chengxiong@whu.edu.cn");
+			nCell.setCellStyle(telStyle(wb));
+			
+			//line
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(7);
+			
+			poiUtil.setLine(wb, patriarch, curRow, 2, curRow, 8);	//draw line
+			
+			nCell   = nRow.createCell((4));
+			nCell.setCellValue("    购   销   合   同");
+			nCell.setCellStyle(titleStyle(wb));
+			
+			//Offeror
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(20);
+			
+			nCell   = nRow.createCell((1));
+			nCell.setCellValue(printMap.get("Offeror"));
+			nCell.setCellStyle(poiUtil.titlev12(wb, blackFont));
+
+			//Facotry
+			nCell   = nRow.createCell((5));
+			nCell.setCellValue(printMap.get("Factory"));
+			nCell.setCellStyle(poiUtil.titlev12(wb, blackFont));
+			
+			
+			//ContractNo
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(20);
+			
+			nCell   = nRow.createCell(1);
+			nCell.setCellValue(printMap.get("ContractNo"));
+			nCell.setCellStyle(poiUtil.titlev12(wb, blackFont));
+			
+			//Contractor
+			nCell  = nRow.createCell(5);
+			nCell.setCellValue(printMap.get("Contractor"));
+			nCell.setCellStyle(poiUtil.titlev12(wb, blackFont));
+			
+			//SigningDate
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(20);
+			
+			nCell = nRow.createCell(1);
+			nCell.setCellValue(printMap.get("SigningDate"));
+			nCell.setCellStyle(poiUtil.titlev12(wb, blackFont));
+			
+			//Phone
+			nCell = nRow.createCell(5);
+			nCell.setCellValue(printMap.get("Phone"));
+			nCell.setCellStyle(poiUtil.titlev12(wb, blackFont));
+			
+			//importNum
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(24);
+			
+			region = new CellRangeAddress(curRow-1, curRow-1, 1, 3);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			nCell = nRow.createCell(1);
+			nCell.setCellValue("产品");
+			nCell.setCellStyle(thStyle(wb));		
+			
+			nCell = nRow.createCell(2);
+			nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));
+			
+			nCell = nRow.createCell(3);
+			nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));
+			
+			nCell = nRow.createCell(4);
+			nCell.setCellValue(printMap.get("ContractDesc"));
+			nCell.setCellStyle(thStyle(wb));	
+			
+			region = new CellRangeAddress(curRow-1, curRow-1, 5, 6);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			nCell = nRow.createCell(5);
+			nCell.setCellValue("数量");
+			nCell.setCellStyle(thStyle(wb));	
+			
+			nCell = nRow.createCell(6);
+			nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));			
+			
+			nCell = nRow.createCell(7);
+			nCell.setCellValue("单价");
+			nCell.setCellStyle(thStyle(wb));						
+			
+			nCell = nRow.createCell(8);
+			nCell.setCellValue("总金额");
+			nCell.setCellStyle(thStyle(wb));						
+
+
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(96);
+			
+			region = new CellRangeAddress(curRow-1, curRow-1, 1, 3);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			//插入产品图片
+			if(UtilFuns.isNotEmpty(printMap.get("ProductImage"))){
+				System.out.println(printMap.get("ProductImage"));
+				poiUtil.setPicture(wb, patriarch, path+"ufiles/jquery/"+printMap.get("ProductImage"), curRow-1, 1, curRow, 3);
+			}
+			
+			nCell = nRow.createCell(2);
+			nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));
+			
+			nCell = nRow.createCell(3);
+			nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));
+			
+			//ProductDesc
+			region = new CellRangeAddress(curRow-1, curRow, 4, 4);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			nCell = nRow.createCell(4);
+			nCell.setCellValue(printMap.get("ProductDesc"));
+			nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));		
+			
+			//Cnumber
+			region = new CellRangeAddress(curRow-1, curRow, 5, 5);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			nCell = nRow.createCell(5);
+			nCell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+			nCell.setCellValue(Double.parseDouble(printMap.get("Cnumber")));
+			nCell.setCellStyle(poiUtil.numberrv10_BorderThin(wb, defaultFont10));	
+			
+			//Unit
+			region = new CellRangeAddress(curRow-1, curRow, 6, 6);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			nCell = nRow.createCell(6);
+			nCell.setCellValue(printMap.get("PackingUnit"));
+			nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));	
+			
+			//Price
+			region = new CellRangeAddress(curRow-1, curRow, 7, 7);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			nCell = nRow.createCell(7);
+			nCell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+			nCell.setCellValue(Double.parseDouble(printMap.get("Price")));
+			nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));
+			
+			
+			//Amount
+			region = new CellRangeAddress(curRow-1, curRow, 8, 8);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			nCell = nRow.createCell(8);
+			if(UtilFuns.isNotEmpty(printMap.get("Cnumber")) && UtilFuns.isNotEmpty(printMap.get("Price"))){
+				nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+				nCell.setCellFormula("F"+String.valueOf(curRow)+"*H"+String.valueOf(curRow));
+			}
+			nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));			
+
+			curRow++;
+			
+			region = new CellRangeAddress(curRow-1, curRow-1, 1, 3);	//纵向合并单元格 
+			sheet.addMergedRegion(region);
+			
+			//ProductNo
+			nRow = sheet.createRow(curRow-1);
+			nRow.setHeightInPoints(24);
+			
+			nCell = nRow.createCell(1);
+			nCell.setCellValue(printMap.get("ProductNo"));
+			nCell.setCellStyle(poiUtil.notecv10_BorderThin(wb, defaultFont10));
+			
+			for(int j=2;j<9;j++){
+				nCell = nRow.createCell(j);
+				nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));
+			}
+			
+			
+			
+			if(contract.getPrintStyle().equals("2") && UtilFuns.isNotEmpty(printMap.get("ProductNo2"))){
+				nRow = sheet.createRow(curRow++);
+				nRow.setHeightInPoints(96);
+				
+				region = new CellRangeAddress(curRow-1, curRow-1, 1, 3);	//纵向合并单元格 
+				sheet.addMergedRegion(region);
+				
+				//插入产品图片
+				if(UtilFuns.isNotEmpty(printMap.get("ProductImage2"))){
+					System.out.println(printMap.get("ProductImage2"));
+					poiUtil.setPicture(wb, patriarch, path+"ufiles/jquery/"+printMap.get("ProductImage2"), curRow-1, 1, curRow, 3);
+				}
+				
+				//ProductDesc
+				region = new CellRangeAddress(curRow-1, curRow, 4, 4);	//纵向合并单元格 
+				sheet.addMergedRegion(region);
+				
+				nCell = nRow.createCell(4);
+				nCell.setCellValue(printMap.get("ProductDesc2"));
+				nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));		
+				
+				//Cnumber
+				region = new CellRangeAddress(curRow-1, curRow, 5, 5);	//纵向合并单元格 
+				sheet.addMergedRegion(region);
+				
+				nCell = nRow.createCell(5);
+				nCell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+				nCell.setCellValue(Double.parseDouble(printMap.get("Cnumber2")));
+				nCell.setCellStyle(poiUtil.numberrv10_BorderThin(wb, defaultFont10));	
+				
+				//Unit
+				region = new CellRangeAddress(curRow-1, curRow, 6, 6);	//纵向合并单元格 
+				sheet.addMergedRegion(region);
+				
+				nCell = nRow.createCell(6);
+				nCell.setCellValue(printMap.get("PackingUnit2"));
+				nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));	
+				
+				//Price
+				region = new CellRangeAddress(curRow-1, curRow, 7, 7);	//纵向合并单元格 
+				sheet.addMergedRegion(region);
+				
+				nCell = nRow.createCell(7);
+				nCell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+				nCell.setCellValue(Double.parseDouble(printMap.get("Price2")));
+				nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));
+				
+				
+				//Amount
+				region = new CellRangeAddress(curRow-1, curRow, 8, 8);	//纵向合并单元格 
+				sheet.addMergedRegion(region);
+				
+				nCell = nRow.createCell(8);
+				if(UtilFuns.isNotEmpty(printMap.get("Cnumber2")) && UtilFuns.isNotEmpty(printMap.get("Price2"))){
+					nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+					nCell.setCellFormula("F"+String.valueOf(curRow)+"*H"+String.valueOf(curRow));
+				}
+				nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));		
+				
+				curRow++;
+				
+				region = new CellRangeAddress(curRow-1, curRow-1, 1, 3);	//纵向合并单元格
+				sheet.addMergedRegion(region);
+				
+				nRow = sheet.createRow(curRow-1);
+				nRow.setHeightInPoints(24);
+				
+				nCell = nRow.createCell(1);
+				nCell.setCellValue(printMap.get("ProductNo2"));
+				nCell.setCellStyle(poiUtil.notecv10_BorderThin(wb, defaultFont10));			
+				
+				//合并单元格画线
+				for(int j=2;j<9;j++){
+					nCell = nRow.createCell(j);
+					nCell.setCellStyle(poiUtil.notehv10_BorderThin(wb, defaultFont10));
+				}				
+			}
+			
+			
+			//InputBy
+			nRow = sheet.createRow(curRow++);
+			nRow.setHeightInPoints(24);
+			
+			nCell = nRow.createCell(1);
+			nCell.setCellValue(printMap.get("InputBy"));
+			nCell.setCellStyle(poiUtil.bnormalv12(wb,defaultFont12));
+			
+			//CheckBy+inspector
+			
+			nCell = nRow.createCell(4);
+			nCell.setCellValue(printMap.get("CheckBy"));
+			nCell.setCellStyle(poiUtil.bnormalv12(wb,defaultFont12));
+			
+			//if(contract.getPrintStyle().equals("2") && UtilFuns.isNotEmpty(printMap.get("ProductNo2"))){
+				
+			nCell = nRow.createCell(7);
+			nCell.setCellValue("总金额：");
+			nCell.setCellStyle(bcv12(wb));
+			
+			//TotalAmount
+			nRow = sheet.createRow(curRow-1);
+			nRow.setHeightInPoints(24);
+			if(UtilFuns.isNotEmpty(printMap.get("Cnumber"))&&UtilFuns.isNotEmpty(printMap.get("Price"))){
+				nCell  = nRow.createCell(8);
+				nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+				nCell.setCellFormula("SUM(I"+String.valueOf(curRow-4)+":I"+String.valueOf(curRow-1)+")");
+				nCell.setCellStyle(poiUtil.moneyrv12_BorderThin(wb,defaultFont12,rmb2Format));		
+			}
+		//}
 		
+		
+		//note
+		nRow = sheet.createRow(curRow++);
+		nRow.setHeightInPoints(21);
+		
+		nCell = nRow.createCell(2);
+		nCell.setCellValue(printMap.get("Remark"));
+		nCell.setCellStyle(noteStyle(wb));			
+		
+		//Request
+		region = new CellRangeAddress(curRow, curRow, 1, 8);	//指定合并区域 
+		sheet.addMergedRegion(region);
+		
+		nRow = sheet.createRow(curRow++);
+		float height = poiUtil.getCellAutoHeight(printMap.get("Request"), 12f);		//自动高度
+		nRow.setHeightInPoints(height);
+		
+		nCell = nRow.createCell(1);
+		nCell.setCellValue(printMap.get("Request"));
+		nCell.setCellStyle(requestStyle(wb));
+		
+		//space line
+		nRow = sheet.createRow(curRow++);
+		nRow.setHeightInPoints(20);
+		
+		//duty
+		nRow = sheet.createRow(curRow++);
+		nRow.setHeightInPoints(32);
+		
+		nCell = nRow.createCell(1);
+		nCell.setCellValue("未按以上要求出货而导致客人索赔，由供方承担。");
+		nCell.setCellStyle(dutyStyle(wb));	
+		
+		//space line
+		nRow = sheet.createRow(curRow++);
+		nRow.setHeightInPoints(32);
+		
+		//buyer
+		nRow = sheet.createRow(curRow++);
+		nRow.setHeightInPoints(25);
+		
+		nCell = nRow.createCell(1);
+		nCell.setCellValue("    收购方负责人：");
+		nCell.setCellStyle(dutyStyle(wb));				
+		
+		//seller
+		nCell = nRow.createCell(5);
+		nCell.setCellValue("供方负责人：");
+		nCell.setCellStyle(dutyStyle(wb));	
+		
+		curRow++;
+
+	}
+
+	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();			//生成流对象
+	wb.write(byteArrayOutputStream);													//将excel写入流
+
+	//工具类，封装弹出下载框：		
+	String outFile = "购销合同.xls";
+	DownloadUtil down = new DownloadUtil();
+	down.download(byteArrayOutputStream, response, outFile);
 }
 
 	private HSSFCellStyle leftStyle(HSSFWorkbook wb) {
