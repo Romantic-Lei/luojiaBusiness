@@ -29,6 +29,8 @@
 								onclick="formSubmit('submit.action','_self');this.blur();">上报</a></li>
 							<li id="new"><a href="#"
 								onclick="formSubmit('cancel.action','_self');this.blur();">取消</a></li>
+							<li id="print"><a href="#"
+								onclick="formSubmit('print.action','_self');this.blur();">打印</a></li>
 						</ul>
 					</div>
 				</div>

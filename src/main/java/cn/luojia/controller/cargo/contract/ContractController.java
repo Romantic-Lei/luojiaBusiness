@@ -95,4 +95,11 @@ public class ContractController extends BaseController {
 		
 		return "redirect:/cargo/contract/list.action";
 	}
+	
+	// 打印
+	@RequestMapping("/cargo/contract/print.action")
+	public void print() {
+		
+	}
+	
 }
