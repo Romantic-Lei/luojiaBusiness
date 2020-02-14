@@ -120,7 +120,7 @@ public class ContractPrintTemplate {
 		
 		//设置相同内容
 		for(int i=0;i<pageList.size();i++){
-			int rowNo = 7;
+			int rowNo = 7;						// 前 7行直接copy模板内容，不用改修
 			int colNo = 0;
 			Row nRow = null;
 			Cell nCell = null;

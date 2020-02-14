@@ -29,8 +29,10 @@
 								onclick="formSubmit('submit.action','_self');this.blur();">上报</a></li>
 							<li id="new"><a href="#"
 								onclick="formSubmit('cancel.action','_self');this.blur();">取消</a></li>
-							<li id="print"><a href="#"
+							<li id="print"><a href="#" title="手工POI打印"
 								onclick="formSubmit('print.action','_self');this.blur();">打印</a></li>
+							<li id="print"><a href="#" title="模板打印"
+								onclick="formSubmit('templatePrint.action','_self');this.blur();">打印</a></li>
 						</ul>
 					</div>
 				</div>

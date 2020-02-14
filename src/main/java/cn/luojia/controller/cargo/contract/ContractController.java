@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.luojia.controller.BaseController;
 import cn.luojia.domain.Contract;
+import cn.luojia.print.ContractPrint;
 import cn.luojia.print.ContractPrintTemplate;
 import cn.luojia.service.ContractService;
 import cn.luojia.vo.ContractVO;
@@ -100,9 +101,19 @@ public class ContractController extends BaseController {
 		return "redirect:/cargo/contract/list.action";
 	}
 	
-	// 打印
+	// 手工POI打印
 	@RequestMapping("/cargo/contract/print.action")
 	public void print(String id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ContractPrint cp = new ContractPrint();
+		
+		ContractVO obj = contractService.view(id);
+		
+		cp.print(obj, request.getSession().getServletContext().getRealPath("/"), response);
+		
+	}
+	// 模板打印
+	@RequestMapping("/cargo/contract/templatePrint.action")
+	public void templatePrint(String id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ContractPrintTemplate cp = new ContractPrintTemplate();
 		
 		ContractVO obj = contractService.view(id);

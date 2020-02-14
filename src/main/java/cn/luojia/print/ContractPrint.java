@@ -91,6 +91,8 @@ public class ContractPrint {
 			if ("2".equals(contract.getPrintStyle())) {
 				i++; // 读取第二个货物
 				if (i < oList.size()) {
+					oProduct = oList.get(i); // 获取下一款货物
+					
 					// 厂家不同另起新页打印，除去第一次的比较
 					if (oProduct.getFactory().getFactoryName().equals(oldFactory)) {
 						pageMap.put("ProductImage2", oProduct.getProductImage());
