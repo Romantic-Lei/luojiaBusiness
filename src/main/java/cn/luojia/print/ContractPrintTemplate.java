@@ -121,13 +121,11 @@ public class ContractPrintTemplate {
 		//设置相同内容
 		for(int i=0;i<pageList.size();i++){
 			int rowNo = 7;						// 前 7行直接copy模板内容，不用改修
-			int colNo = 0;
 			Row nRow = null;
 			Cell nCell = null;
 			Map<String,String> printMap = pageList.get(i);
 			
 			Sheet sheet = wb.getSheetAt(i+1);						//定位到当前工作表
-			String sheetName = sheet.getSheetName();
 			sheet.setForceFormulaRecalculation(true);				//强制公式自动计算，利用模板时，模板中的公式不会因值发生变化而自动计算。
 			
 			nRow = sheet.getRow(rowNo++);
