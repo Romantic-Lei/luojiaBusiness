@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.luojia.mapper.ExportMapper">
+	<resultMap type="cn.luojia.domain.Export" id="exportRM">
+		<id property="id" column="EXPORT_ID"/>
+		
+		<!-- 虚拟字段 -->
+		<result property="epnum" column="EPNUM"/>
+		<result property="extnum" column="EXTNUM"/>
+		
+		<result property="inputDate" column="INPUT_DATE"/>
+		<result property="contractIds" column="CONTRACT_IDS"/>
+		<result property="customerContract" column="CUSTOMER_CONTRACT"/>
+		<result property="lcno" column="LCNO"/>
+		<result property="consignee" column="CONSIGNEE"/>
+		<result property="marks" column="MARKS"/>
+		<result property="remark" column="REMARK"/>
+		<result property="shipmentPort" column="SHIPMENT_PORT"/>
+		<result property="destinationPort" column="DESTINATION_PORT"/>
+		<result property="transportMode" column="TRANSPORT_MODE"/>
+		<result property="priceCondition" column="PRICE_CONDITION"/>
+		<result property="grossWeight" column="GROSS_WEIGHT"/>
+		<result property="netWeight" column="NET_WEIGHT"/>
+		<result property="measurement" column="MEASUREMENT"/>
+		<result property="state" column="STATE"/>
+		
+		<result property="createBy" column="CREATE_BY"/>
+		<result property="createDept" column="CREATE_DEPT"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+	
+	<select id="find" parameterType="map">
+		select 
+  (select count(*) from export_product_c
+  where export_id=e.export_id)  as epnum,
+  (select count(*) from ext_eproduct_c
+          where export_product_id in (select export_product_id from export_product_c where export_id=e.export_id)
+      ) as extnum,
+
+e.export_id,e.input_date,e.contract_ids,e.customer_contract,e.lcno,e.consignee,e.marks,e.remark,e.shipment_port,e.destination_port,e.transport_mode,e.price_condition,e.gross_weight,e.net_weight,e.measurement,e.state
+from export_c e
+	</select>
+	
+</mapper>
