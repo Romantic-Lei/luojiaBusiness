@@ -110,15 +110,10 @@ public class ContractPrintTemplate {
 		/*
 		 * 打开模板，复制sheet，另存
 		 */;
-		Workbook wb = new HSSFWorkbook(new FileInputStream(new File(path + "make/xlsprint/tCONTRACTVO1.xls")));
+		Workbook wb = new HSSFWorkbook(new FileInputStream(new File(path + "make/xlsprint/tCONTRACTVO.xls")));
 		for(int i=0;i<pageList.size();i++){
 			wb.cloneSheet(0);								//复制工作簿
 			wb.setSheetName(i+1, "C"+(i+1)+"");		//设置工作簿名称
-//			DownloadUtil du = new DownloadUtil();
-//			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//			wb.write(bos);
-//			bos.close();
-//			du.download(bos, response, "购销合同.xls");
 		}
 		
 		//设置相同内容
