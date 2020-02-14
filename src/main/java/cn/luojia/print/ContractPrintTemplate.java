@@ -98,9 +98,11 @@ public class ContractPrintTemplate {
 						}
 						pageMap.put("Price2", cp.getPrice().toString());
 						pageMap.put("ProductNo2", cp.getProductNo());
+					}else {
+						i--;					//如果第二款货物厂家不同，则必须新起一页
 					}
 				}else{
-					i--;						//如果第二款货物厂家不同，则必须新起一页
+					i--;						//数据已经到了最后一条
 				}
 			}
 			
@@ -113,7 +115,7 @@ public class ContractPrintTemplate {
 		Workbook wb = new HSSFWorkbook(new FileInputStream(new File(path + "make/xlsprint/tCONTRACTVO.xls")));
 		for(int i=0;i<pageList.size();i++){
 			wb.cloneSheet(0);								//复制工作簿
-			wb.setSheetName(i+1, "C"+(i+1)+"");		//设置工作簿名称
+			wb.setSheetName(i+1, cpList.get(i).getFactory().getFullName());		//设置工作簿名称
 		}
 		
 		//设置相同内容
