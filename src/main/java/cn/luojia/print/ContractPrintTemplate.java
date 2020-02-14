@@ -110,7 +110,7 @@ public class ContractPrintTemplate {
 		/*
 		 * 打开模板，复制sheet，另存
 		 */;
-		Workbook wb = new HSSFWorkbook(new FileInputStream(new File(path + "make/xlsprint/tCONTRACTVO.xls")));
+		Workbook wb = new HSSFWorkbook(new FileInputStream(new File(path + "make/xlsprint/tCONTRACTVO1.xls")));
 		for(int i=0;i<pageList.size();i++){
 			wb.cloneSheet(0);								//复制工作簿
 			wb.setSheetName(i+1, "C"+(i+1)+"");		//设置工作簿名称
@@ -123,7 +123,7 @@ public class ContractPrintTemplate {
 		
 		//设置相同内容
 		for(int i=0;i<pageList.size();i++){
-			int rowNo = 6;
+			int rowNo = 7;
 			int colNo = 0;
 			Row nRow = null;
 			Cell nCell = null;
