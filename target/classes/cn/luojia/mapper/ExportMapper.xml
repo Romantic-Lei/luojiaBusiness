@@ -44,4 +44,89 @@ e.export_id,e.input_date,e.contract_ids,e.customer_contract,e.lcno,e.consignee,e
 from export_c e
 	</select>
 	
+	<select id="get" parameterType="string">
+		select EXPORT_ID,INPUT_DATE,CONTRACT_IDS,CUSTOMER_CONTRACT,LCNO,CONSIGNEE,MARKS,
+			REMARK,SHIPMENT_PORT,DESTINATION_PORT,TRANSPORT_MODE,PRICE_CONDITION,
+			GROSS_WEIGHT,NET_WEIGHT,MEASUREMENT,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME
+		from EXPORT_C
+		where id = #{pid}
+	</select>
+	
+	<insert id="insert" parameterType="cn.luojia.domain.Export">
+		insert into export_c
+		(EXPORT_ID,INPUT_DATE,CONTRACT_IDS,CUSTOMER_CONTRACT,LCNO,CONSIGNEE,MARKS,
+			REMARK,SHIPMENT_PORT,DESTINATION_PORT,TRANSPORT_MODE,PRICE_CONDITION,
+			GROSS_WEIGHT,NET_WEIGHT,MEASUREMENT,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		values
+		(
+			#{id},
+			#{inputDate, jdbcType=TIMESTAMP},
+			#{contractIds, jdbcType=VARCHAR},
+			#{customerContract, jdbcType=VARCHAR},
+			#{lcno, jdbcType=VARCHAR},
+			#{consignee, jdbcType=VARCHAR},
+			#{marks, jdbcType=VARCHAR},
+			#{remark, jdbcType=VARCHAR},
+			#{shipmentPort, jdbcType=VARCHAR},
+			#{destinationPort, jdbcType=VARCHAR},
+			#{transportMode, jdbcType=VARCHAR},
+			#{priceCondition, jdbcType=VARCHAR},
+			#{grossWeight, jdbcType=DOUBLE},
+			#{netWeight, jdbcType=DOUBLE},
+			#{measurement, jdbcType=DOUBLE},
+			#{state, jdbcType=INTEGER},
+			
+			#{createBy, jdbcType=VARCHAR},
+			#{createDept, jdbcType=VARCHAR},
+			#{createTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cn.luojia.domain.Export">
+		update EXPORT_C
+		<set>
+			<if test="inputDate != null"> INPUT_DATE=#{inputDate},</if>
+			<if test="contractIds != null"> CONTRACT_IDS=#{contractIds},</if>
+			<if test="customerContract != null"> CUSTOMER_CONTRACT=#{customerContract},</if>
+			<if test="lcno != null"> LCNO=#{lcno},</if>
+			<if test="consignee != null"> CONSIGNEE=#{consignee},</if>
+			<if test="marks != null"> MARKS=#{marks},</if>
+			<if test="remark != null"> REMARK=#{remark},</if>
+			<if test="shipmentPort != null"> SHIPMENT_PORT=#{shipmentPort},</if>
+			<if test="destinationPort != null"> DESTINATION_PORT=#{destinationPort},</if>
+			<if test="transportMode != null"> TRANSPORT_MODE=#{transportMode},</if>
+			<if test="priceCondition != null"> PRICE_CONDITION=#{priceCondition},</if>
+			<if test="state != null"> STATE=#{state},</if>
+			<if test="grossWeight != null"> GROSS_WEIGHT=#{grossWeight},</if>
+			<if test="netWeight != null"> NET_WEIGHT=#{netWeight},</if>
+			<if test="measurement != null"> MEASUREMENT=#{measurement},</if>
+		</set>
+		where EXPORT_ID=#{id}
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from export_c
+		where export_id=#{pid}
+	</delete>
+	
+	<!-- 删除多条（一维字符串数组） -->
+	<delete id="delete" parameterType="string">
+		delete from export_c
+		where export_id in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 修改状态 -->
+	<update id="updateState" parameterType="map">
+		update export_c
+		set state=#{state}
+		where export_id in
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</update>
+	
 </mapper>
