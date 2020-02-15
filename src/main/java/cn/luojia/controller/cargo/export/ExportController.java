@@ -22,7 +22,7 @@ public class ExportController extends BaseController {
 	@Autowired
 	ExportService exportService;
 	
-	@RequestMapping("/cargo/export/cargo/export/.action")
+	@RequestMapping("cargo/export/list.action")
 	public String list(Model model) {
 		List<Export> dataList = exportService.find(null);
 		model.addAttribute("dataList", dataList);
