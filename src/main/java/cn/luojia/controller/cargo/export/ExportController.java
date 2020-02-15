@@ -50,5 +50,21 @@ public class ExportController extends BaseController {
 		
 		return "redirect:/cargo/export/list.action";
 	}
+	
+	// 修改
+	@RequestMapping("/cargo/export/toupdate.action")
+	public String toupdate(String id, Model model) {
+		Export obj = exportService.get(id);
+		model.addAttribute("obj", obj);
+		
+		return "cargo/export/jExportUpdate.jsp";
+	}
+	
+	@RequestMapping("/cargo/export/update.action")
+	public String update(Export export) {
+		exportService.update(export);
+		
+		return "redirect:/cargo/export/list.action";
+	}
 
 }
