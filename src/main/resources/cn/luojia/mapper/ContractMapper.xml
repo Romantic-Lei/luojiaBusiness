@@ -111,75 +111,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="state!=null"> and c.state=#{state}</if>
 	</select>
 	
-		<select id="view" parameterType="string" resultMap="contractVORM">
-			select
-			      c.contract_id,c.offeror,c.contract_no,c.signing_date,c.input_by,c.check_by,c.inspector,c.total_amount,c.import_num,c.crequest,c.custom_name,c.delivery_period,c.ship_time,c.trade_terms,c.remark,c.print_style,c.old_state,c.state,c.out_state,c.create_by,c.create_dept,c.create_time,
-			       
-			       t.contract_product_id,
-			        t.product_no,t.product_image,t.product_desc,t.cnumber,t.out_number,t.loading_rate,t.box_num,t.packing_unit,t.price,t.amount,t.finished,t.exts,t.order_no,
-			        t.factory_id,t.full_name,t.factory_name,t.contacts,t.phone,
-			              
-			        t.ext_cproduct_id,
-			        t.ctype,t.ext_product_no,t.ext_product_image,t.ext_product_desc,t.ext_cnumber,t.ext_packing_unit,t.ext_price,t.ext_amount,t.product_request,
-			        t.ext_order_no,
-			        t.ext_factory_id,t.ext_full_name,t.ext_factory_name,t.ext_contacts,t.ext_phone
-			
-			from
-			(
-			      select 
-			          contract_id,offeror,contract_no,signing_date,input_by,check_by,inspector,total_amount,import_num,crequest,custom_name,delivery_period,ship_time,trade_terms,remark,print_style,old_state,state,out_state,create_by,create_dept,create_time
-			       from contract_c 
-			) c
-			left join
-			(
-			       select
-			              cp.contract_product_id,cp.contract_id,
-			              cp.product_no,cp.product_image,cp.product_desc,cp.cnumber,cp.out_number,cp.loading_rate,cp.box_num,cp.packing_unit,cp.price,cp.amount,cp.finished,cp.exts,cp.order_no,
-			              cp.factory_id,cp.full_name,cp.factory_name,cp.contacts,cp.phone,
-			              
-			              ext.ext_cproduct_id,
-			              ext.ctype,ext.product_no as ext_product_no,ext.product_image as ext_product_image,ext.product_desc as ext_product_desc,
-			              ext.cnumber as ext_cnumber,ext.packing_unit as ext_packing_unit,ext.price as ext_price,ext.amount as ext_amount,
-			              ext.product_request,ext.order_no as ext_order_no,
-			              ext.factory_id as ext_factory_id,ext.full_name as ext_full_name,ext.factory_name as ext_factory_name,ext.contacts as ext_contacts,ext.phone as ext_phone
-			              
-			        from
-			        (
-			            select
-			              cp.contract_product_id,cp.contract_id,
-			              cp.product_no,cp.product_image,cp.product_desc,cp.cnumber,cp.out_number,cp.loading_rate,cp.box_num,cp.packing_unit,cp.price,cp.amount,cp.finished,cp.exts,cp.order_no,
-			              f.factory_id,f.full_name,f.factory_name,f.contacts,f.phone
-			            from
-			            (select 
-			            contract_product_id,contract_id,factory_id,
-			            product_no,product_image,product_desc,cnumber,out_number,loading_rate,box_num,packing_unit,price,amount,finished,exts,order_no
-			             from contract_product_c) cp
-			            left join 
-			            (select factory_id,full_name,factory_name,contacts,phone from factory_c) f
-			            on cp.factory_id=f.factory_id
-			        ) cp
-			        left join
-			        (
-			            select
-			              ext.ext_cproduct_id,ext.contract_product_id,
-			              ext.ctype,ext.product_no,ext.product_image,ext.product_desc,ext.cnumber,ext.packing_unit,ext.price,ext.amount,ext.product_request,ext.order_no,
-			              f.factory_id,f.full_name,f.factory_name,f.contacts,f.phone
-			            from
-			            (
-			            select 
-			                ext_cproduct_id,contract_product_id,factory_id,
-			                ctype,product_no,product_image,product_desc,cnumber,packing_unit,price,amount,product_request,order_no
-			             from ext_cproduct_c 
-			            ) ext
-			            left join 
-			            (select factory_id,full_name,factory_name,contacts,phone from factory_c) f
-			            on ext.factory_id=f.factory_id
-			        ) ext
-			        on cp.contract_product_id=ext.contract_product_id
-			) t
-			on c.contract_id=t.contract_id
-			
-			where c.contract_id=#{contractId}
+	<select id="view" parameterType="string" resultMap="contractVORM">
+		select
+		      c.contract_id,c.offeror,c.contract_no,c.signing_date,c.input_by,c.check_by,c.inspector,c.total_amount,c.import_num,c.crequest,c.custom_name,c.delivery_period,c.ship_time,c.trade_terms,c.remark,c.print_style,c.old_state,c.state,c.out_state,c.create_by,c.create_dept,c.create_time,
+		       
+		       t.contract_product_id,
+		        t.product_no,t.product_image,t.product_desc,t.cnumber,t.out_number,t.loading_rate,t.box_num,t.packing_unit,t.price,t.amount,t.finished,t.exts,t.order_no,
+		        t.factory_id,t.full_name,t.factory_name,t.contacts,t.phone,
+		              
+		        t.ext_cproduct_id,
+		        t.ctype,t.ext_product_no,t.ext_product_image,t.ext_product_desc,t.ext_cnumber,t.ext_packing_unit,t.ext_price,t.ext_amount,t.product_request,
+		        t.ext_order_no,
+		        t.ext_factory_id,t.ext_full_name,t.ext_factory_name,t.ext_contacts,t.ext_phone
+		
+		from
+		(
+		      select 
+		          contract_id,offeror,contract_no,signing_date,input_by,check_by,inspector,total_amount,import_num,crequest,custom_name,delivery_period,ship_time,trade_terms,remark,print_style,old_state,state,out_state,create_by,create_dept,create_time
+		       from contract_c 
+		) c
+		left join
+		(
+		       select
+		              cp.contract_product_id,cp.contract_id,
+		              cp.product_no,cp.product_image,cp.product_desc,cp.cnumber,cp.out_number,cp.loading_rate,cp.box_num,cp.packing_unit,cp.price,cp.amount,cp.finished,cp.exts,cp.order_no,
+		              cp.factory_id,cp.full_name,cp.factory_name,cp.contacts,cp.phone,
+		              
+		              ext.ext_cproduct_id,
+		              ext.ctype,ext.product_no as ext_product_no,ext.product_image as ext_product_image,ext.product_desc as ext_product_desc,
+		              ext.cnumber as ext_cnumber,ext.packing_unit as ext_packing_unit,ext.price as ext_price,ext.amount as ext_amount,
+		              ext.product_request,ext.order_no as ext_order_no,
+		              ext.factory_id as ext_factory_id,ext.full_name as ext_full_name,ext.factory_name as ext_factory_name,ext.contacts as ext_contacts,ext.phone as ext_phone
+		              
+		        from
+		        (
+		            select
+		              cp.contract_product_id,cp.contract_id,
+		              cp.product_no,cp.product_image,cp.product_desc,cp.cnumber,cp.out_number,cp.loading_rate,cp.box_num,cp.packing_unit,cp.price,cp.amount,cp.finished,cp.exts,cp.order_no,
+		              f.factory_id,f.full_name,f.factory_name,f.contacts,f.phone
+		            from
+		            (select 
+		            contract_product_id,contract_id,factory_id,
+		            product_no,product_image,product_desc,cnumber,out_number,loading_rate,box_num,packing_unit,price,amount,finished,exts,order_no
+		             from contract_product_c) cp
+		            left join 
+		            (select factory_id,full_name,factory_name,contacts,phone from factory_c) f
+		            on cp.factory_id=f.factory_id
+		        ) cp
+		        left join
+		        (
+		            select
+		              ext.ext_cproduct_id,ext.contract_product_id,
+		              ext.ctype,ext.product_no,ext.product_image,ext.product_desc,ext.cnumber,ext.packing_unit,ext.price,ext.amount,ext.product_request,ext.order_no,
+		              f.factory_id,f.full_name,f.factory_name,f.contacts,f.phone
+		            from
+		            (
+		            select 
+		                ext_cproduct_id,contract_product_id,factory_id,
+		                ctype,product_no,product_image,product_desc,cnumber,packing_unit,price,amount,product_request,order_no
+		             from ext_cproduct_c 
+		            ) ext
+		            left join 
+		            (select factory_id,full_name,factory_name,contacts,phone from factory_c) f
+		            on ext.factory_id=f.factory_id
+		        ) ext
+		        on cp.contract_product_id=ext.contract_product_id
+		) t
+		on c.contract_id=t.contract_id
+		
+		where c.contract_id=#{contractId}
 	</select>
 	
 	<!-- 查询一条 -->
