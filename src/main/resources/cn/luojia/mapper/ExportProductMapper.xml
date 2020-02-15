@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.luojia.mapper.ExportProductMapper">
+	<resultMap type="cn.luojia.domain.ExportProduct" id="exportProductRM">
+		<id property="id" column="EXPORT_PRODUCT_ID" />
+
+		<result property="exportId" column="EXPORT_ID" />
+		<result property="factoryId" column="FACTORY_ID" />
+
+		<result property="factoryName" column="FACTORY_NAME" />
+		<result property="productNo" column="PRODUCT_NO" />
+		<result property="cnumber" column="CNUMBER" />
+		<result property="packingUnit" column="PACKING_UNIT" />
+		<result property="price" column="PRICE" />
+		<result property="boxNum" column="BOX_NUM" />
+
+		<result property="grossWeight" column="GROSS_WEIGHT" />
+		<result property="netWeight" column="NET_WEIGHT" />
+		<result property="sizeLength" column="SIZE_LENGTH" />
+		<result property="sizeWidth" column="SIZE_WIDTH" />
+		<result property="sizeHeight" column="SIZE_HEIGHT" />
+		<result property="exPrice" column="EX_PRICE" />
+		<result property="tax" column="TAX" />
+
+		<result property="orderNo" column="ORDER_NO" />
+	</resultMap>
+	
+	<select id="find" parameterType="map" resultMap="exportProductRM">
+		select EXPORT_PRODUCT_ID,EXPORT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,CNUMBER,PACKING_UNIT,
+			PRICE,BOX_NUM,GROSS_WEIGHT,NET_WEIGHT,SIZE_LENGTH,SIZE_WIDTH,SIZE_HEIGHT,EX_PRICE,TAX,ORDER_NO
+		from EXPORT_PRODUCT_C
+		where 1 = 1
+	</select>
+	
+	<select id="get" parameterType="string" resultMap="exportProductRM">
+		select EXPORT_PRODUCT_ID,EXPORT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,CNUMBER,PACKING_UNIT,
+			PRICE,BOX_NUM,GROSS_WEIGHT,NET_WEIGHT,SIZE_LENGTH,SIZE_WIDTH,SIZE_HEIGHT,EX_PRICE,TAX,ORDER_NO
+		from EXPORT_PRODUCT_C
+		where export_product_id = #{pid}
+	</select>
+	
+	<insert id="insert" parameterType="cn.luojia.domain.ExportProduct">
+		insert into export_product_c
+		(EXPORT_PRODUCT_ID,EXPORT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,CNUMBER,PACKING_UNIT,
+			PRICE,BOX_NUM,GROSS_WEIGHT,NET_WEIGHT,SIZE_LENGTH,SIZE_WIDTH,SIZE_HEIGHT,EX_PRICE,TAX,ORDER_NO)
+		values
+		(
+			#{id},
+			#{exportId, jdbcType=VARCHAR},
+			#{factoryId, jdbcType=VARCHAR},
+			#{factoryName, jdbcType=VARCHAR},
+			#{productNo, jdbcType=VARCHAR},
+			#{cnumber, jdbcType=INTEGER},
+			#{packingUnit, jdbcType=VARCHAR},
+			#{price, jdbcType=DOUBLE},
+			#{boxNum, jdbcType=INTEGER},
+			#{grossWeight, jdbcType=DOUBLE},
+			#{netWeight, jdbcType=DOUBLE},
+			#{sizeLength, jdbcType=DOUBLE},
+			#{sizeWidth, jdbcType=DOUBLE},
+			#{sizeHeight, jdbcType=DOUBLE},
+			#{exPrice, jdbcType=DOUBLE},
+			#{tax, jdbcType=DOUBLE},
+			#{orderNo, jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cn.luojia.domain.ExportProduct">
+		update export_product_c
+		<set>
+			<if test="exportId != null">EXPORT_ID=#{exportId},</if>
+			<if test="factoryId != null">FACTORY_ID=#{factoryId},</if>
+			<if test="factoryName != null">FACTORY_NAME=#{factoryName},</if>
+			<if test="productNo != null">PRODUCT_NO=#{productNo},</if>
+			<if test="cnumber != null">CNUMBER=#{cnumber},</if>
+			<if test="packingUnit != null">PACKING_UNIT=#{packingUnit},</if>
+			<if test="price != null">PRICE=#{price},</if>
+			<if test="boxNum != null">BOX_NUM=#{boxNum},</if>
+			<if test="grossWeight != null">GROSS_WEIGHT=#{grossWeight},</if>
+			<if test="netWeight != null">NET_WEIGHT=#{netWeight},</if>
+			<if test="sizeLength != null">SIZE_LENGTH=#{sizeLength},</if>
+			<if test="sizeWidth != null">SIZE_WIDTH=#{sizeWidth},</if>
+			<if test="sizeHeight != null">SIZE_HEIGHT=#{sizeHeight},</if>
+			<if test="exPrice != null">EX_PRICE=#{exPrice},</if>
+			<if test="tax != null">TAX=#{tax},</if>
+			<if test="orderNo != null">ORDER_NO=#{orderNo},</if>
+		</set>
+		where export_product_id=#{id}
+	</update>
+	
+</mapper>
