@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.luojia.mapper.ExtEproductMapper">
+	<resultMap type="cn.luojia.domain.ExtEproduct" id="extEproductRM">
+		<id property="id" column="EXT_EPRODUCT_ID"/>
+		
+		<result property="exportProductId" column="EXPORT_PRODUCT_ID"/>
+		<result property="factoryId" column="FACTORY_ID"/>
+		
+		<result property="factoryName" column="FACTORY_NAME"/>
+		<result property="ctype" column="CTYPE"/>
+		
+		<result property="productNo" column="PRODUCT_NO"/>
+		<result property="productImage" column="PRODUCT_IMAGE"/>
+		<result property="productDesc" column="PRODUCT_DESC"/>
+		<result property="cnumber" column="CNUMBER"/>
+		<result property="packingUnit" column="PACKING_UNIT"/>
+		<result property="price" column="PRICE"/>
+		<result property="amount" column="AMOUNT"/>
+		<result property="productRequest" column="PRODUCT_REQUEST"/>
+		<result property="orderNo" column="ORDER_NO"/>
+	</resultMap>
+	
+	<!-- 查询某个货物下的附件信息 -->
+	<select id="find" parameterType="map" resultMap="extEproductRM">
+		select * from ext_eproduct_c
+		where 1=1
+		<if test="exportProductId != null"> and EXPORT_PRODUCT_ID=#{exportProductId}</if>
+	</select>
+	
+	<select id="get" parameterType="string" resultMap="extEproductRM">
+		select * from ext_eproduct_c
+		where ext_eproduct_id=#{pid}
+	</select>
+	
+	<insert id="insert" parameterType="cn.luojia.domain.ExtEproduct">
+		insert into ext_eproduct_c
+		(EXT_EPRODUCT_ID,EXPORT_PRODUCT_ID,FACTORY_ID,FACTORY_NAME,CTYPE,PRODUCT_NO,
+			PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,
+			PACKING_UNIT,PRICE,AMOUNT,PRODUCT_REQUEST,ORDER_NO)
+		values(
+			#{id},
+			#{exportProductId},
+			#{factoryId},
+			#{factoryName, jdbcType=VARCHAR},
+			#{ctype, jdbcType=INTEGER},
+			#{productNo, jdbcType=VARCHAR},
+			#{productImage, jdbcType=VARCHAR},
+			#{productDesc, jdbcType=VARCHAR},
+			#{cnumber, jdbcType=INTEGER},
+			#{packingUnit, jdbcType=VARCHAR},
+			#{price, jdbcType=DOUBLE},
+			#{amount, jdbcType=DOUBLE},
+			#{productRequest, jdbcType=VARCHAR},
+			#{orderNo, jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cn.luojia.domain.ExtEproduct">
+		update ext_eproduct_c
+		<set>
+			EXPORT_PRODUCT_ID=#{exportProductId},
+			FACTORY_ID=#{factoryId},
+			<if test="factoryName != null">FACTORY_NAME=#{factoryName},</if>
+			<if test="ctype != null">CTYPE=#{ctype},</if>
+			<if test="productNo != null">PRODUCT_NO=#{productNo},</if>
+			<if test="productImage != null">PRODUCT_IMAGE=#{productImage},</if>
+			<if test="productDesc != null">PRODUCT_DESC=#{productDesc},</if>
+			<if test="cnumber != null">CNUMBER=#{cnumber},</if>
+			<if test="packingUnit != null">PACKING_UNIT=#{packingUnit},</if>
+			<if test="price != null">PRICE=#{price},</if>
+			<if test="amount != null">AMOUNT=#{amount},</if>
+			<if test="productRequest != null">PRODUCT_REQUEST=#{productRequest},</if>
+			<if test="orderNo != null">ORDER_NO=#{orderNo},</if>
+		</set>
+		where EXT_EPRODUCT_ID=#{id}
+	</update>
+	
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from ext_eproduct_c
+		where EXT_EPRODUCT_ID=#{pid}
+	</delete>
+	
+	<!-- 删除多条（一维字符串数组） -->
+	<delete id="delete" parameterType="string">
+		delete from ext_eproduct_c
+		where EXT_EPRODUCT_ID in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+</mapper>
