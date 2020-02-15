@@ -35,5 +35,5 @@ public class Export {
 	
 	private String createBy;
 	private String createDept;
-	private java.util.Date createTime;	
+	private Date createTime;	
 }
