@@ -57,7 +57,7 @@ public class ExportController extends BaseController {
 		Export obj = exportService.get(id);
 		model.addAttribute("obj", obj);
 		
-		return "cargo/export/jExportUpdate.jsp";
+		return "/cargo/export/jExportUpdate.jsp";
 	}
 	
 	@RequestMapping("/cargo/export/update.action")

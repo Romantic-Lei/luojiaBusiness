@@ -82,6 +82,8 @@ public class ExportServiceImpl implements ExportService {
 		// x, y
 		export.setContractIds(UtilFuns.joinStr(contractIds, ","));		// 工具类，拼串
 		export.setCustomerContract(contractNos);
+		
+		export.setState(0);		// 默认是草稿状态
 		exportDao.insert(export);
 		
 		// 处理货物信息
@@ -114,8 +116,8 @@ public class ExportServiceImpl implements ExportService {
 					
 					extep.setId(UUID.randomUUID().toString());
 					extep.setExportProductId(ep.getId()); 				// 绑定外键
-//					extep.setFactoryId(extcp.getFactory().getId());
-//					extep.setFactoryName(extcp.getFactory().getFactoryName());
+					extep.setFactoryId(extcp.getFactory().getId());
+					extep.setFactoryName(extcp.getFactory().getFactoryName());
 					
 					extEproductDao.insert(extep);
 					

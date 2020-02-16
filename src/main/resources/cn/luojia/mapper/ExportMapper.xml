@@ -49,7 +49,7 @@ from export_c e
 			REMARK,SHIPMENT_PORT,DESTINATION_PORT,TRANSPORT_MODE,PRICE_CONDITION,
 			GROSS_WEIGHT,NET_WEIGHT,MEASUREMENT,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME
 		from EXPORT_C
-		where id = #{pid}
+		where EXPORT_ID = #{pid}
 	</select>
 	
 	<insert id="insert" parameterType="cn.luojia.domain.Export">
