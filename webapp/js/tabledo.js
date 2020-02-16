@@ -56,7 +56,8 @@ function setTRUpdateFlag( obj ){
 	}
 	//alert(currTr.innerHTML);
 	if(obj.value!=obj.defaultValue){	//当填写的框内容发生变化时,设置本行记录发生变化标识
-		currTr.cells[1].all.mr_changed.value = "1";
+		//currTr.cells[1].all.mr_changed.value = "1";
+		currTr.cells[1].lastChild.value = "1"
 	}
 	//currTr.cells[1].document.getElementsByTagName("INPUT")[4].value = "1";
 	//alert(currTr.cells[1].all.mr_changed.value);

@@ -19,8 +19,6 @@
     });
     
     function setTRUpdateFlag( obj ){
-    	//alert(obj.type);
-    	//alert(obj.defaultValue);
     	var currTr = obj.parentElement.parentElement;
     	if(currTr.innerHTML.toLowerCase().indexOf("<span")==0){
     		currTr = obj.parentElement.parentElement.parentElement;
@@ -28,11 +26,6 @@
     	if(obj.value!=obj.defaultValue){	//当填写的框内容发生变化时,设置本行记录发生变化标识
     		currTr.cells[1].lastChild.value = "1";
     	}
-    	//currTr.cells[1].document.getElementsByTagName("INPUT")[4].value = "1";
-    	//alert(currTr.cells[1].all.mr_changed.value);
-    	//alert(currTr.cells[1].document.getElementsByTagName("INPUT")[4].value);
-    	//alert(currTr.cells[2].document.getElementsByTagName("INPUT").value);
-    	//currTr.getElementsByTagName("TD").all.mr_changed = "1";.document.getElementsByTagName("INPUT")
     }
 
 	/* 实现表格序号列自动调整 created by tony 20081219 */
