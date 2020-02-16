@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.luojia.mapper.PackingListMapper">
+	<resultMap type="cn.luojia.domain.PackingList" id="packingListRM">
+		<id property="id" column="PACKING_LIST_ID"/>
+		<result property="seller" column="SELLER"/>
+		<result property="buyer" column="BUYER"/>
+		<result property="invoiceNo" column="INVOICE_NO"/>
+		<result property="invoiceDate" column="INVOICE_DATE"/>
+		<result property="marks" column="MARKS"/>
+		<result property="descriptions" column="DESCRIPTIONS"/>
+		
+		<result property="exportIds" column="EXPORT_IDS"/>
+		<result property="exportNos" column="EXPORT_NOS"/>
+		
+		<result property="state" column="STATE"/>
+		<result property="createBy" column="CREATE_BY"/>
+		<result property="createDept" column="CREATE_DEPT"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+	
+	<select id="find" parameterType="map" resultMap="packingListRM">
+		select PACKING_LIST_ID,SELLER,BUYER,INVOICE_NO,INVOICE_DATE,MARKS,DESCRIPTIONS,
+			EXPORT_IDS,EXPORT_NOS,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		from PACKING_LIST_C
+		where 1=1
+	</select>
+	
+	<select id="get" parameterType="string" resultMap="packingListRM">
+		select PACKING_LIST_ID,SELLER,BUYER,INVOICE_NO,INVOICE_DATE,MARKS,DESCRIPTIONS,
+			EXPORT_IDS,EXPORT_NOS,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		from PACKING_LIST_C
+		where PACKING_LIST_ID=#{pid}
+	</select>
+	
+	<insert id="insert" parameterType="cn.luojia.domain.PackingList">
+		insert into PACKING_LIST_C
+		(PACKING_LIST_ID,SELLER,BUYER,INVOICE_NO,INVOICE_DATE,MARKS,DESCRIPTIONS,
+			EXPORT_IDS,EXPORT_NOS,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		values
+		(
+			#{id},
+			#{seller, jdbcType=VARCHAR},
+			#{buyer, jdbcType=VARCHAR},
+			#{invoiceNo, jdbcType=VARCHAR},
+			#{invoiceDate, jdbcType=TIMESTAMP},
+			#{marks, jdbcType=VARCHAR},
+			#{descriptions, jdbcType=VARCHAR},
+			#{exportIds, jdbcType=VARCHAR},
+			#{exportNos, jdbcType=VARCHAR},
+			#{state, jdbcType=INTEGER},
+			#{createBy, jdbcType=VARCHAR},
+			#{createDept, jdbcType=VARCHAR},
+			#{createTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cn.luojia.domain.PackingList">
+		update PACKING_LIST_C
+		<set>
+			<if test="seller != null">SELLER=#{seller},</if>
+			<if test="buyer != null">BUYER=#{buyer},</if>
+			<if test="invoiceNo != null">INVOICE_NO=#{invoiceNo},</if>
+			<if test="invoiceDate != null">INVOICE_DATE=#{invoiceDate},</if>
+			<if test="marks != null">MARKS=#{marks},</if>
+			<if test="descriptions != null">DESCRIPTIONS=#{descriptions},</if>
+			<if test="exportIds != null">EXPORT_IDS=#{exportIds},</if>
+			<if test="exportNos != null">EXPORT_NOS=#{exportNos},</if>
+			<if test="state != null">STATE=#{state},</if>
+		</set>
+		where PACKING_LIST_ID=#{id}
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from PACKING_LIST_C
+		where PACKING_LIST_ID=#{pid}
+	</delete>
+	
+	<!-- 删除多条（一维字符串数组） -->
+	<delete id="delete" parameterType="string">
+		delete from PACKING_LIST_C
+		where PACKING_LIST_ID in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 修改状态 -->
+	<update id="updateState" parameterType="map">
+		update packing_list_c
+		set state = #{state}
+		where PACKING_LIST_ID in
+		<!-- 如果参数类型是List,则必须在collecion中指定为list, 如果是数据组，则必须在collection属性中指定为 array. 此处为dao层他的变量名 -->
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</update>
+	
+</mapper>
