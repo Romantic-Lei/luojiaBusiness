@@ -11,8 +11,6 @@
 
 <script type="text/javascript" src="../../js/datepicker/WdatePicker.js"></script>
 
-<input type="text" name="val" onblur="setTRUpdateFlag(this);"/>
-
 <script type="text/javascript">
     $().ready(function(){
 		${mRecordData}
@@ -50,7 +48,7 @@
 		//this.style.background="#0099cc url(../images/arroww.gif) 4px 9px no-repeat";
 		oTD.innerHTML = "&nbsp;&nbsp;";	
 		oTD = oTR.insertCell(1);
-		oTD.innerHTML = "<input class=\"input\" type=\"checkbox\" name=\"del\" value=\""+id+"\"><input type=\"hidden\" name=\"mr_id\" value=\""+id+"\"><input class=\"input\" type=\"text\" id=\"mr_changed\" name=\"mr_changed\">";
+		oTD.innerHTML = "<input class=\"input\" type=\"checkbox\" name=\"del\" value=\""+id+"\"><input type=\"hidden\" name=\"mr_id\" value=\""+id+"\"><input class=\"input\" type=\"hidden\" id=\"mr_changed\" name=\"mr_changed\">";
 		oTD = oTR.insertCell(2);
 		oTD.innerHTML = "<input class=\"input\" type=\"text\" name=\"mr_orderNo\" readonly size=\"3\" value=\"\">";
 		oTD = oTR.insertCell(3);
