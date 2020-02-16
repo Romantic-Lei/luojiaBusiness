@@ -28,11 +28,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="orderNo" column="ORDER_NO" />
 	</resultMap>
 	
+	<!-- 查询摸个报运下的货运信息 -->
 	<select id="find" parameterType="map" resultMap="exportProductRM">
 		select EXPORT_PRODUCT_ID,EXPORT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,CNUMBER,PACKING_UNIT,
 			PRICE,BOX_NUM,GROSS_WEIGHT,NET_WEIGHT,SIZE_LENGTH,SIZE_WIDTH,SIZE_HEIGHT,EX_PRICE,TAX,ORDER_NO
 		from EXPORT_PRODUCT_C
 		where 1 = 1
+		<if test="exportId != null"> and EXPORT_ID = #{exportId}</if>
 	</select>
 	
 	<select id="get" parameterType="string" resultMap="exportProductRM">

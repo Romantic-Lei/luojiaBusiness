@@ -11,11 +11,29 @@
 
 <script type="text/javascript" src="../../js/datepicker/WdatePicker.js"></script>
 
+<input type="text" name="val" onblur="setTRUpdateFlag(this);"/>
+
 <script type="text/javascript">
     $().ready(function(){
 		${mRecordData}
     });
     
+    function setTRUpdateFlag( obj ){
+    	//alert(obj.type);
+    	//alert(obj.defaultValue);
+    	var currTr = obj.parentElement.parentElement;
+    	if(currTr.innerHTML.toLowerCase().indexOf("<span")==0){
+    		currTr = obj.parentElement.parentElement.parentElement;
+    	}
+    	if(obj.value!=obj.defaultValue){	//当填写的框内容发生变化时,设置本行记录发生变化标识
+    		currTr.cells[1].lastChild.value = "1";
+    	}
+    	//currTr.cells[1].document.getElementsByTagName("INPUT")[4].value = "1";
+    	//alert(currTr.cells[1].all.mr_changed.value);
+    	//alert(currTr.cells[1].document.getElementsByTagName("INPUT")[4].value);
+    	//alert(currTr.cells[2].document.getElementsByTagName("INPUT").value);
+    	//currTr.getElementsByTagName("TD").all.mr_changed = "1";.document.getElementsByTagName("INPUT")
+    }
 
 	/* 实现表格序号列自动调整 created by tony 20081219 */
 	function sortnoTR(){
@@ -39,7 +57,7 @@
 		//this.style.background="#0099cc url(../images/arroww.gif) 4px 9px no-repeat";
 		oTD.innerHTML = "&nbsp;&nbsp;";	
 		oTD = oTR.insertCell(1);
-		oTD.innerHTML = "<input class=\"input\" type=\"checkbox\" name=\"del\" value=\""+id+"\"><input type=\"hidden\" name=\"mr_id\" value=\""+id+"\"><input class=\"input\" type=\"hidden\" id=\"mr_changed\" name=\"mr_changed\">";
+		oTD.innerHTML = "<input class=\"input\" type=\"checkbox\" name=\"del\" value=\""+id+"\"><input type=\"hidden\" name=\"mr_id\" value=\""+id+"\"><input class=\"input\" type=\"text\" id=\"mr_changed\" name=\"mr_changed\">";
 		oTD = oTR.insertCell(2);
 		oTD.innerHTML = "<input class=\"input\" type=\"text\" name=\"mr_orderNo\" readonly size=\"3\" value=\"\">";
 		oTD = oTR.insertCell(3);

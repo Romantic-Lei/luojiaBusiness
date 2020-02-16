@@ -130,8 +130,36 @@ public class ExportServiceImpl implements ExportService {
 	}
 
 	@Override
-	public void update(Export export) {
+	public void update(Export export,
+			String[] mr_id,
+			Integer[] mr_orderNo,
+			Integer[] mr_cnumber,
+			Double[] mr_grossWeight,
+			Double[] mr_netWeight,
+			Double[] mr_sizeLength,
+			Double[] mr_sizeWidth,
+			Double[] mr_sizeHeight,
+			Double[] mr_exPrice,
+			Double[] mr_tax,
+			Integer[] mr_changed) {
 		exportDao.update(export);
+		// 批量修改货物信息
+		
+		for (int i = 0; i < mr_id.length; i++) {
+			if (mr_changed[i] != null && mr_changed[i] == 1) {			// 修改标识，只有用户修改的行才进行更新
+				ExportProduct ep = exportProductDao.get(mr_id[i]);
+				ep.setOrderNo(mr_orderNo[i]);
+				ep.setCnumber(mr_cnumber[i]);
+				ep.setGrossWeight(mr_grossWeight[i]);
+				ep.setNetWeight(mr_netWeight[i]);
+				ep.setSizeLength(mr_sizeLength[i]);
+				ep.setSizeWidth(mr_sizeWidth[i]);
+				ep.setSizeHeight(mr_sizeHeight[i]);
+				ep.setExPrice(mr_exPrice[i]);
+				ep.setTax(mr_tax[i]);
+				exportProductDao.update(ep);
+			}
+		}
 	}
 
 	@Override
@@ -166,6 +194,18 @@ public class ExportServiceImpl implements ExportService {
 		paraMap.put("state", 1); // 1 已上报的合同信息
 
 		return contractDao.find(paraMap);
+	}
+	
+	public String getMrecordDate(String exportId) {
+		Map paraMap = new HashMap();
+		paraMap.put("exportId", exportId);
+		
+		List<ExportProduct> oLIst = exportProductDao.find(paraMap);
+		StringBuffer sBuf = new StringBuffer();
+		for(ExportProduct ep : oLIst) {
+			sBuf.append("addTRRecord(\"mRecordTable\", \"").append(ep.getId()).append("\", \"").append(ep.getProductNo()).append("\", \"").append(ep.getCnumber()).append("\", \"").append(UtilFuns.convertNull(ep.getGrossWeight())).append("\", \"").append(UtilFuns.convertNull(ep.getNetWeight())).append("\", \"").append(UtilFuns.convertNull(ep.getSizeLength())).append("\", \"").append(UtilFuns.convertNull(ep.getSizeWidth())).append("\", \"").append(UtilFuns.convertNull(ep.getSizeHeight())).append("\", \"").append(UtilFuns.convertNull(ep.getExPrice())).append("\", \"").append(UtilFuns.convertNull(ep.getTax())).append("\");");
+		}
+		return sBuf.toString();
 	}
 
 }
