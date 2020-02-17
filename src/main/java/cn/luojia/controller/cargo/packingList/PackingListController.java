@@ -29,7 +29,7 @@ public class PackingListController extends BaseController {
 	@RequestMapping("/cargo/packinglist/tocreate.action")
 	public String tocreate(String[] id, Model model){				//出口报运的id集合
 		//携带出口报运的id集合，显示装箱和报运的关系
-		String divData = packingListService.getDivData(id);
+		String divData = packingListService.getDivDataCreate(id);
 		model.addAttribute("divData", divData);
 		
 		return "/cargo/packinglist/jPackingListCreate.jsp";
@@ -40,6 +40,35 @@ public class PackingListController extends BaseController {
 		packingListService.insert(packingList);
 		
 		return "redirect:/cargo/packinglist/list.action";
+	}
+	
+	@RequestMapping("/cargo/packinglist/toupdate.action")
+	public String toupdate(String id, Model model) {
+		PackingList obj = packingListService.get(id);
+		model.addAttribute("obj", obj);
+		
+		String _s = packingListService.getDivDataUpdate(obj.getExportIds().split("\\|")
+				, obj.getExportNos().split("\\|"));
+		model.addAttribute("divData", _s);
+		
+		return "/cargo/packinglist/jPackingListUpdate.jsp";
+	}
+	
+	@RequestMapping("/cargo/packinglist/update.action")
+	public String update(PackingList packingList) {
+		packingListService.update(packingList);
+		
+		return "redirect:/cargo/packinglist/list.action";
+	}
+	
+	@RequestMapping("/cargo/packinglist/toview.action")
+	public String toview(String id, Model model) {
+		PackingList obj = packingListService.get(id);
+		model.addAttribute("obj", obj);
+		
+		model.addAttribute("divData", packingListService.getDivDataView(obj.getExportNos().split("\\|")));
+		
+		return "/cargo/packinglist/jPackingListView.jsp";
 	}
 	
 }
