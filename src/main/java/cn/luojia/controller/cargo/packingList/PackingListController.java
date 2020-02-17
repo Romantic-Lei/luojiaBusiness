@@ -71,4 +71,25 @@ public class PackingListController extends BaseController {
 		return "/cargo/packinglist/jPackingListView.jsp";
 	}
 	
+	@RequestMapping("/cargo/packinglist/delete.action")
+	public String delete(String id) {
+		packingListService.deleteById(id);
+		
+		return "redirect:/cargo/packinglist/list.action";
+	}
+	
+	@RequestMapping("/cargo/packinglist/submit.action")
+	public String submit(String[] id) {
+		
+		packingListService.submit(id);
+		return "redirect:/cargo/packinglist/list.action";
+	}
+	
+	@RequestMapping("/cargo/packinglist/cancel.action")
+	public String cancel(String[] id) {
+		packingListService.cancel(id);
+		
+		return "redirect:/cargo/packinglist/list.action";
+	}
+	
 }
