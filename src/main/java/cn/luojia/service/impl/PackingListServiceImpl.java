@@ -9,8 +9,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.luojia.dao.ExtCproductDao;
+import cn.luojia.dao.ExportDao;
 import cn.luojia.dao.PackingListDao;
+import cn.luojia.domain.Export;
 import cn.luojia.domain.PackingList;
 import cn.luojia.pagination.Page;
 import cn.luojia.service.PackingListService;
@@ -27,12 +28,11 @@ public class PackingListServiceImpl implements PackingListService {
 	@Autowired
 	PackingListDao packingListDao;
 	@Autowired
-	ExtCproductDao extCproductDao;
+	ExportDao exportDao;
 	
 	@Override
 	public List<PackingList> findPage(Page page) {
-		// TODO Auto-generated method stub
-		return null;
+		return packingListDao.findPage(page);
 	}
 
 	@Override
@@ -86,5 +86,15 @@ public class PackingListServiceImpl implements PackingListService {
 		map.put("ids", ids);
 		packingListDao.updateState(map);
 	}
-
+	
+	// 拼接HTML 片段
+	public String getDivData(String[] exportIds) {
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < exportIds.length; i++) {
+			Export export = exportDao.get(exportIds[i]);
+			sb.append("<input type=\"checkbox\" name=\"exportIds\" checked value=\"").append(exportIds[i]).append("\"class=\"input\"/>");
+			sb.append(export.getCustomerContract()).append("&nbsp;&nbsp;");
+		}
+		return sb.toString();
+	}
 }

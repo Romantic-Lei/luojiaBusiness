@@ -25,5 +25,7 @@ public interface PackingListService {
 	
 	public void submit(Serializable[] ids);					// 上报
 	public void cancel(Serializable[] ids);					// 取消
+	
+	public String getDivData(String[] exportIds);			// 获取div 展示数据
 
 }
