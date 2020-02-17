@@ -1,5 +1,9 @@
 package cn.luojia.domain;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 /**
@@ -14,7 +18,7 @@ public class PackingList {
 	private String seller;					//卖方
 	private String buyer;					//买方
 	private String invoiceNo;				//发票号
-	private java.util.Date invoiceDate;		//发票日期
+	private Date invoiceDate;				//发票日期
 	private String marks;					//唛头
 	private String descriptions;			//描述
 	
