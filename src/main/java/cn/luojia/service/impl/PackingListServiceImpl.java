@@ -15,6 +15,7 @@ import cn.luojia.domain.Export;
 import cn.luojia.domain.PackingList;
 import cn.luojia.pagination.Page;
 import cn.luojia.service.PackingListService;
+import cn.luojia.util.UtilFuns;
 
 /**
  * 
@@ -47,6 +48,22 @@ public class PackingListServiceImpl implements PackingListService {
 
 	@Override
 	public void insert(PackingList packingList) {
+		String _exportIds = "";
+		String _exportNos = "";
+		
+		String[] _s = packingList.getExportIds().split(",");	// 有多个id时，spring框架自动帮我们以逗号分隔了
+		for(int i = 0; i < _s.length; i++) {
+			String[] _tem = _s[i].split("\\|");		// 这个分隔符是我们在 getDivData 方法中自行拼接的
+			_exportIds += _tem[0] + "|";
+			_exportNos += _tem[1] + "|";
+		}
+		
+		_exportIds = UtilFuns.delLastChar(_exportIds);
+		_exportNos = UtilFuns.delLastChar(_exportNos);
+		
+		packingList.setExportIds(_exportIds);
+		packingList.setExportNos(_exportNos);
+		
 		packingList.setId(UUID.randomUUID().toString());
 		packingList.setState(0); // 0 是草稿， 1是上报, 默认新增装箱合同为草稿状态
 		packingListDao.insert(packingList);
@@ -92,7 +109,8 @@ public class PackingListServiceImpl implements PackingListService {
 		StringBuffer sb = new StringBuffer();
 		for(int i = 0; i < exportIds.length; i++) {
 			Export export = exportDao.get(exportIds[i]);
-			sb.append("<input type=\"checkbox\" name=\"exportIds\" checked value=\"").append(exportIds[i]).append("\"class=\"input\"/>");
+			sb.append("<input type=\"checkbox\" name=\"exportIds\" checked value=\"").append(exportIds[i])
+				.append("|").append(export.getCustomerContract()).append("\"class=\"input\"/>");
 			sb.append(export.getCustomerContract()).append("&nbsp;&nbsp;");
 		}
 		return sb.toString();
