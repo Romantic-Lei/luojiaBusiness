@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.luojia.common.springdao.SqlDao;
+import cn.luojia.dao.ContractHisDao;
 import cn.luojia.domain.Contract;
 import cn.luojia.pagination.Page;
 import cn.luojia.service.ContractHisService;
@@ -24,22 +25,17 @@ public class ContractHisServiceImpl implements ContractHisService {
 
 	@Autowired
 	SqlDao sqlDao;
+	@Autowired
+	ContractHisDao contractHisDao;
 	
 	@Override
 	public void pigeinhole(String[] contractIds) {
-		StringBuffer sb = new StringBuffer();
-		// 将当前数据插入到历史表中
-		String _s = UtilFuns.joinStr(contractIds, "'", "'", ",");			// 合同的id串 x,y，构造成in子查询串'x', 'y'
-		
-		
-		// 删除当前表中的数据
-		sqlDao.batchSQL(sql);			// 批量执行
+		sqlDao.batchSQL(this.doData(contractIds, "", "_his"));			// 批量执行
 	}
 
 	@Override
 	public void pigeouthole(String[] contractIds) {
-		// TODO Auto-generated method stub
-		
+		sqlDao.batchSQL(this.doData(contractIds, "_his", ""));
 	}
 	
 	//处理数据:由源表向目的表赋值数据，将源表数据删除
@@ -63,22 +59,6 @@ public class ContractHisServiceImpl implements ContractHisService {
 		return sBuf.toString().split(";");			//批量执行，将SQL语句以分号分割成6条语句
 	}
 	
-	@Override
-	public List<Contract> findPage(Page page) {
-		return contractHisDao.findPage(page);
-	}
-
-	@Override
-	public List<Contract> find(Map paraMap) {
-		return contractHisDao.find(paraMap);
-	}
-
-	@Override
-	public ContractVO view(String contractId) {
-		
-		return contractHisDao.view(contractId);
-	}
-
 	//删除归档合同里面的 附件，产品，合同
 	public void deleteAll(String[] contractIds) {
 		StringBuffer sBuf = new StringBuffer();
@@ -88,6 +68,21 @@ public class ContractHisServiceImpl implements ContractHisService {
 		sBuf.append("delete from contract_his_c where contract_id in (").append(inStr).append(");");
 		
 		sqlDao.batchSQL(sBuf.toString().split(";"));
+	}
+
+	@Override
+	public List<Contract> findPage(Page page) {
+		return contractHisDao.findPage(page);
+	}
+
+	@Override
+	public List<Contract> find(Map paraMap) {
+		return contractHisDao.find(null);
+	}
+
+	@Override
+	public ContractVO view(String contractId) {
+		return contractHisDao.view(contractId);
 	}
 
 }

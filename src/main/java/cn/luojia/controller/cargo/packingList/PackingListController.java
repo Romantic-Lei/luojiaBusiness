@@ -1,11 +1,16 @@
 package cn.luojia.controller.cargo.packinglist;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.luojia.controller.BaseController;
@@ -90,6 +95,13 @@ public class PackingListController extends BaseController {
 		packingListService.cancel(id);
 		
 		return "redirect:/cargo/packinglist/list.action";
+	}
+	
+	@Override
+	public void initBinder(WebDataBinder binder) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setLenient(true);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
 }
