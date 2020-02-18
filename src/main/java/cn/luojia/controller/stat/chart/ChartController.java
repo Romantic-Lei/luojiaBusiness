@@ -63,6 +63,18 @@ public class ChartController {
 		return "/stat/chart/jStat.jsp?forward="+dir;
 	}
 	
+	// 系统访问压力图
+	@RequestMapping("/stat/chart/onlineInfo.action")
+	public String onlineInfo(HttpServletRequest request) throws FileNotFoundException {
+		String path = request.getSession().getServletContext().getRealPath("/");		// 真实路径
+		String dir = "onlineinfo";
+		
+		String sql = "SELECT t.a1,p.countnum FROM ((SELECT a1 FROM online_t) ORDER BY a1) t LEFT JOIN (select a1,count(*) as countnum from(select SUBSTR(to_char(login_time,'yyyy-mm-dd hh24:mi:ss'),12,2) as a1 from login_log_p) group by a1) p ON t.a1=p.a1";
+		this.writeXml(path, dir, this.LineXml(this.getData(sql)));
+		
+		return "/stat/chart/jStat.jsp?forward="+dir;
+	}
+	
 	// 获取数据
 	public List<String> getData(String sql){
 		return sqlDao.executeSQL(sql);
@@ -111,6 +123,40 @@ public class ChartController {
 		sb.append("</graphs>");
 		sb.append("</chart>");
 		return sb.toString();
+	}
+	
+	//获取折线图
+	public String LineXml(List<String> dataList){
+		StringBuffer sBuf = new StringBuffer();
+		sBuf.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		sBuf.append("<chart>");
+		sBuf.append("<series>");
+		
+		int xid = 0;			//对应标识
+		for(int i=0;i<dataList.size();){
+			sBuf.append("<value xid=\"").append(xid++).append("\">").append(dataList.get(i++)).append("</value>");
+			i++;		//key
+		}
+		sBuf.append("</series>");
+		sBuf.append("<graphs>");
+		sBuf.append("<graph gid=\"30\" color=\"#FFCC00\" gradient_fill_colors=\"#111111, #1A897C\">");
+		
+		xid = 0;
+		for(int i=0;i<dataList.size();){
+			i++;		//skip
+			if(dataList.get(i) == null || dataList.get(i).trim() == ""){
+				sBuf.append("<value xid=\"").append(xid++).append("\">").append("0").append("</value>");
+				i++;
+			}else{
+				sBuf.append("<value xid=\"").append(xid++).append("\">").append(dataList.get(i++)).append("</value>");
+			}
+		}
+		
+		sBuf.append("</graph>");
+		sBuf.append("</graphs>");
+		sBuf.append("</chart>");
+		
+		return sBuf.toString();
 	}
 	
 	// 写xml文本文件,格式 utf-8
