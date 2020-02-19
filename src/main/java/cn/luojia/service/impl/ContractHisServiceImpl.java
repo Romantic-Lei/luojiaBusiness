@@ -41,35 +41,24 @@ public class ContractHisServiceImpl implements ContractHisService {
 	//处理数据:由源表向目的表赋值数据，将源表数据删除
 	//参数：操作表id,源表,目的表
 	public String[] doData(String[] contractIds,String source,String target){
-		StringBuffer sBuf = new StringBuffer();
+		StringBuffer sb = new StringBuffer();
 		//将当前表的数据插入到历史表中
 		String inStr = UtilFuns.joinStr(contractIds, "'", "'", ",");		//合同的id串 x,y ,构造成in 子查询串'x','y'
 		//处理历史合同新增
-		sBuf.append("insert into contract").append(target).append("_c (select * from contract").append(source).append("_c where contract_id in (").append(inStr).append("));");
+		sb.append("insert into contract").append(target).append("_c (select * from contract").append(source).append("_c where contract_id in (").append(inStr).append("));");
 		//处理历史货物新增
-		sBuf.append("insert into contract_product").append(target).append("_c (select * from contract_product").append(source).append("_c where contract_id in (").append(inStr).append("));");
+		sb.append("insert into contract_product").append(target).append("_c (select * from contract_product").append(source).append("_c where contract_id in (").append(inStr).append("));");
 		//处理历史附件新增
-		sBuf.append("insert into ext_cproduct").append(target).append("_c (select * from ext_cproduct").append(source).append("_c where contract_product_id in (select contract_product_id from contract_product").append(source).append("_c where contract_id in (").append(inStr).append(")));");
+		sb.append("insert into ext_cproduct").append(target).append("_c (select * from ext_cproduct").append(source).append("_c where contract_product_id in (select contract_product_id from contract_product").append(source).append("_c where contract_id in (").append(inStr).append(")));");
 		
 		//当前表的数据删除，删除需要从最先面的开始删
-		sBuf.append("delete from ext_cproduct").append(source).append("_c where contract_product_id in (select contract_product_id from contract_product").append(source).append("_c where contract_id in (").append(inStr).append("));");
-		sBuf.append("delete from contract_product").append(source).append("_c where contract_id in (").append(inStr).append(");");
-		sBuf.append("delete from contract").append(source).append("_c where contract_id in (").append(inStr).append(");");
+		sb.append("delete from ext_cproduct").append(source).append("_c where contract_product_id in (select contract_product_id from contract_product").append(source).append("_c where contract_id in (").append(inStr).append("));");
+		sb.append("delete from contract_product").append(source).append("_c where contract_id in (").append(inStr).append(");");
+		sb.append("delete from contract").append(source).append("_c where contract_id in (").append(inStr).append(");");
 		
-		return sBuf.toString().split(";");			//批量执行，将SQL语句以分号分割成6条语句
+		return sb.toString().split(";");			//批量执行，将SQL语句以分号分割成6条语句
 	}
 	
-	//删除归档合同里面的 附件，产品，合同
-	public void deleteAll(String[] contractIds) {
-		StringBuffer sBuf = new StringBuffer();
-		String inStr = UtilFuns.joinStr(contractIds, "'", "'", ",");
-		sBuf.append("delete from ext_cproduct_his_c where contract_product_id in (select contract_product_id from contract_product_his_c where contract_id in (").append(inStr).append("));");
-		sBuf.append("delete from contract_product_his_c where contract_id in (").append(inStr).append(");");
-		sBuf.append("delete from contract_his_c where contract_id in (").append(inStr).append(");");
-		
-		sqlDao.batchSQL(sBuf.toString().split(";"));
-	}
-
 	@Override
 	public List<Contract> findPage(Page page) {
 		return contractHisDao.findPage(page);
@@ -83,6 +72,18 @@ public class ContractHisServiceImpl implements ContractHisService {
 	@Override
 	public ContractVO view(String contractId) {
 		return contractHisDao.view(contractId);
+	}
+	
+	//删除归档合同里面的 附件，产品，合同
+	@Override
+	public void delete(String[] contractIds) {
+		StringBuffer sb = new StringBuffer();
+		String inStr = UtilFuns.joinStr(contractIds, "'", "'", ",");
+		sb.append("delete from ext_cproduct_his_c where contract_product_id in (select contract_product_id from contract_product_his_c where contract_id in (").append(inStr).append("));");
+		sb.append("delete from contract_product_his_c where contract_id in (").append(inStr).append(");");
+		sb.append("delete from contract_his_c where contract_id in (").append(inStr).append(");");
+		
+		sqlDao.batchSQL(sb.toString().split(";"));
 	}
 
 }

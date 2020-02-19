@@ -1,6 +1,12 @@
 package cn.luojia.controller.cargo.contracthis;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.luojia.controller.BaseController;
 import cn.luojia.domain.Contract;
+import cn.luojia.print.ContractPrint;
 import cn.luojia.service.ContractHisService;
 import cn.luojia.vo.ContractVO;
 
@@ -50,5 +57,24 @@ public class ContractHisController extends BaseController {
 		
 		return "redirect:/cargo/contracthis/list.action"; 
 	}
+	
+	// 历史购销合同删除
+	@RequestMapping("/cargo/contracthis/delete.action")
+	public String delete(String[] id) {
+		contractHisService.delete(id);
+		
+		return "redirect:/cargo/contracthis/list.action";
+	}
+	
+	// 历史购销合同打印
+	@RequestMapping("/cargo/contracthis/print.action")
+	public void print(String id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String path = request.getSession().getServletContext().getRealPath("/");
+		
+		ContractVO view = contractHisService.view(id);
+		ContractPrint cp = new ContractPrint();
+		cp.print(view, path, response);
+	}
+	
 
 }

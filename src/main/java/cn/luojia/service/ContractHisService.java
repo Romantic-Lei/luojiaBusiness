@@ -21,4 +21,5 @@ public interface ContractHisService {
 	
 	public void pigeinhole(String[] contractIds);			// 归档
 	public void pigeouthole(String[] contractIds);			// 取消归档
+	public void delete(String[] contractIds);				// 历史购销合同删除
 }
