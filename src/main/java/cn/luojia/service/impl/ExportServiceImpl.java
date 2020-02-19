@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,7 @@ import cn.luojia.vo.ExtCproductVO;
  * @Description 出口报运类业务层
  */
 @Service
+@WebService
 public class ExportServiceImpl implements ExportService {
 
 	@Autowired
@@ -43,22 +47,31 @@ public class ExportServiceImpl implements ExportService {
 	@Autowired
 	ExtEproductDao extEproductDao;
 
+	// 利用set 方法，在cxf中注入dao，这样cxf的WebService才可以查询我们系统的数据
+	@WebMethod(exclude=true)
+	public void setExportDao(ExportDao exportDao) {
+		this.exportDao = exportDao;
+	}
+
 	@Override
+	@WebMethod(exclude=true)
 	public List<Export> findPage(Page page) {
 		return exportDao.findPage(page);
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public List<Export> find(Map paraMap) {
 		return exportDao.find(paraMap);
 	}
 
 	@Override
-	public Export get(Serializable id) {
+	public Export get(String id) {
 		return exportDao.get(id);
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public void insert(String[] contractIds) {
 		/*
 		 * 步骤：
@@ -130,6 +143,7 @@ public class ExportServiceImpl implements ExportService {
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public void update(Export export,
 			String[] mr_id,
 			Integer[] mr_orderNo,
@@ -163,6 +177,7 @@ public class ExportServiceImpl implements ExportService {
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public void deleteById(Serializable id) {
 		exportDao.deleteById(id);
 	}
@@ -173,6 +188,7 @@ public class ExportServiceImpl implements ExportService {
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public void submit(Serializable[] ids) {
 		Map map = new HashMap();
 		map.put("state", 1); // 1已上报
@@ -181,6 +197,7 @@ public class ExportServiceImpl implements ExportService {
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public void cancel(Serializable[] ids) {
 		Map map = new HashMap();
 		map.put("state", 0); // 0 草稿
@@ -189,6 +206,7 @@ public class ExportServiceImpl implements ExportService {
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public List<Contract> getContractList() {
 		Map paraMap = new HashMap();
 		paraMap.put("state", 1); // 1 已上报的合同信息
@@ -196,6 +214,7 @@ public class ExportServiceImpl implements ExportService {
 		return contractDao.find(paraMap);
 	}
 	
+	@WebMethod(exclude=true)
 	public String getMrecordDate(String exportId) {
 		Map paraMap = new HashMap();
 		paraMap.put("exportId", exportId);

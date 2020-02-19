@@ -1,5 +1,6 @@
 package cn.luojia.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.Data;
  * @Description 货物报运
  */
 @Data
-public class Export {
+public class Export implements Serializable {
 	private String id;
 	private Date inputDate;
 	

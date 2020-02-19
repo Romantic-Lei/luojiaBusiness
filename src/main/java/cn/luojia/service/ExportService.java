@@ -17,7 +17,7 @@ import cn.luojia.pagination.Page;
 public interface ExportService {
 	public List<Export> findPage(Page page);			//分页查询
 	public List<Export> find(Map paraMap);				//带条件查询，条件可以为null，既没有条件；返回list对象集合
-	public Export get(Serializable id);					//只查询一个，常用于修改,序列化的好处是不论是自增式的id还是UUID都能用
+	public Export get(String id);						//只查询一个，常用于修改,序列化的好处是不论是自增式的id还是UUID都能用
 	
 	public void insert(String[] contractIds);			//插入，用实体作为参数
 	public void update(Export export,

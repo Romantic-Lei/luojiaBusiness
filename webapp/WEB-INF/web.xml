@@ -26,8 +26,21 @@
   	<url-pattern>*.action</url-pattern>
   </servlet-mapping>
   
+  <!-- 3.整合CXFService -->
+  <servlet>
+  	<servlet-name>cxf</servlet-name>
+  	<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+  	<init-param>
+  		<param-name>config-location</param-name>
+  		<param-value>classpath:cxf-servlet.xml</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>cxf</servlet-name>
+  	<url-pattern>/cxf/*</url-pattern>
+  </servlet-mapping>
   
-  <!-- 3.编码过滤器，解决中文乱码 -->
+  <!-- 4.编码过滤器，解决中文乱码 -->
 	<filter>
 		<filter-name>SpringEncoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
