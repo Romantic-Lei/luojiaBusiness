@@ -42,6 +42,15 @@ public class ExportController extends BaseController {
 		return "/cargo/export/jContractList.jsp";
 	}
 	
+	// 查看
+	@RequestMapping("/cargo/export/toview.action")
+	public String toview(String id, Model model) {
+		Export obj = exportService.get(id);
+		model.addAttribute("obj", obj);
+		
+		return "/cargo/export/jExportView.jsp";
+	}
+	
 	// 报运新增,直接在后台保存,批量保存
 	@RequestMapping("/cargo/export/insert.action")
 	public String insert(@RequestParam("id") String[] contractIds) { 		// 合同的 id 集合
@@ -91,5 +100,30 @@ public class ExportController extends BaseController {
 		
 		return "redirect:/cargo/export/list.action";
 	}
+	
+	// 删除
+	@RequestMapping("/cargo/export/delete.action")
+	public String delete(String[] id) {
+		exportService.delete(id);
+		
+		return "redirect:/cargo/export/list.action";
+	}
+	
+	// 上报
+	@RequestMapping("/cargo/export/delete.action")
+	public String submit(String[] id) {
+		exportService.submit(id);
+		
+		return "redirect:/cargo/export/list.action";
+	}
+	
+	// 取消
+	@RequestMapping("/cargo/export/delete.action")
+	public String cancel(String[] id) {
+		exportService.cancel(id);
+		
+		return "redirect:/cargo/export/list.action";
+	}
+	
 
 }
