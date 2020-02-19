@@ -133,13 +133,9 @@ public class ExportServiceImpl implements ExportService {
 					extep.setFactoryName(extcp.getFactory().getFactoryName());
 					
 					extEproductDao.insert(extep);
-					
 				}
 			}
-			
 		}
-		
-		
 	}
 
 	@Override
@@ -183,6 +179,7 @@ public class ExportServiceImpl implements ExportService {
 	}
 
 	@Override
+	@WebMethod(exclude=true)
 	public void delete(Serializable[] ids) {
 		exportDao.delete(ids);
 	}
