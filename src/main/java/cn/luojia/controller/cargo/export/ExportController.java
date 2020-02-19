@@ -110,7 +110,7 @@ public class ExportController extends BaseController {
 	}
 	
 	// 上报
-	@RequestMapping("/cargo/export/delete.action")
+	@RequestMapping("/cargo/export/submit.action")
 	public String submit(String[] id) {
 		exportService.submit(id);
 		
@@ -118,7 +118,7 @@ public class ExportController extends BaseController {
 	}
 	
 	// 取消
-	@RequestMapping("/cargo/export/delete.action")
+	@RequestMapping("/cargo/export/cancel.action")
 	public String cancel(String[] id) {
 		exportService.cancel(id);
 		
