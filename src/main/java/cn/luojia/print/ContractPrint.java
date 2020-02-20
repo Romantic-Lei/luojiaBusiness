@@ -2,9 +2,13 @@ package cn.luojia.print;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +22,15 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellRangeAddress;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import cn.luojia.util.DownloadUtil;
 import cn.luojia.util.UtilFuns;
@@ -40,7 +53,25 @@ public class ContractPrint {
 		String signingDate = sd.format(contract.getSigningDate());
 		String deliveryPeriod = sd.format(contract.getDeliveryPeriod());
 		String shipTime = sd.format(contract.getShipTime());
-
+		
+		String contents = "合同号：" + contract.getContractNo() + "\n"
+						+ "客户名称：" + contract.getCustomName() + "\n"
+						+ "合作方：" + contract.getOfferor() + "\n"
+						+ "签单日期" + signingDate + "\n"
+						+ "制单人" + contract.getInputBy() + "\n"
+						+ "审单人" + contract.getCheckBy() + "\n"
+						+ "验货人" + contract.getInspector() + "\n"
+						+ "总金额" + contract.getTotalAmount() + "\n"
+						+ "重要程度" + contract.getImportNum() + "\n"
+						
+						+ "交货日期" + deliveryPeriod + "\n"
+						+ "船期" + shipTime + "\n"
+						+ "贸易条款" + contract.getTradeTerms() + "\n"
+						+ "说明" + contract.getRemark() + "\n"
+						+ "打印板式" + contract.getPrintStyle() + "\n"
+						+ "状态" + contract.getState() + "\n"
+						+ "走货状态" + contract.getOutState() + "\n";
+						
 		// 相同厂家的信息一起打印
 		List<ContractProductVO> oList = contract.getContractProducts();
 		UtilFuns utilFuns = new UtilFuns();
@@ -203,6 +234,11 @@ public class ContractPrint {
 			poiUtil.setLine(wb, patriarch, curRow, 2, curRow, 8);	//draw line
 			
 			//header
+			ZxingQRCode ORCode = new ZxingQRCode();
+			// 把二维码存起来 ，要做大一点，否则读图片的时候会模糊
+			ORCode.encode(contents, 400, 400, path+"make/xlsprint/二维码1.png");
+			poiUtil.setPicture(wb, patriarch, path+"make/xlsprint/二维码1.png", curRow, 8, curRow+4, 8);
+						
 			nRow = sheet.createRow(curRow++);
 			nRow.setHeightInPoints(30);
 			
@@ -730,4 +766,34 @@ public class ContractPrint {
 		return curStyle;
 	}
 
+	public class ZxingQRCode {
+		/**
+		 * 生成二维码
+		 * @param contents 二维码内容
+		 * @param width 宽度
+		 * @param height 高度
+		 * @param imgPath 存放地址
+		 */
+		public void encode(String contents, int width, int height, String imgPath) {
+			Hashtable<EncodeHintType, Object> hints = new Hashtable();
+			// 设置纠错等级
+			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+			// 设置编码格式
+			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+			// 设置白边
+			hints.put(EncodeHintType.MARGIN, 1);
+			MatrixToImageConfig config = new MatrixToImageConfig(0xFF00CCCC, 0xFFFFFFFF);
+			try {
+				BitMatrix bitMatrix = new MultiFormatWriter().encode(contents,
+						BarcodeFormat.QR_CODE, width, height, hints);
+				MatrixToImageWriter.writeToStream(bitMatrix, "png", 
+						new FileOutputStream(imgPath), config);
+				System.out.println("QR Code encode sucsess! the img's path is "+imgPath);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }
