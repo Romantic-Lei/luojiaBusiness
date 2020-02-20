@@ -9,18 +9,22 @@
 <script type="text/javascript">
 	function doc(value) {
 		if (value == 0) {
-			document.getElementById('fm').style.display="none";
+			document.getElementById('fm').hidden = true;
+			document.getElementById('view').hidden = false;
 			document.getElementById("putName").innerHTML = "信用证号：";
 			document.getElementById("idOrLcno").value = "L/C";
 			this.reset(); // 清空表格值
 			
 		} else if(value == 1) {
-			document.getElementById('fm').style.display="none";
+			document.getElementById('fm').hidden = true;
+			document.getElementById('view').hidden = false;
 			document.getElementById("putName").innerHTML = "报运编号：";
 			document.getElementById("idOrLcno").value = "8a63f9ca-1670-436a-96c7-e0f12b70e8d8";
 			this.reset(); // 清空表格值
 		} else {
-			document.getElementById('fm').style.display="";
+			document.getElementById('fm').hidden = false;
+			document.getElementById('view').hidden = true;
+			//document.getElementById('view').style.display="none"; // 显示报运表单查询框
 			document.getElementById("putName").innerHTML = "报运编号：";
 			document.getElementById("idOrLcno").value = "8a63f9ca-1670-436a-96c7-e0f12b70e8d8";
 			this.reset(); // 清空表格值
@@ -151,23 +155,25 @@
 </script>
 </head>
 <body>
-	<form action="${ctx}/ws/export/get.action" method="post" id="fm">
-		<div style="background-color: rgba(255, 255, 255, 0.4);width: 1160px;height: 1px">
-			<input type="text" name="id" value="${id }" /> <input type="submit" value="物流单查询" />
-		</div>
-	</form>
-	<form method="post">
-		<div id="menubar">
+<div id="menubar">
 			<div id="middleMenubar">
 				<div id="innerMenubar">
 					<div id="navMenubar">
 						<ul>
-							<li id="view"><a href="#" onclick="sendMsg();this.blur();">查看</a></li>
+							<li id="view" ><a href="#" onclick="sendMsg();this.blur();"hidden="false">查看</a></li>
 						</ul>
+						<form action="${ctx}/ws/export/get.action" method="post" id="fm" hidden="true">
+							<div style="background-color: rgba(255, 255, 255, 0.4);width: 1160px;height: 1px">
+								<input type="text" name="id" value="${id }" /> <input type="submit" value="物流单查询" />
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+	
+	<form method="post">
+		
 		<div class="textbox" id="centerTextbox">
 
 			<div class="textbox-header">
@@ -175,9 +181,9 @@
 					<div class="textbox-title">
 						出口报运跟踪 <select name="find" id="queryMode"
 							onChange="doc(this.value)">
-							<option value="0">信用证号查询</option>
+							<option value="0" selected="selected">信用证号查询</option>
 							<option value="1">报运id查询</option>
-							<option value="2" selected="selected">内网id查询</option>
+							<option value="2">内网id查询</option>
 						</select>
 					</div>
 				</div>
@@ -216,9 +222,9 @@
 				<div>
 					<table class="commonTable" cellspacing="1" id="clearTable">
 						<tr>
-							<td class="columnTitle_mustbe" id="putName">报运编号：</td>
+							<td class="columnTitle_mustbe" id="putName">信用证号：</td>
 							<td class="tableContent"><input type="text" name="lcno"
-								id="idOrLcno" value="${id }"/></td>
+								id="idOrLcno" placeholder="L/C" value=""/></td>
 						</tr>
 						<tr>
 							<td class="columnTitle_mustbe">报运号：</td>
