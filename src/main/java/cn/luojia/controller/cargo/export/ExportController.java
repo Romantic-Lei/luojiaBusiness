@@ -101,6 +101,20 @@ public class ExportController extends BaseController {
 		return "redirect:/cargo/export/list.action";
 	}
 	
+	// 报运内网查询
+	@RequestMapping("/ws/export/get.action")
+	public String get(String id, Model model) {
+		Export dataList = exportService.get(id);
+		if(dataList == null){
+//			dataList.setState(5);
+			model.addAttribute("state", 5);
+		}else{
+			model.addAttribute("id", id);
+			model.addAttribute("dataList", dataList);
+		}
+		return "/ws/export/ajaxExport.jsp";
+	}
+	
 	// 删除
 	@RequestMapping("/cargo/export/delete.action")
 	public String delete(String[] id) {

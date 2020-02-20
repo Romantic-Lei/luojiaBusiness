@@ -7,6 +7,26 @@
 <title></title>
 <script type="text/javascript" src="../../js/datepicker/WdatePicker.js"></script>
 <script type="text/javascript">
+	function doc(value) {
+		if (value == 0) {
+			document.getElementById('fm').style.display="none";
+			document.getElementById("putName").innerHTML = "信用证号：";
+			document.getElementById("idOrLcno").value = "L/C";
+			this.reset(); // 清空表格值
+			
+		} else if(value == 1) {
+			document.getElementById('fm').style.display="none";
+			document.getElementById("putName").innerHTML = "报运编号：";
+			document.getElementById("idOrLcno").value = "8a63f9ca-1670-436a-96c7-e0f12b70e8d8";
+			this.reset(); // 清空表格值
+		} else {
+			document.getElementById('fm').style.display="";
+			document.getElementById("putName").innerHTML = "报运编号：";
+			document.getElementById("idOrLcno").value = "8a63f9ca-1670-436a-96c7-e0f12b70e8d8";
+			this.reset(); // 清空表格值
+		}
+
+	}
 	/* 
 		开发步骤
 		1、创建xmlHttpRquest对象
@@ -22,10 +42,10 @@
 
 		var idOrLcno = document.getElementById("idOrLcno").value;
 		var num = document.getElementById("queryMode").value;
-		
+
 		var url = "http://localhost:8080/luojia/cxf/ExportServiceImpl";
 		var requestBody;
-		if (num == 1){
+		if (num == 1) {
 			requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:q0=\"http://impl.service.luojia.cn/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
 					+ "<soapenv:Body><q0:get><arg0>"
 					+ idOrLcno
@@ -51,7 +71,7 @@
 			if (xmlHttpRequest.status == 200) {
 				var retXml = xmlHttpRequest.responseXML;
 				var ret = retXml.getElementsByTagName("return")[0]; // 获取return 结点信息
-				
+
 				if (ret != null) {
 					var test = ret.getElementsByTagName("customerContract")[0].firstChild.nodeValue;
 					var customerContract = ret
@@ -59,7 +79,8 @@
 					document.getElementById("customerContract").innerHTML = customerContract;
 
 					var inputDate = ret.getElementsByTagName("inputDate")[0].firstChild.nodeValue; //获取到报运号
-					document.getElementById("inputDate").innerHTML = inputDate.substring(0, 10);
+					document.getElementById("inputDate").innerHTML = inputDate
+							.substring(0, 10);
 
 					var lcno = ret.getElementsByTagName("lcno").item(0).firstChild.nodeValue;
 					document.getElementById("lcno").innerHTML = lcno;
@@ -103,19 +124,7 @@
 					document.getElementById("state").innerHTML = "<font color='orange'>"
 							+ state + "</font>";
 				} else {
-					var space = " ";
-					document.getElementById("customerContract").innerHTML = space;
-					document.getElementById("inputDate").innerHTML = space;
-					document.getElementById("lcno").innerHTML = space;
-					document.getElementById("consignee").innerHTML = space;
-					document.getElementById("shipmentPort").innerHTML = space;
-
-					document.getElementById("destinationPort").innerHTML = space;
-					document.getElementById("transportMode").innerHTML = space;
-					document.getElementById("priceCondition").innerHTML = space;
-					document.getElementById("marks").innerHTML = space;
-					document.getElementById("remark").innerHTML = space;
-					document.getElementById("state").innerHTML = space;
+					reset();
 				}
 			} else {
 				// 无法正确访问出口报运服务
@@ -123,9 +132,30 @@
 			}
 		}
 	}
+	
+	function reset(){
+		var space = " ";
+		document.getElementById("customerContract").innerHTML = space;
+		document.getElementById("inputDate").innerHTML = space;
+		document.getElementById("lcno").innerHTML = space;
+		document.getElementById("consignee").innerHTML = space;
+		document.getElementById("shipmentPort").innerHTML = space;
+
+		document.getElementById("destinationPort").innerHTML = space;
+		document.getElementById("transportMode").innerHTML = space;
+		document.getElementById("priceCondition").innerHTML = space;
+		document.getElementById("marks").innerHTML = space;
+		document.getElementById("remark").innerHTML = space;
+		document.getElementById("state").innerHTML = space;
+	}
 </script>
 </head>
 <body>
+	<form action="${ctx}/ws/export/get.action" method="post" id="fm">
+		<div style="background-color: rgba(255, 255, 255, 0.4);width: 1160px;height: 1px">
+			<input type="text" name="id" value="${id }" /> <input type="submit" value="物流单查询" />
+		</div>
+	</form>
 	<form method="post">
 		<div id="menubar">
 			<div id="middleMenubar">
@@ -142,11 +172,12 @@
 
 			<div class="textbox-header">
 				<div class="textbox-inner-header">
-					<div class="textbox-title">出口报运跟踪
-						<select name="find" id="queryMode">
+					<div class="textbox-title">
+						出口报运跟踪 <select name="find" id="queryMode"
+							onChange="doc(this.value)">
 							<option value="0">信用证号查询</option>
 							<option value="1">报运id查询</option>
-							<option value="2">其他查询</option>
+							<option value="2" selected="selected">内网id查询</option>
 						</select>
 					</div>
 				</div>
@@ -157,48 +188,68 @@
 			<div class="textbox-header">
 				<div class="textbox-inner-header">
 					<div class="textbox-title">
-						状态：<span id="state"></span>
+						状态： <span id="state"> <c:if test="${state == 5}">
+										<font style="color: orange">您的订单正在报运中或者不存在,请稍后再试！</font>
+									</c:if> <c:if test="${dataList.state == 0}">
+										<font style="color: orange">您的订单正在处理中</font>
+									</c:if> <c:if test="${dataList.state == 1}">
+										<font style="color: orange">已上报，待装箱</font>
+									</c:if> <c:if test="${dataList.state == 2}">
+										<font style="color: gray">已上报，待装箱→</font>
+										<font style="color: orange">已装箱，待委托</font>
+									</c:if> <c:if test="${dataList.state == 3}">
+										<font style="color: gray">已上报，待装箱→</font>
+										<font style="color: gray">已装箱，待委托→</font>
+										<font style="color: orange">已委托，待发票通知</font>
+									</c:if> <c:if test="${dataList.state == 4}">
+										<font style="color: gray">已上报，待装箱→</font>
+										<font style="color: gray">已装箱，待委托→</font>
+										<font style="color: gray">已委托，待发票通知→</font>
+										<font style="color: orange">已发票，流程顺利完成!</font>
+									</c:if>
+								</span>
 					</div>
 				</div>
 			</div>
 			<div>
 
 				<div>
-					<table class="commonTable" cellspacing="1">
+					<table class="commonTable" cellspacing="1" id="clearTable">
 						<tr>
-							<td class="columnTitle_mustbe">信用证号：</td>
+							<td class="columnTitle_mustbe" id="putName">报运编号：</td>
 							<td class="tableContent"><input type="text" name="lcno"
-								id="idOrLcno" value="8a63f9ca-1670-436a-96c7-e0f12b70e8d8" /></td>
+								id="idOrLcno" value="${id }"/></td>
 						</tr>
 						<tr>
 							<td class="columnTitle_mustbe">报运号：</td>
-							<td class="tableContent" id="customerContract"></td>
+							<td class="tableContent" id="customerContract">${dataList.customerContract }</td>
 							<td class="columnTitle_mustbe">制单日期：</td>
-							<td class="tableContent" id="inputDate"></td>
+							<td class="tableContent" id="inputDate"><fmt:formatDate
+									value="${dataList.inputDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						</tr>
 						<tr>
 							<td class="columnTitle_mustbe">信用证号：</td>
-							<td class="tableContent" id="lcno"></td>
+							<td class="tableContent" id="lcno">${dataList.lcno }</td>
 							<td class="columnTitle_mustbe">收货人及地址：</td>
-							<td class="tableContent" id="consignee"></td>
+							<td class="tableContent" id="consignee">${dataList.consignee }</td>
 						</tr>
 						<tr>
 							<td class="columnTitle_mustbe">装运港：</td>
-							<td class="tableContent" id="shipmentPort"></td>
+							<td class="tableContent" id="shipmentPort">${dataList.shipmentPort }</td>
 							<td class="columnTitle_mustbe">目的港：</td>
-							<td class="tableContent" id="destinationPort"></td>
+							<td class="tableContent" id="destinationPort">${dataList.destinationPort }</td>
 						</tr>
 						<tr>
 							<td class="columnTitle_mustbe">运输方式：</td>
-							<td class="tableContentAuto" id="transportMode"></td>
+							<td class="tableContentAuto" id="transportMode">${dataList.transportMode }</td>
 							<td class="columnTitle_mustbe">价格条件：</td>
-							<td class="tableContentAuto" id="priceCondition"></td>
+							<td class="tableContentAuto" id="priceCondition">${dataList.priceCondition }</td>
 						</tr>
 						<tr>
 							<td class="columnTitle_mustbe">唛头：</td>
-							<td class="tableContent" id="marks"></td>
+							<td class="tableContent" id="marks">${dataList.marks }</td>
 							<td class="columnTitle_mustbe">备注：</td>
-							<td class="tableContent" id="remark"></td>
+							<td class="tableContent" id="remark">${dataList.remark }</td>
 						</tr>
 					</table>
 				</div>
