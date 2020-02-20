@@ -76,5 +76,6 @@
 		<aop:pointcut expression="execution(* cn.luojia.service.*.*(..))" id="txPoint"/>
 	    <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
 	</aop:config>
+	
 </beans>
 			

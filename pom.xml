@@ -50,14 +50,14 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		
+
 		<!-- 整合数据库连接池 c3p0 -->
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1.2</version>
 		</dependency>
-		
+
 		<!-- 注入数据库驱动 -->
 		<dependency>
 			<groupId>com.oracle</groupId>
@@ -69,7 +69,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.44</version>
 		</dependency>
-		
+
 		<!-- 整合Apache CXF WebService -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -87,7 +87,7 @@
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
 			<version>3.0.0-milestone2</version>
 		</dependency>
-		
+
 		<!-- 第三方常用jar包 -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -99,14 +99,14 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.5</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.6</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.6</version>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
@@ -127,7 +127,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.9</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -155,7 +155,7 @@
 			<artifactId>jxl</artifactId>
 			<version>2.4.2</version>
 		</dependency>
-		
+
 		<!-- 防止和tomcat中的jar冲突 -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -200,5 +200,5 @@
 		</plugins>
 		<finalName>luojiaBusiness</finalName>
 	</build>
-	
+
 </project>
