@@ -69,6 +69,14 @@ public class ExportServiceImpl implements ExportService {
 	public Export get(String id) {
 		return exportDao.get(id);
 	}
+	
+	@Override
+	public Export findByLcno(String lcno) {
+		List<Export> findByLcno = exportDao.findByLcno(lcno);
+		int size = findByLcno.size();
+		boolean b = findByLcno == null;
+		return findByLcno.size() == 0 ? null : findByLcno.get(0);
+	}
 
 	@Override
 	@WebMethod(exclude=true)

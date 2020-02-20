@@ -66,7 +66,7 @@
 									<!-- 序号是当前索引加1 -->
 									<td>${status.index+1}</td>
 									<td>${o.customName}</td>
-									<td><a href="toview.action?id=${o.id}">${o.contractNo}</a></td>
+									<td><a href="${ctx}/cargo/contract/toview.action?id=${o.id}">${o.contractNo}</a></td>
 									<td align="center">${o.cpnum}/${o.extnum}</td>
 									<td>${o.inputBy}</td>
 									<td>${o.checkBy}</td>

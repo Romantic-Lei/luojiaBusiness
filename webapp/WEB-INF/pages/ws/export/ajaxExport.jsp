@@ -20,14 +20,22 @@
 	// alert(xmlHttpRequest);
 	function sendMsg() {
 
-		var id = document.getElementById("id").value;
-
+		var idOrLcno = document.getElementById("idOrLcno").value;
+		var num = document.getElementById("queryMode").value;
+		
 		var url = "http://localhost:8080/luojia/cxf/ExportServiceImpl";
-
-		var requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:q0=\"http://impl.service.luojia.cn/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
-				+ "<soapenv:Body><q0:get><arg0>"
-				+ id
-				+ "</arg0></q0:get></soapenv:Body></soapenv:Envelope>";
+		var requestBody;
+		if (num == 1){
+			requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:q0=\"http://impl.service.luojia.cn/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+					+ "<soapenv:Body><q0:get><arg0>"
+					+ idOrLcno
+					+ "</arg0></q0:get></soapenv:Body></soapenv:Envelope>";
+		} else if (num == 0) {
+			requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:q0=\"http://impl.service.luojia.cn/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+					+ "<soapenv:Body><q0:findByLcno><arg0>"
+					+ idOrLcno
+					+ "</arg0></q0:findByLcno></soapenv:Body></soapenv:Envelope>";
+		}
 
 		xmlHttpRequest.open("POST", url, true); //打开链接
 		xmlHttpRequest.setRequestHeader("Content-Type",
@@ -43,7 +51,7 @@
 			if (xmlHttpRequest.status == 200) {
 				var retXml = xmlHttpRequest.responseXML;
 				var ret = retXml.getElementsByTagName("return")[0]; // 获取return 结点信息
-
+				
 				if (ret != null) {
 					var test = ret.getElementsByTagName("customerContract")[0].firstChild.nodeValue;
 					var customerContract = ret
@@ -134,7 +142,13 @@
 
 			<div class="textbox-header">
 				<div class="textbox-inner-header">
-					<div class="textbox-title">出口报运跟踪</div>
+					<div class="textbox-title">出口报运跟踪
+						<select name="find" id="queryMode">
+							<option value="0">信用证号查询</option>
+							<option value="1">报运id查询</option>
+							<option value="2">其他查询</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -152,9 +166,9 @@
 				<div>
 					<table class="commonTable" cellspacing="1">
 						<tr>
-							<td class="columnTitle_mustbe">报运编号：</td>
-							<td class="tableContent"><input type="text" name="id"
-								id="id" value="8a63f9ca-1670-436a-96c7-e0f12b70e8d8" /></td>
+							<td class="columnTitle_mustbe">信用证号：</td>
+							<td class="tableContent"><input type="text" name="lcno"
+								id="idOrLcno" value="8a63f9ca-1670-436a-96c7-e0f12b70e8d8" /></td>
 						</tr>
 						<tr>
 							<td class="columnTitle_mustbe">报运号：</td>

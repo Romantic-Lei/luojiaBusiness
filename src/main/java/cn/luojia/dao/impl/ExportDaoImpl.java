@@ -1,12 +1,12 @@
 package cn.luojia.dao.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import cn.luojia.dao.ExportDao;
 import cn.luojia.domain.Export;
-import cn.luojia.vo.ContractVO;
 
 /**
  * 
@@ -26,5 +26,11 @@ public class ExportDaoImpl extends BaseDaoImpl<Export> implements ExportDao {
 	@Override
 	public void updateState(Map map) {
 		super.getSqlSession().update(super.getNs() + ".updateState", map);
+	}
+
+	@Override
+	public List<Export> findByLcno(String lcno) {
+		
+		return super.getSqlSession().selectList(super.getNs() + ".findByLcno", lcno);
 	}
 }

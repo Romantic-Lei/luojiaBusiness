@@ -52,6 +52,15 @@ from export_c e
 		where EXPORT_ID = #{pid}
 	</select>
 	
+	<!-- 根据信用证号查询货物  -->
+	<select id="findByLcno" parameterType="string" resultMap="exportRM">
+		select EXPORT_ID,INPUT_DATE,CONTRACT_IDS,CUSTOMER_CONTRACT,LCNO,CONSIGNEE,MARKS,
+			REMARK,SHIPMENT_PORT,DESTINATION_PORT,TRANSPORT_MODE,PRICE_CONDITION,
+			GROSS_WEIGHT,NET_WEIGHT,MEASUREMENT,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME
+		from EXPORT_C
+		where LCNO = #{lcno}
+	</select>
+	
 	<insert id="insert" parameterType="cn.luojia.domain.Export">
 		insert into export_c
 		(EXPORT_ID,INPUT_DATE,CONTRACT_IDS,CUSTOMER_CONTRACT,LCNO,CONSIGNEE,MARKS,

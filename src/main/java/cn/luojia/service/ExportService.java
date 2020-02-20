@@ -40,4 +40,5 @@ public interface ExportService {
 
 	public List<Contract> getContractList();			// 获取购销合同列表
 	public String getMrecordDate(String exportId);		// 拼接js
+	public Export findByLcno(String lcno);				// 通过信用证号查找货物信息
 }
