@@ -162,7 +162,6 @@
 					<div id="navMenubar">
 						<ul>
 							<li id="view" ><a href="#" onclick="sendMsg();this.blur();"hidden="false">查看</a></li>
-							<li id="view" ><a href="#" onclick="jsonData();this.blur();"hidden="false">ajax</a></li>
 						</ul>
 						<form action="${ctx}/ws/export/get.action" method="post" id="fm" hidden="true">
 							<div style="background-color: rgba(255, 255, 255, 0.4);width: 1160px;height: 1px">

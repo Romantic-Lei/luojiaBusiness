@@ -183,6 +183,32 @@
 			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- 二维码 -->
+	    <dependency>
+	      <groupId>com.google.zxing</groupId>
+	      <artifactId>core</artifactId>
+	      <version>3.2.0</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.google.zxing</groupId>
+	      <artifactId>javase</artifactId>
+	      <version>3.2.0</version>
+	    </dependency>
+		
+		<!-- json -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.2.3</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.4</version>
+        </dependency>
 
 	</dependencies>
 
