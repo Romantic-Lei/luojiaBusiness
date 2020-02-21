@@ -32,6 +32,13 @@
 							onclick="linkHighlighted(this)" target="main" id="aa_1">产品销售排行</a></li>
 						<li><a href="${ctx}/stat/chart/onlineInfo.action"
 							onclick="linkHighlighted(this)" target="main" id="aa_1">系统访问压力图</a></li>
+						<li>json串完成功能</a></li>
+						<li><a href="${ctx}/stat/chart/factorySaleJson.action"
+							onclick="linkHighlighted(this)" target="main" id="aa_1">生产厂家销售情况</a></li>
+						<li><a href="${ctx}/stat/chart/productSaleJson.action"
+							onclick="linkHighlighted(this)" target="main" id="aa_1">产品销售排行</a></li>
+						<li><a href="${ctx}/stat/chart/factorySaleJson.action"
+							onclick="linkHighlighted(this)" target="main" id="aa_1">系统访问压力图</a></li>
 					</ul>
 				</div>
 			</div>
