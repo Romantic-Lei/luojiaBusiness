@@ -465,6 +465,20 @@ import java.util.Date;
     }
   }
   
+  //将为null的数据转为0.0，用在数值的值从数据库中读出的情况
+  public static Double ConvertZero(String s)
+  {
+	  try{
+		  if(s==""){
+			  return 0.0;
+		  }else{
+			  return Double.parseDouble(s);
+		  }
+	  }catch(Exception e){
+		  return 0.0;
+	  }
+  }
+  
   //将为null的数据转为0，用在数值的值从数据库中读出的情况
   public static int cvtPecrent(Object o)
   {
