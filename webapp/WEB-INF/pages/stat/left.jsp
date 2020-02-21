@@ -37,7 +37,7 @@
 							onclick="linkHighlighted(this)" target="main" id="aa_1">生产厂家销售情况</a></li>
 						<li><a href="${ctx}/stat/chart/productSaleJson.action"
 							onclick="linkHighlighted(this)" target="main" id="aa_1">产品销售排行</a></li>
-						<li><a href="${ctx}/stat/chart/factorySaleJson.action"
+						<li><a href="${ctx}/stat/chart/onlineInfoJson.action"
 							onclick="linkHighlighted(this)" target="main" id="aa_1">系统访问压力图</a></li>
 					</ul>
 				</div>

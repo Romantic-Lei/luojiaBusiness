@@ -1,109 +1,65 @@
+// Set theme
 am4core.useTheme(am4themes_animated);
 
+// Generate random data
+var data = [];
+var visits = 10;
+
+for (var i = 1; i < 366; i++) {
+  visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+  data.push({
+    date: new Date(2018, 0, i),
+    name: "name" + i,
+    value: visits
+  });
+}
+
+// Create chart
 var chart = am4core.createFromConfig({
-  // Reduce saturation of colors to make them appear as toned down
-  "colors": {
-    "saturation": 0.4
-  },
+  // Set settings and data
+  "paddingRight": 20,
+  "data": data,
 
-  // Setting data
-  "data": [{
-    "country": "USA",
-    "visits": 3025
-  }, {
-    "country": "China",
-    "visits": 1882
-  }, {
-    "country": "Japan",
-    "visits": 1809
-  }, {
-    "country": "Germany",
-    "visits": 1322
-  }, {
-    "country": "UK",
-    "visits": 1122
-  }, {
-    "country": "France",
-    "visits": 1114
-  }, {
-    "country": "India",
-    "visits": 984
-  }, {
-    "country": "Spain",
-    "visits": 711
-  }, {
-    "country": "Netherlands",
-    "visits": 665
-  }, {
-    "country": "Russia",
-    "visits": 580
-  }, {
-    "country": "South Korea",
-    "visits": 443
-  }, {
-    "country": "Canada",
-    "visits": 441
-  }],
-
-  // Add Y axis
-  "yAxes": [{
-    "type": "ValueAxis",
-    "renderer": {
-      "maxLabelPosition": 0.98
-    }
-  }],
-
-  // Add X axis
+  // Create X axes
   "xAxes": [{
-    "type": "CategoryAxis",
+    "type": "DateAxis",
     "renderer": {
-      "minGridDistance": 20,
       "grid": {
         "location": 0
       }
-    },
-    "dataFields": {
-      "category": "country"
     }
   }],
 
-  // Add series
+  // Create Y axes
+  "yAxes": [{
+    "type": "ValueAxis",
+    "tooltip": {
+      "disabled": true
+    },
+    "renderer": {
+      "minWidth": 35
+    }
+  }],
+
+  // Create series
   "series": [{
-    // Set type
-    "type": "ColumnSeries",
-
-    // Define data fields
+    "id": "s1",
+    "type": "LineSeries",
     "dataFields": {
-      "categoryX": "country",
-      "valueY": "visits"
+      "dateX": "date",
+      "valueY": "value"
     },
-
-    // Modify default state
-    "defaultState": {
-      "transitionDuration": 1000
-    },
-
-    // Set animation options
-    "sequencedInterpolation": true,
-    "sequencedInterpolationDelay": 100,
-
-    // Modify color appearance
-    "columns": {
-      // Disable outline
-      "strokeOpacity": 0,
-
-      // Add adapter to apply different colors for each column
-      "adapter": {
-        "fill": function (fill, target) {
-          return chart.colors.getIndex(target.dataItem.index);
-        }
-      }
-    }
+    "tooltipText": "{valueY.value}"
   }],
 
-  // Enable chart cursor
+  // Add cursor
   "cursor": {
-    "type": "XYCursor",
-    "behavior": "zoomX"
+    "type": "XYCursor"
+  },
+
+  // Add horizontal scrollbar
+  "scrollbarX": {
+    "type": "XYChartScrollbar",
+    "series": ["s1"]
   }
 }, "chartdiv", "XYChart");

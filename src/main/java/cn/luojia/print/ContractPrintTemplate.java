@@ -193,11 +193,11 @@ public class ContractPrintTemplate {
 			nCell = nRow.getCell(4);
 			nCell.setCellValue(printMap.get("ProductDesc"));
 			nCell = nRow.getCell(5);
-			nCell.setCellValue(UtilFuns.ConvertZero(printMap.get("Cnumber")));
+			nCell.setCellValue(UtilFuns.ConvertZero2Double(printMap.get("Cnumber")));
 			nCell = nRow.getCell(6);
 			nCell.setCellValue(printMap.get("PackingUnit"));
 			nCell = nRow.getCell(7);
-			nCell.setCellValue(UtilFuns.ConvertZero(printMap.get("Price")));
+			nCell.setCellValue(UtilFuns.ConvertZero2Double(printMap.get("Price")));
 			
 			nRow = sheet.getRow(rowNo++);
 			nCell = nRow.getCell(1);

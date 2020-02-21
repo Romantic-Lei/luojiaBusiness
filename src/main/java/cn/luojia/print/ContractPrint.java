@@ -347,7 +347,7 @@ public class ContractPrint {
 
 			nCell = nRow.createCell(5);
 			nCell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-			nCell.setCellValue(UtilFuns.ConvertZero(printMap.get("Cnumber")));
+			nCell.setCellValue(UtilFuns.ConvertZero2Double(printMap.get("Cnumber")));
 			nCell.setCellStyle(poiUtil.numberrv10_BorderThin(wb, defaultFont10));
 
 			// Unit
@@ -364,7 +364,7 @@ public class ContractPrint {
 
 			nCell = nRow.createCell(7);
 			nCell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-			nCell.setCellValue(UtilFuns.ConvertZero(printMap.get("Price")));
+			nCell.setCellValue(UtilFuns.ConvertZero2Double(printMap.get("Price")));
 			nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));
 
 			// Amount
