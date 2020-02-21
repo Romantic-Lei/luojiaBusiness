@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
+import org.apache.poi.hssf.usermodel.HSSFPatriarch;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -27,6 +30,8 @@ import org.apache.poi.util.IOUtils;
 
 import cn.luojia.util.DownloadUtil;
 import cn.luojia.util.UtilFuns;
+import cn.luojia.util.file.PoiUtil;
+import cn.luojia.util.file.ZxingQRCode;
 import cn.luojia.vo.ContractProductVO;
 import cn.luojia.vo.ContractVO;
 
@@ -37,7 +42,27 @@ public class ContractPrintTemplate {
 		 * 2.封装每页数据
 		 * 3.打印
 		 */
-		
+		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String signingDate = sd.format(contract.getSigningDate());
+		String deliveryPeriod = sd.format(contract.getDeliveryPeriod());
+		String shipTime = sd.format(contract.getShipTime());
+		String contents = "合同号：" + contract.getContractNo() + "\n"
+				+ "客户名称：" + contract.getCustomName() + "\n"
+				+ "合作方：" + contract.getOfferor() + "\n"
+				+ "签单日期：" + signingDate + "\n"
+				+ "制单人：" + contract.getInputBy() + "\n"
+				+ "审单人：" + contract.getCheckBy() + "\n"
+				+ "验货人：" + contract.getInspector() + "\n"
+				+ "总金额：" + contract.getTotalAmount() + "\n"
+				+ "重要程度：" + contract.getImportNum() + "\n"
+
+				+ "交货日期：" + deliveryPeriod + "\n"
+				+ "船期：" + shipTime + "\n"
+				+ "贸易条款：" + contract.getTradeTerms() + "\n"
+				+ "说明：" + contract.getRemark() + "\n"
+				+ "打印板式：" + contract.getPrintStyle() + "\n"
+				+ "状态：" + contract.getState() + "\n"
+				+ "走货状态：" + contract.getOutState() + "\n";
 		UtilFuns utilFuns = new UtilFuns();
 		List<Map> pageList = new ArrayList<Map>();
 		Map<String,String> pageMap = null;
@@ -72,13 +97,13 @@ public class ContractPrintTemplate {
 			
 			pageMap.put("ProductImage", cp.getProductImage());
 			pageMap.put("ProductDesc", cp.getProductDesc());
-			pageMap.put("Cnumber", cp.getCnumber().toString());
+			pageMap.put("Cnumber", utilFuns.convertNull(cp.getCnumber()));
 			if(cp.getPackingUnit().equals("PCS")){
 				pageMap.put("PackingUnit", "只");
 			}else if(cp.getPackingUnit().equals("SETS")){
 				pageMap.put("PackingUnit", "套");
 			}
-			pageMap.put("Price", cp.getPrice().toString());
+			pageMap.put("Price", utilFuns.convertNull(cp.getPrice()));
 			pageMap.put("ProductNo", cp.getProductNo());
 			
 			String fullName = cp.getFactory().getFullName();
@@ -90,13 +115,13 @@ public class ContractPrintTemplate {
 					if(cp.getFactory().getFullName().equals(fullName)){
 						pageMap.put("ProductImage2", cp.getProductImage());
 						pageMap.put("ProductDesc2", cp.getProductDesc());
-						pageMap.put("Cnumber2", cp.getCnumber().toString());
+						pageMap.put("Cnumber2", utilFuns.convertNull(cp.getCnumber()));
 						if(cp.getPackingUnit().equals("PCS")){
 							pageMap.put("PackingUnit2", "只");
 						}else if(cp.getPackingUnit().equals("SETS")){
 							pageMap.put("PackingUnit2", "套");
 						}
-						pageMap.put("Price2", cp.getPrice().toString());
+						pageMap.put("Price2", utilFuns.convertNull(cp.getPrice()));
 						pageMap.put("ProductNo2", cp.getProductNo());
 					}else {
 						i--;					//如果第二款货物厂家不同，则必须新起一页
@@ -112,7 +137,7 @@ public class ContractPrintTemplate {
 		/*
 		 * 打开模板，复制sheet，另存
 		 */;
-		Workbook wb = new HSSFWorkbook(new FileInputStream(new File(path + "make/xlsprint/tCONTRACTVO.xls")));
+		HSSFWorkbook wb = new HSSFWorkbook(new FileInputStream(new File(path + "make/xlsprint/tCONTRACTVO.xls")));
 		for(int i=0;i<pageList.size();i++){
 			wb.cloneSheet(0);								//复制工作簿
 			wb.setSheetName(i+1, cpList.get(i).getFactory().getFullName());		//设置工作簿名称
@@ -125,8 +150,16 @@ public class ContractPrintTemplate {
 			Cell nCell = null;
 			Map<String,String> printMap = pageList.get(i);
 			
-			Sheet sheet = wb.getSheetAt(i+1);						//定位到当前工作表
+			HSSFSheet sheet = wb.getSheetAt(i+1);						//定位到当前工作表
 			sheet.setForceFormulaRecalculation(true);				//强制公式自动计算，利用模板时，模板中的公式不会因值发生变化而自动计算。
+			
+			ZxingQRCode ORCode = new ZxingQRCode();
+			PoiUtil poiUtil = new PoiUtil();
+			HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
+			
+			// 把二维码存起来 ，要做大一点，否则读图片的时候会模糊
+			ORCode.encode(contents, 400, 400, path + "make/xlsprint/二维码1.png");
+			poiUtil.setPicture(wb, patriarch, path + "make/xlsprint/二维码1.png", rowNo-1, 8, rowNo + 3, 8);
 			
 			nRow = sheet.getRow(rowNo++);
 			nCell = nRow.getCell(1);
@@ -160,11 +193,11 @@ public class ContractPrintTemplate {
 			nCell = nRow.getCell(4);
 			nCell.setCellValue(printMap.get("ProductDesc"));
 			nCell = nRow.getCell(5);
-			nCell.setCellValue(Integer.parseInt(printMap.get("Cnumber")));
+			nCell.setCellValue(UtilFuns.ConvertZero(printMap.get("Cnumber")));
 			nCell = nRow.getCell(6);
 			nCell.setCellValue(printMap.get("PackingUnit"));
 			nCell = nRow.getCell(7);
-			nCell.setCellValue(Double.parseDouble(printMap.get("Price")));
+			nCell.setCellValue(UtilFuns.ConvertZero(printMap.get("Price")));
 			
 			nRow = sheet.getRow(rowNo++);
 			nCell = nRow.getCell(1);
