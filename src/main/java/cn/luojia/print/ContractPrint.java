@@ -372,10 +372,6 @@ public class ContractPrint {
 			sheet.addMergedRegion(region);
 
 			nCell = nRow.createCell(8);
-			if (UtilFuns.isNotEmpty(printMap.get("Cnumber")) && UtilFuns.isNotEmpty(printMap.get("Price"))) {
-				nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-				nCell.setCellFormula("F" + String.valueOf(curRow) + "*H" + String.valueOf(curRow));
-			} 
 			nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 			nCell.setCellFormula("F" + String.valueOf(curRow) + "*H" + String.valueOf(curRow));
 			nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));
@@ -451,10 +447,8 @@ public class ContractPrint {
 				sheet.addMergedRegion(region);
 
 				nCell = nRow.createCell(8);
-				if (UtilFuns.isNotEmpty(printMap.get("Cnumber2")) && UtilFuns.isNotEmpty(printMap.get("Price2"))) {
-					nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-					nCell.setCellFormula("F" + String.valueOf(curRow) + "*H" + String.valueOf(curRow));
-				}
+				nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+				nCell.setCellFormula("F" + String.valueOf(curRow) + "*H" + String.valueOf(curRow));
 				nCell.setCellStyle(poiUtil.moneyrv10_BorderThin(wb, defaultFont10, rmb4Format));
 
 				curRow++;
@@ -479,12 +473,6 @@ public class ContractPrint {
 			// TotalAmount
 			nRow = sheet.createRow(curRow++);
 			nRow.setHeightInPoints(24);
-			if (UtilFuns.isNotEmpty(printMap.get("Cnumber")) && UtilFuns.isNotEmpty(printMap.get("Price"))) {
-				nCell = nRow.createCell(8);
-				nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-				nCell.setCellFormula("SUM(I" + String.valueOf(curRow - 4) + ":I" + String.valueOf(curRow - 1) + ")");
-				nCell.setCellStyle(poiUtil.moneyrv12_BorderThin(wb, defaultFont12, rmb2Format));
-			}
 			nCell = nRow.createCell(8);
 			nCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 			nCell.setCellFormula("SUM(I" + String.valueOf(curRow - 4) + ":I" + String.valueOf(curRow - 1) + ")");
