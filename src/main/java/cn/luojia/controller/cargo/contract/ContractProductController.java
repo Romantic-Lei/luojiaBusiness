@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.luojia.controller.BaseController;
+import cn.luojia.domain.Contract;
 import cn.luojia.domain.ContractProduct;
 import cn.luojia.domain.Factory;
 import cn.luojia.service.ContractProductService;
+import cn.luojia.service.ContractService;
 import cn.luojia.service.FactoryService;
 
 /**
@@ -26,6 +28,8 @@ public class ContractProductController extends BaseController {
 	
 	@Autowired
 	ContractProductService contractProductService;
+	@Autowired
+	ContractService contractService;
 	@Autowired
 	FactoryService factoryService;
 	
@@ -76,6 +80,11 @@ public class ContractProductController extends BaseController {
 	@RequestMapping("/cargo/contractproduct/update.action")
 	public String update(ContractProduct contractProduct, Model model) {
 		contractProductService.update(contractProduct);
+		// 修改合同冗余的总金额，其他增删改查也是同理
+		Double amount = contractProduct.getAmount();
+		Contract contract = contractService.get(contractProduct.getContractId());
+		contract.setTotalAmount(amount);
+		contractService.update(contract);
 		//重定向的时候把id传到新增页面，避免id遗失
 		model.addAttribute("contractId", contractProduct.getContractId());
 		
