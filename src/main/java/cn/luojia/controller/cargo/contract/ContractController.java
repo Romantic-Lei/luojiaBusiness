@@ -32,6 +32,19 @@ public class ContractController extends BaseController {
 	@RequestMapping("/cargo/contract/list.action")
 	public String list(Model model) {
 		List<Contract> dataList = contractService.find(null);
+		
+		// 极不推荐这样处理冗余字段 合同总金额，推荐在购销合同和附件中各自对合同总金额进行操作
+		Contract _contract;
+		for(Contract contract : dataList) {
+			// 临时合同对象
+			_contract = contractService.get(contract.getId());
+			if(contract.getTotalAmount() != null && !contract.getTotalAmount().equals(_contract.getTotalAmount())) {
+				// 数据库中合同总金额和 查询出来的总金额不对应就更新
+				contract.setTotalAmount(contract.getTotalAmount());
+				contractService.update(contract);
+			}
+		}
+		
 		model.addAttribute("dataList", dataList);
 		
 		return "/cargo/contract/jContractList.jsp";
