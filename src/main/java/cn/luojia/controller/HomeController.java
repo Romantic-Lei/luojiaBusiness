@@ -15,8 +15,8 @@ public class HomeController {
 	@RequestMapping(value={"/home.action"})		//配合web下<url-pattern>/</url-pattern>
 	public String login(HttpSession session,SessionStatus sessionStatus ){
 		
-		session.removeAttribute("name");
-		sessionStatus.setComplete();
+//		session.removeAttribute("name");
+//		sessionStatus.setComplete();
 		return "/index.jsp";			//首页，删除根目录下index.jsp，否则上面url将被拦截进不来
 	}
 	
