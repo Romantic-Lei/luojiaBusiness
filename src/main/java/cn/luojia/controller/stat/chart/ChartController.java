@@ -1,6 +1,7 @@
 package cn.luojia.controller.stat.chart;
 
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,7 +115,7 @@ public class ChartController {
 		// 查询到的list集合是一个生产厂家名和销售数量交替存放的
 		List<String> dataList = sqlDao.executeSQL(sql);
 		String dir = "onlineinfojson";
-		this.writeJson(path, dir, this.getLinrJson(dataList));
+		this.writeJson(path, dir, this.getLineJson(dataList));
 		
 		return "/stat/chart/jStat.jsp?forward="+dir;
 	}
@@ -237,9 +238,14 @@ public class ChartController {
 		return sb.toString();
 	}
 	
-	public String getLinrJson(List<String> dataList) {
+	public String getLineJson(List<String> dataList) {
 		// 拼接数据到一个json 字符串
-		StringBuffer sb = new StringBuffer();sb.append("am4core.useTheme(am4themes_animated);");
+		StringBuffer sb = new StringBuffer();
+		sb.append("am4core.useTheme(am4themes_animated);");
+		Calendar now = Calendar.getInstance();  
+	    String year = now.get(Calendar.YEAR) + "";  
+	    String month = now.get(Calendar.MONTH) + 1 + "";  
+	    String day =  now.get(Calendar.DAY_OF_MONTH) + "";  
 		sb.append("am4core.useTheme(am4themes_animated);var data = [];");
 		int time = 0;
 		int visits = 0;
@@ -247,7 +253,7 @@ public class ChartController {
 			time = UtilFuns.ConvertZero(dataList.get(i++));
 			visits = UtilFuns.ConvertZero(dataList.get(i++));
 			
-			sb.append("data.push({time:").append(time).append(", name:\"name\" + 1,value: ").append(visits).append("});");
+			sb.append("data.push({time: new Date(").append(year + "," + month + "," + day + ",").append(time).append("), name:\"name\" + 1,value: ").append(visits).append("});");
 		}
 			sb.append("var chart = am4core.createFromConfig({\"paddingRight\": 20,\"data\": data,\"xAxes\": [{\"type\": \"DateAxis\",\"renderer\": {\"grid\": {\"location\": 0}}}],\"yAxes\": [{\"type\": \"ValueAxis\",\"tooltip\": {\"disabled\": true},\"renderer\": {\"minWidth\": 35}}],\"series\": [{\"id\": \"s1\",\"type\": \"LineSeries\",\"dataFields\": {\"dateX\": \"time\",\"valueY\": \"value\"}, \"tooltipText\": \"{valueY.value}\"}],\"cursor\": {\"type\": \"XYCursor\"},\"scrollbarX\": { \"type\": \"XYChartScrollbar\",\"series\": [\"s1\"]}}, \"chartdiv\", \"XYChart\");");
 
