@@ -11,6 +11,13 @@
 		var ele = document.getElementById("factoryName");
 		ele.value = val
 	}
+	
+	// 自动计算货物金额
+	function setAmount(){
+		var cnumber = document.getElementById("cnumber").value;
+		var price = document.getElementById("price").value;
+		document.getElementById("amount").value = cnumber * price
+	}
 </script>
 </head>
 <body>
@@ -41,7 +48,7 @@
 			<div>
 				<div>
 					<table class="commonTable" cellspacing="1">
-						<input type="hidden" name="amount" value="${obj.amount}"
+						<input type="text" name="amount" value="${obj.amount}"
 							id="amount" />
 						<tr>
 						<tr>
@@ -75,7 +82,7 @@
 						<tr>
 							<td class="columnTitle_mustbe">数量：</td>
 							<td class="tableContent"><input type="text" name="cnumber"
-								id="cnumber" value="${obj.cnumber}" onchange="setAmount()" /></td>
+								id="cnumber" value="${obj.cnumber}" onblur="setAmount()" /></td>
 							<td class="columnTitle_mustbe">包装单位：</td>
 							<td class="tableContent"><input type="text"
 								name="packingUnit" value="${obj.packingUnit}" /></td>
@@ -83,7 +90,7 @@
 						<tr>
 							<td class="columnTitle_mustbe">单价：</td>
 							<td class="tableContent"><input type="text" name="price"
-								id="price" value="${obj.price}" onchange="setAmount()" /></td>
+								id="price" value="${obj.price}" onblur="setAmount()" /></td>
 							<td class="columnTitle_mustbe">排序号：</td>
 							<td class="tableContent"><input type="text" name="orderNo"
 								value="${obj.orderNo}" /></td>
