@@ -11,6 +11,14 @@
 		var ele = document.getElementById("factoryName");
 		ele.value = val
 	}
+	
+	// 自动计算货物总金额
+	function setAmount(){
+		var cnumber = document.getElementById("cnumber").value;
+		var price = document.getElementById("price").value;
+		document.getElementById("amount").value = cnumber * price
+	}
+	
 </script>
 </head>
 <body>
