@@ -1,16 +1,26 @@
 package cn.luojia.util.file;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
 import com.google.zxing.EncodeHintType;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 /**
@@ -22,7 +32,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 public class ZxingQRCode {
 	
 	/**
-	 * 
+	 * 生成二维码
 	 * @param contents 二维码内容
 	 * @param width 宽度
 	 * @param height 高度
@@ -53,7 +63,7 @@ public class ZxingQRCode {
 	}
 
 	// 删除二维码白边
-	public BufferedImage deleteWhite(BitMatrix matrix) {
+	public BufferedImage deleteWhite(BitMatrix matrix) throws Exception {
 		int[] rec = matrix.getEnclosingRectangle();
 		int resWidth = rec[2] + 1;
 		int resHeight = rec[3] + 1;
@@ -75,7 +85,48 @@ public class ZxingQRCode {
 				image.setRGB(x, y, resMatrix.get(x, y) ?  Color.BLACK.getRGB():Color.WHITE.getRGB());
 			}
 		}
-
+		image = createPhotoAtCenter(image,"C:\\Users\\asus\\Desktop\\1.jpg");
 		return image;
+	}
+	
+	private BufferedImage createPhotoAtCenter(BufferedImage bufImg,String imgFile) throws Exception {
+		Image im = ImageIO.read(new File(imgFile));
+		Graphics2D g = bufImg.createGraphics();
+		//获取bufImg的中间位置
+		int centerX = bufImg.getMinX() + bufImg.getWidth()/2 - 80/2;
+		int centerY = bufImg.getMinY() + bufImg.getHeight()/2 - 80/2;
+		g.drawImage(im,centerX,centerY,80,80,null);
+		g.dispose();
+		bufImg.flush();
+		return bufImg;
+	}
+	
+	/**
+	 * 解析二维码
+	 * @param imgPath 图片路径
+	 * @return 
+	 */
+	public String decode(String imgPath) {
+		BufferedImage image = null;
+        Result result = null;
+        try {
+        	image = ImageIO.read(new File(imgPath));
+        	if (image == null) {
+                System.out.println("the decode image may be not exit.");
+            }
+        	LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            Hashtable<DecodeHintType, Object> hints = new Hashtable();
+            //设置显示格式为GBK
+            hints.put(DecodeHintType.CHARACTER_SET, "utf-8");
+            //进行解码
+            result = new MultiFormatReader().decode(bitmap, hints);
+            return result.getText();//返回结果信息
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        return null;
 	}
 }
