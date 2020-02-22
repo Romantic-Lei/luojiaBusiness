@@ -15,6 +15,6 @@ public class UserLogin {
 	private String userName;			// 用户名
 	private String passWord;			// 面膜
 	private String email;				// 邮箱用于登录
-	private String dept;				// 部门
+	private String department;			// 部门
 
 }
