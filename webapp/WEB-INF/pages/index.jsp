@@ -21,13 +21,13 @@ body{
 </style>
 
 <body>
-	<form action="login_main" method="post" name="Form1">
+	<form action=""${ctx}/luojia/login.action" method="post" name="Form1">
 		<div id="warpbox">
 			<div class="main">
 				<div class="zck">
 					<div class="zc">
 						<div class="zc_line">
-							用户名： <input type="text" value="" name="userName" id="userName" />
+							邮 &nbsp;&nbsp;箱： <input type="text" value="" name="email" id="email" />
 							<div id="ts" style="z-index: 1;"></div>
 						</div>
 						<div class="zc_line">
@@ -37,7 +37,7 @@ body{
 					</div>
 					<div class="dl">
 						<input class="loginImgOut" value="" type="button" name="btnsubmit"
-							onclick="formSubmit('${ctx}/fmain.action','_self');"
+							onclick="formSubmit('${ctx}/login.action','_self');"
 							onmouseover="this.className='loginImgOver'"
 							onmouseout="this.className='loginImgOut'" />
 						<input class="resetImgOut" value="" type="button" 
