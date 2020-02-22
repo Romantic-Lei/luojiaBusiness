@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="find" parameterType="map" resultMap="userLoginRM">
 		select UID, USERNAME, PASSWORD, EMAIL, DEPARTMENT
 		from USER_LOGIN_C
-		where EMAIL=#{email} and PASSWORD=#{passWord}
+		where EMAIL=#{email,jdbcType=VARCHAR} and PASSWORD=#{passWord,jdbcType=VARCHAR}
 	</select>
 	
 	<!-- 新增用户 -->
