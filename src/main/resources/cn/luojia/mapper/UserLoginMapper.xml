@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.luojia.mapper.UserLoginMapper">
+	<resultMap type="cn.luojia.domain.UserLogin" id="userLoginRM">
+		<id property="uid" column="uid"/>
+		
+		<result property="userName" column="USERNAME"/>
+		<result property="passWord" column="PASSWORD"/>
+		<result property="email" column="EMAIL"/>
+		<result property="department" column="DEPARTMENT"/>
+	</resultMap>
+	
+	<!-- 查找用户, 根据邮箱和密码查找 -->
+	<select id="find" parameterType="cn.luojia.domain.UserLogin" resultMap="userLoginRM">
+		select UID, USERNAME, PASSWORD, EMAIL, DEPARTMENT
+		from USER_LOGIN_C
+		where EMAIL = #{EMAIL} and password=#{passWord}
+	</select>
+	
+	<!-- 新增用户 -->
+	<insert id="insert" parameterType="cn.luojia.domain.UserLogin">
+		insert into USER_LOGIN_C
+        (UID,USERNAME,PASSWORD,EMAIL,DEPARTMENT)
+        values
+        (
+            #{uid,jdbcType=VARCHAR},
+            #{userName,jdbcType=VARCHAR},
+            #{passWord,jdbcType=VARCHAR},
+            #{email,jdbcType=VARCHAR},
+            #{dept,jdbcType=VARCHAR}
+        )
+	</insert>
+	
+	<update id="update" parameterType="cn.luojia.domain.UserLogin">
+		update USER_LOGIN_C
+        <set>
+            <if test="userName != null">USERNAME=#{passWord,jdbcType=VARCHAR},</if>
+            <if test="passWord != null">PASSWORD=#{passWord,jdbcType=VARCHAR},</if>
+            <if test="dept != null">DEPARTMENT=#{dept,jdbcType=VARCHAR},</if>
+        </set>
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete USER_LOGIN_C
+		where uid = #{pid}
+	</delete>
+	
+	
+</mapper>
