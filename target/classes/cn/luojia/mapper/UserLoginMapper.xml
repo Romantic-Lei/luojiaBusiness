@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="cn.luojia.mapper.UserLoginMapper">
 	<resultMap type="cn.luojia.domain.UserLogin" id="userLoginRM">
-		<id property="uid" column="uid"/>
+		<id property="uid" column="USER_ID"/>
 		
 		<result property="userName" column="USERNAME"/>
 		<result property="passWord" column="PASSWORD"/>

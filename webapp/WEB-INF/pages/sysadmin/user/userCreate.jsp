@@ -7,23 +7,45 @@
 <title>用户新增</title>
 <script type="text/javascript" src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
 <script type="text/javascript">
+	function getByUserName() {
+		var userName = document.getElementsByName("userName")[0].value;
+		$.ajax({
+			url : "${ctx}/sysadmin/user/getChinese2PinYin.action",
+			type : "POST",
+			data : {name : userName},
+			success : function(data) {
+				if("" != data){
+					document.getElementsByName("email")[0].value=data;
+					getByEmail();
+				}
+		    },
+		    error : function(msg) {
+		    	console.log(msg);
+		    }
+		});
+	}
+
 	<!-- 发送ajax请求  -->
 	function getByEmail(){
 		var email = document.getElementsByName("email")[0].value;
 		var reg = new RegExp("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$"); 
 		 if(!reg.test(email)){
 			document.getElementById("font1").innerHTML="<font color=\"#eb6b12\">邮箱格式不正确，请重新输入！</font>";
+			document.getElementById("hidden").value="1";
 			return ;
 		 }
+		 
 		$.ajax({
 			url : "${ctx}/sysadmin/user/getByEmail.action",
 			type : "POST",
 			data : {email : email},
 			success : function(data) {
+				<!-- 返回无数据，邮箱可用 -->
 				if("" == data){
 					document.getElementById("font1").innerHTML="<font color=\"green\">邮箱可使用</font>";
 					document.getElementById("hidden").value="0";
 				} else {
+					<!-- 返回有数据,邮箱不可用 -->
 					document.getElementById("font1").innerHTML="<font color=\"red\">邮箱已被占用</font>";
 					document.getElementById("hidden").value="1";
 				}
@@ -37,6 +59,7 @@
 	function checkEmail(){
 		var _v = document.getElementById("hidden").value;
 		if(_v == 0){
+			<!-- 邮箱合规可提交 -->
 			formSubmit('insert.action','_self');
 			return true;
 		}else {
@@ -72,13 +95,12 @@
 				<table id="ec_table" class="tableRegion" width="98%">
 					<tr>
 						<td class="tableHeader">员工姓名：</td>
-						<td class="tableHeader">&nbsp;<input type="text"
-							name="userName" /></td>
+						<td class="tableHeader">&nbsp;<input type="text" name="userName" onblur="getByUserName()" /></td>
 					</tr>
 					<tr>
 						<td class="tableHeader">员工邮箱：</td>
 						<td class="tableHeader">
-							&nbsp;<input type="text" id="email1" name="email" onblur="getByEmail()"/>
+							&nbsp;<input type="text" id="email1" name="email" onchange="getByEmail()"/>
 							<input type="hidden" id="hidden" value="2"/>
 							<font id="font1"></font>
 						</td>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import cn.luojia.domain.UserLogin;
 import cn.luojia.service.UserLoginService;
+import cn.luojia.util.PinYinUtil;
 import cn.luojia.util.UtilFuns;
 
 @Controller
@@ -131,11 +132,32 @@ public class LoginController {
 	
 	@RequestMapping("/sysadmin/user/getByEmail.action")
 	@ResponseBody
-	public String getByEmail(String email, HttpServletRequest request,HttpServletResponse response, Model model) throws UnsupportedEncodingException {
+	public String getByEmail(String email) throws UnsupportedEncodingException {
 		UserLogin byEmail = userLoginService.getByEmail(email);
 //		UtilFuns.convertNull(byEmail)
 		
 		return byEmail == null ? null : byEmail.getEmail();
+	}
+	
+	@RequestMapping("/sysadmin/user/getChinese2PinYin.action")
+	@ResponseBody
+	public String getChinese2PinYin(String name) {
+		if (name == null || "".equals(name.trim())) {
+			return null;
+		}
+		String fullSpell = PinYinUtil.getFullSpell(name.trim());
+		int i = 1;
+		UserLogin byEmail = userLoginService.getByEmail(fullSpell + "@luojia.com");
+		while(byEmail != null) {
+			i++;
+			byEmail = userLoginService.getByEmail(fullSpell + i + "@luojia.com");
+			if(byEmail == null) {
+				fullSpell = fullSpell + i;
+				break;
+			}
+		}
+		
+		return fullSpell + "@luojia.com";
 	}
 	
 	
