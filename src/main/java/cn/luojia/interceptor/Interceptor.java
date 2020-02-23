@@ -1,7 +1,5 @@
 package cn.luojia.interceptor;
 
-import java.util.Enumeration;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +17,7 @@ public class Interceptor implements HandlerInterceptor {
 		String name = (String) request.getSession().getAttribute("name");
 		if(name == null) {
 			// 用户没有登录，重定向到登录页面
-			response.sendRedirect("/luojia/home.action");
+			response.sendRedirect("/luojiaBusiness/home.action");
 			return false;
 		}else {
 			return true;

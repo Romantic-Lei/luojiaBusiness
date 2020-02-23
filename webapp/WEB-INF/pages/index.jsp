@@ -4,6 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>珞珈商务综合管理平台</title>
+<script language='javascript'>
+	history.go(1);
+</script>
 <link rel="stylesheet" rev="stylesheet" type="text/css"
 	href="${ctx}/skin/default/css/login.css" media="all" />
 <link rel="icon" href="${ctx}/skin/default/images/bussiness.ico"
@@ -21,7 +24,7 @@ body{
 </style>
 
 <body>
-	<form action=""${ctx}/luojia/login.action" method="post" name="Form1">
+	<form action=""${ctx}/luojiaBusiness/login.action" method="post" name="Form1" autocomplete="off">
 		<div id="warpbox">
 			<div class="main">
 				<div class="zck">
@@ -36,7 +39,7 @@ body{
 						</div>
 					</div>
 					<div class="dl">
-						<input class="loginImgOut" value="" type="button" name="btnsubmit"
+						<input class="loginImgOut" value="" type="submit" name="btnsubmit"
 							onclick="formSubmit('${ctx}/login.action','_self');"
 							onmouseover="this.className='loginImgOver'"
 							onmouseout="this.className='loginImgOut'" />

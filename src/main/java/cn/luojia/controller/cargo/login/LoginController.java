@@ -1,5 +1,6 @@
 package cn.luojia.controller.cargo.login;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ import cn.luojia.service.UserLoginService;
 @Controller
 // 只能作用在类上，作用是将指定的Model中的键值对添加至session中
 @SessionAttributes(value = {"name","dept","ip"})
-@SuppressWarnings(value={"unchecked","rawtypes"})
 public class LoginController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class LoginController {
 	@RequestMapping("/login.action")
 	public String checkUser(String email, 
 			@RequestParam(value="passWord",required=false) String passWord
-			,Model model,HttpServletRequest request) {
+			,Model model,HttpServletRequest request) throws IOException {
 		
 		if(!"".equals(email) && !"".equals(passWord)) {
 			// 用户输入了用户名和密码
@@ -59,7 +59,7 @@ public class LoginController {
 	
 	// 用户登出清除session
 	@RequestMapping("/logout.action")
-	public String logout(SessionStatus sessionStatus, HttpServletRequest request) {
+	public String logout(HttpServletRequest request, SessionStatus sessionStatus) {
 		
 		HttpSession session = request.getSession();
 		session.removeAttribute("name");
