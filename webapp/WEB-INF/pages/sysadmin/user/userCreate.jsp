@@ -7,8 +7,14 @@
 <title>用户新增</title>
 <script type="text/javascript" src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
 <script type="text/javascript">
+	<!-- 发送ajax请求  -->
 	function getByEmail(){
 		var email = document.getElementsByName("email")[0].value;
+		var reg = new RegExp("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$"); 
+		 if(!reg.test(email)){
+			document.getElementById("font1").innerHTML="<font color=\"#eb6b12\">邮箱格式不正确，请重新输入！</font>";
+			return ;
+		 }
 		$.ajax({
 			url : "${ctx}/sysadmin/user/getByEmail.action",
 			type : "POST",
@@ -29,7 +35,14 @@
 	}
 	
 	function checkEmail(){
-		alert();
+		var _v = document.getElementById("hidden").value;
+		if(_v == 0){
+			formSubmit('insert.action','_self');
+			return true;
+		}else {
+			alert("请注册合规的邮箱");
+			return false;
+		}
 	}
 </script>
 <body class="curbody">
@@ -40,7 +53,7 @@
 					<div id="navMenubar">
 						<ul>
 							<li id="update"><a href="#"
-								onclick="formSubmit('insert.action','_self');checkEmail();this.blur();">确定</a></li>
+								onclick="return checkEmail();this.blur();">确定</a></li>
 							<li id="back"><a href="#"
 								onclick="formSubmit('${ctx}/sysadminMain.action','_self');this.blur();">返回</a></li>
 						</ul>
@@ -66,7 +79,7 @@
 						<td class="tableHeader">员工邮箱：</td>
 						<td class="tableHeader">
 							&nbsp;<input type="text" id="email1" name="email" onblur="getByEmail()"/>
-							<input type="text" id="hidden" value=""/>
+							<input type="hidden" id="hidden" value="2"/>
 							<font id="font1"></font>
 						</td>
 					</tr>
