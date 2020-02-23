@@ -24,7 +24,7 @@ body{
 </style>
 
 <body>
-	<form action=""${ctx}/luojiaBusiness/login.action" method="post" name="Form1" autocomplete="off">
+	<form action=""${ctx}/luojiaBusiness/login.action" method="post" name="Form1">
 		<div id="warpbox">
 			<div class="main">
 				<div class="zck">
