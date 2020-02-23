@@ -3,6 +3,7 @@ package cn.luojia.service.impl;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 
 	@Override
 	public void insert(UserLogin userLogin) {
+		userLogin.setUid(UUID.randomUUID().toString());
 		userLoginDao.insert(userLogin);
 	}
 

@@ -48,7 +48,7 @@
 		var idOrLcno = document.getElementById("idOrLcno").value;
 		var num = document.getElementById("queryMode").value;
 
-		var url = "http://localhost:8080/luojia/cxf/ExportServiceImpl";
+		var url = "http://localhost:8080/luojiaBusiness/cxf/ExportServiceImpl";
 		var requestBody;
 		if (num == 1) {
 			requestBody = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:q0=\"http://impl.service.luojia.cn/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"

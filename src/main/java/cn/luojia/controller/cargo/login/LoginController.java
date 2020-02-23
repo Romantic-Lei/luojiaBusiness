@@ -109,5 +109,20 @@ public class LoginController {
 
 		return "/index.jsp";
 	}
+	
+	// 转向员工新增页面
+	@RequestMapping("/sysadmin/user/tocreate.action")
+	public String tocreate(){
+		
+		return "/sysadmin/user/userCreate.jsp";
+	}
+	
+	// 员工新增
+	@RequestMapping("/sysadmin/user/insert.action")
+	public String insert(UserLogin userLogin) {
+		userLoginService.insert(userLogin);
+		
+		return "redirect:/sysadmin/user/tocreate.action";
+	}
 
 }

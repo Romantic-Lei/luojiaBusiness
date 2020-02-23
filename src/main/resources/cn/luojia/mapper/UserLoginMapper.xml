@@ -20,17 +20,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where EMAIL=#{email,jdbcType=VARCHAR} and PASSWORD=#{passWord,jdbcType=VARCHAR}
 	</select>
 	
+	<select id="select" parameterType="String" resultMap="userLoginRM">
+		select * 
+		from USER_LOGIN_C
+		where 1=1 
+	</select>
+	
 	<!-- 新增用户 -->
 	<insert id="insert" parameterType="cn.luojia.domain.UserLogin">
 		insert into USER_LOGIN_C
-        (UID,USERNAME,PASSWORD,EMAIL,DEPARTMENT)
+        (USER_ID,USERNAME,PASSWORD,EMAIL,DEPARTMENT)
         values
         (
             #{uid,jdbcType=VARCHAR},
             #{userName,jdbcType=VARCHAR},
             #{passWord,jdbcType=VARCHAR},
             #{email,jdbcType=VARCHAR},
-            #{dept,jdbcType=VARCHAR}
+            #{department,jdbcType=VARCHAR}
         )
 	</insert>
 	
@@ -39,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <set>
             <if test="userName != null">USERNAME=#{passWord,jdbcType=VARCHAR},</if>
             <if test="passWord != null">PASSWORD=#{passWord,jdbcType=VARCHAR},</if>
-            <if test="dept != null">DEPARTMENT=#{dept,jdbcType=VARCHAR},</if>
+            <if test="department != null">DEPARTMENT=#{department,jdbcType=VARCHAR},</if>
         </set>
 	</update>
 	
