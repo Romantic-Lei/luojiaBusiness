@@ -20,10 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where EMAIL=#{email,jdbcType=VARCHAR} and PASSWORD=#{passWord,jdbcType=VARCHAR}
 	</select>
 	
-	<select id="select" parameterType="String" resultMap="userLoginRM">
-		select * 
+	<select id="getByEmail" parameterType="String" resultMap="userLoginRM">
+		select USER_ID,USERNAME,PASSWORD,EMAIL,DEPARTMENT 
 		from USER_LOGIN_C
-		where 1=1 
+		where email=#{email,jdbcType=VARCHAR}
 	</select>
 	
 	<!-- 新增用户 -->

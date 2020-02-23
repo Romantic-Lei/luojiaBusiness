@@ -12,4 +12,9 @@ public class UserLoginDaoImpl extends BaseDaoImpl<UserLogin> implements UserLogi
 		// 设置命令空间
 		super.setNs("cn.luojia.mapper.UserLoginMapper");
 	}
+
+	@Override
+	public UserLogin getByEmail(String email) {
+		return super.getSqlSession().selectOne(super.getNs() + ".getByEmail", email);
+	}
 }

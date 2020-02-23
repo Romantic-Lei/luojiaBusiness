@@ -44,4 +44,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 		userLoginDao.deleteById(id);
 	}
 
+	@Override
+	public UserLogin getByEmail(String email) {
+		return userLoginDao.getByEmail(email);
+	}
+
 }

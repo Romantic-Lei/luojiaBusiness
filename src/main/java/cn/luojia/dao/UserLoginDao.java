@@ -9,5 +9,5 @@ import cn.luojia.domain.UserLogin;
  * @Description 用户登陆持久层
  */
 public interface UserLoginDao extends BaseDao<UserLogin> {
-	
+	public UserLogin getByEmail(String email);
 }

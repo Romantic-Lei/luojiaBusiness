@@ -5,6 +5,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>用户新增</title>
+<script type="text/javascript" src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
+<script type="text/javascript">
+	function getByEmail(){
+		var email = document.getElementsByName("email")[0].value;
+		$.ajax({
+			url : "${ctx}/sysadmin/user/getByEmail.action",
+			type : "POST",
+			data : {email : email},
+			success : function(data) {
+		        console.log(111111);
+		        alert("111111");
+		    },
+		    error : function(msg) {
+		    }
+		});
+	}
+</script>
 <body class="curbody">
 	<form name="icform" method="post">
 		<div id="menubar">
@@ -37,7 +54,7 @@
 					</tr>
 					<tr>
 						<td class="tableHeader">员工邮箱：</td>
-						<td class="tableHeader">&nbsp;<input type="text" name="email" /></td>
+						<td class="tableHeader">&nbsp;<input type="text" name="email" onblur="getByEmail()"/></td>
 					</tr>
 					<tr>
 						<td class="tableHeader">员工部门：</td>

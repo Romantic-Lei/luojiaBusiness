@@ -124,5 +124,14 @@ public class LoginController {
 		
 		return "redirect:/sysadmin/user/tocreate.action";
 	}
+	
+	@RequestMapping("/sysadmin/user/getByEmail.action")
+	public String getByEmail(String email, Model model) {
+		UserLogin byEmail = userLoginService.getByEmail(email);
+		model.addAttribute("byEmail", byEmail);
+		return "/sysadmin/user/userCreate.jsp";
+	}
+	
+	
 
 }
