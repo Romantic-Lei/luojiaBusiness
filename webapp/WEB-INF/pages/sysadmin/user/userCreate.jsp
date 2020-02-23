@@ -14,12 +14,22 @@
 			type : "POST",
 			data : {email : email},
 			success : function(data) {
-		        console.log(111111);
-		        alert("111111");
+				if("" == data){
+					document.getElementById("font1").innerHTML="<font color=\"green\">邮箱可使用</font>";
+					document.getElementById("hidden").value="0";
+				} else {
+					document.getElementById("font1").innerHTML="<font color=\"red\">邮箱已被占用</font>";
+					document.getElementById("hidden").value="1";
+				}
 		    },
 		    error : function(msg) {
+		    	console.log(msg);
 		    }
 		});
+	}
+	
+	function checkEmail(){
+		alert();
 	}
 </script>
 <body class="curbody">
@@ -30,7 +40,7 @@
 					<div id="navMenubar">
 						<ul>
 							<li id="update"><a href="#"
-								onclick="formSubmit('insert.action','_self');this.blur();">确定</a></li>
+								onclick="formSubmit('insert.action','_self');checkEmail();this.blur();">确定</a></li>
 							<li id="back"><a href="#"
 								onclick="formSubmit('${ctx}/sysadminMain.action','_self');this.blur();">返回</a></li>
 						</ul>
@@ -54,7 +64,11 @@
 					</tr>
 					<tr>
 						<td class="tableHeader">员工邮箱：</td>
-						<td class="tableHeader">&nbsp;<input type="text" name="email" onblur="getByEmail()"/></td>
+						<td class="tableHeader">
+							&nbsp;<input type="text" id="email1" name="email" onblur="getByEmail()"/>
+							<input type="text" id="hidden" value=""/>
+							<font id="font1"></font>
+						</td>
 					</tr>
 					<tr>
 						<td class="tableHeader">员工部门：</td>

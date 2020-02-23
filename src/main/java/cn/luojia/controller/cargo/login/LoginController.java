@@ -1,11 +1,13 @@
 package cn.luojia.controller.cargo.login;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import cn.luojia.domain.UserLogin;
 import cn.luojia.service.UserLoginService;
+import cn.luojia.util.UtilFuns;
 
 @Controller
 // 只能作用在类上，作用是将指定的Model中的键值对添加至session中
@@ -126,10 +130,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/sysadmin/user/getByEmail.action")
-	public String getByEmail(String email, Model model) {
+	@ResponseBody
+	public String getByEmail(String email, HttpServletRequest request,HttpServletResponse response, Model model) throws UnsupportedEncodingException {
 		UserLogin byEmail = userLoginService.getByEmail(email);
-		model.addAttribute("byEmail", byEmail);
-		return "/sysadmin/user/userCreate.jsp";
+//		UtilFuns.convertNull(byEmail)
+		
+		return byEmail == null ? null : byEmail.getEmail();
 	}
 	
 	
