@@ -142,16 +142,18 @@ public class LoginController {
 	@RequestMapping("/sysadmin/user/getChinese2PinYin.action")
 	@ResponseBody
 	public String getChinese2PinYin(String name) {
+		// 判断是否输入了用户名
 		if (name == null || "".equals(name.trim())) {
 			return null;
 		}
 		String fullSpell = PinYinUtil.getFullSpell(name.trim());
-		int i = 1;
+		int i = 1;	// 拼接在用户名后面
 		UserLogin byEmail = userLoginService.getByEmail(fullSpell + "@luojia.com");
 		while(byEmail != null) {
 			i++;
 			byEmail = userLoginService.getByEmail(fullSpell + i + "@luojia.com");
 			if(byEmail == null) {
+				// 生成注册用户邮箱
 				fullSpell = fullSpell + i;
 				break;
 			}

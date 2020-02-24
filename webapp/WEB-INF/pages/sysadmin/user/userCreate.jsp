@@ -14,8 +14,10 @@
 			type : "POST",
 			data : {name : userName},
 			success : function(data) {
+				// 查询到了符合条件的邮箱数据就去操作邮箱框
 				if("" != data){
 					document.getElementsByName("email")[0].value=data;
+					// 只要失焦我就去验证邮箱是否可用，避免每次自动写入邮箱名都要手动去在邮箱框上点击
 					getByEmail();
 				}
 		    },
@@ -28,9 +30,11 @@
 	<!-- 发送ajax请求  -->
 	function getByEmail(){
 		var email = document.getElementsByName("email")[0].value;
+		// 邮箱校验正则表达式
 		var reg = new RegExp("^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$"); 
 		 if(!reg.test(email)){
 			document.getElementById("font1").innerHTML="<font color=\"#eb6b12\">邮箱格式不正确，请重新输入！</font>";
+			// 邮箱不可用标识符，如果不加，我们在校验成功合格后，改掉邮箱名依旧可以“骗”过浏览器，提交错误的邮箱
 			document.getElementById("hidden").value="1";
 			return ;
 		 }
@@ -42,11 +46,14 @@
 			success : function(data) {
 				<!-- 返回无数据，邮箱可用 -->
 				if("" == data){
+					// 拼接提示
 					document.getElementById("font1").innerHTML="<font color=\"green\">邮箱可使用</font>";
+					// 邮箱可用
 					document.getElementById("hidden").value="0";
 				} else {
 					<!-- 返回有数据,邮箱不可用 -->
 					document.getElementById("font1").innerHTML="<font color=\"red\">邮箱已被占用</font>";
+					// 邮箱不可用
 					document.getElementById("hidden").value="1";
 				}
 		    },
@@ -100,7 +107,7 @@
 					<tr>
 						<td class="tableHeader">员工邮箱：</td>
 						<td class="tableHeader">
-							&nbsp;<input type="text" id="email1" name="email" onchange="getByEmail()"/>
+							&nbsp;<input type="text" name="email" onchange="getByEmail()"/>
 							<input type="hidden" id="hidden" value="2"/>
 							<font id="font1"></font>
 						</td>
