@@ -7,6 +7,11 @@
 <script language='javascript'>
 	history.go(1);
 </script>
+<script type="text/javascript">
+	document.onkeypress=banBackSpace;  
+	//禁止后退键 作用于IE、Chrome  
+	document.onkeydown=banBackSpace;  
+</script>
 <link rel="stylesheet" rev="stylesheet" type="text/css"
 	href="${ctx}/skin/default/css/login.css" media="all" />
 <link rel="icon" href="${ctx}/skin/default/images/bussiness.ico"

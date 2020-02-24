@@ -102,7 +102,7 @@ public class LoginController {
 
 		} else {
 			// 用户没有输入密码
-			return "/index.jsp";
+			return "/login.action";
 		}
 	}
 
@@ -170,7 +170,7 @@ public class LoginController {
 			request.getSession().removeAttribute("name");
 			request.getSession().invalidate();
 			sessionStatus.setComplete();
-			return "/index.jsp";
+			return "redirect:/home.action";
 		} else {
 			String tips = "请检查两次密码是否一致";
 			request.setAttribute("tips", tips);

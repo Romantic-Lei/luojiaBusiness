@@ -20,7 +20,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<!--  指定对那些请求有效 -->
-			<mvc:mapping path="/*"/>
+			<mvc:mapping path="/**"/>
 			<!-- 对指定页面不拦截 -->
 			<mvc:exclude-mapping path="/login.action"/>
 			<mvc:exclude-mapping path="/home.action"/>
