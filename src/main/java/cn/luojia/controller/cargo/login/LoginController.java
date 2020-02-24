@@ -158,7 +158,7 @@ public class LoginController {
 	
 	// 个人密码修改(员工权限)
 	@RequestMapping("/sysadmin/user/updateByOwn.action")
-	public String updateByOwn(UserLogin userLogin, HttpServletRequest request) {
+	public String updateByOwn(UserLogin userLogin, HttpServletRequest request, SessionStatus sessionStatus) {
 		String pwd = request.getParameter("passWord");
 		String rePwd = request.getParameter("rePwd");
 		if(pwd.trim().equals("")) {
@@ -167,7 +167,10 @@ public class LoginController {
 			return "/sysadmin/user/userPasswordUpdate.jsp";
 		}else if(pwd.equals(rePwd)) {
 			userLoginService.updateByEmail(userLogin);
-			return "redirect:/sysadmin/user/toupdateByOwn.action";
+			request.getSession().removeAttribute("name");
+			request.getSession().invalidate();
+			sessionStatus.setComplete();
+			return "/index.jsp";
 		} else {
 			String tips = "请检查两次密码是否一致";
 			request.setAttribute("tips", tips);
