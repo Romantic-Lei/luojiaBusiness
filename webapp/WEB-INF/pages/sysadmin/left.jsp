@@ -29,7 +29,7 @@
 					<ul>
 						<li><a href="${ctx}/sysadmin/user/tocreate.action" onclick="linkHighlighted(this)"
 							target="main" id="aa_1">角色管理</a></li>
-						<li><a href="${ctx}/sysadmin/user/deptList.action" onclick="linkHighlighted(this)"
+						<li><a href="${ctx}/sysadmin/user/userUpdate.action" onclick="linkHighlighted(this)"
 							target="main" id="aa_1">部门管理</a></li>
 						<li><a href="${ctx}/sysadmin/user/list.action" onclick="linkHighlighted(this)"
 							target="main" id="aa_1">用户管理</a></li>

@@ -1,6 +1,7 @@
 package cn.luojia.controller.cargo.login;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.util.HashMap;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.luojia.domain.UserLogin;
 import cn.luojia.service.UserLoginService;
 import cn.luojia.util.PinYinUtil;
-import cn.luojia.util.UtilFuns;
+import net.sf.json.JSONArray;
 
 @Controller
 // 只能作用在类上，作用是将指定的Model中的键值对添加至session中
@@ -128,6 +131,38 @@ public class LoginController {
 		userLoginService.insert(userLogin);
 		
 		return "redirect:/sysadmin/user/tocreate.action";
+	}
+	
+	// 装箱员工修改
+	@RequestMapping("/sysadmin/user/userUpdate.action")
+	public String toupdate() {
+		
+		return "/sysadmin/user/userUpdate.jsp";
+	}
+	
+	// 员工信息修改
+	@RequestMapping("/sysadmin/user/update.action")
+	public String update(UserLogin userLogin) {
+		userLoginService.update(userLogin);
+		
+		return "redirect:/sysadmin/user/tocreate.action";
+	}
+	
+	@RequestMapping("/sysadmin/user/updateByEmail.action")
+	@ResponseBody
+	public String updateByEmail(String email, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		UserLogin userLogin = userLoginService.getByEmail(email);
+		
+//		JSONArray json = JSONArray.fromObject(userLogin);
+		System.out.println("JSONArray数据---" + JSON.toJSONString(userLogin) );
+		request.setCharacterEncoding("utf-8");  //这里不设置编码会有乱码
+        response.setContentType("text/html;charset=utf-8");
+        response.setHeader("Cache-Control", "no-cache");  
+		PrintWriter out = response.getWriter();  //输出中文，这一句一定要放到response.setContentType("text/html;charset=utf-8"),  response.setHeader("Cache-Control", "no-cache")后面，否则中文返回到页面是乱码  
+		out.print(JSON.toJSONString(userLogin));
+		out.flush();
+		out.close();
+		return null;
 	}
 	
 	@RequestMapping("/sysadmin/user/getByEmail.action")

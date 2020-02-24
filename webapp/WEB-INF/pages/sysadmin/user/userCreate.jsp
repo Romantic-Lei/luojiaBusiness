@@ -27,7 +27,7 @@
 		});
 	}
 
-	<!-- 发送ajax请求  -->
+	// <!-- 发送ajax请求  -->
 	function getByEmail(){
 		var email = document.getElementsByName("email")[0].value;
 		// 邮箱校验正则表达式
@@ -66,7 +66,7 @@
 	function checkEmail(){
 		var _v = document.getElementById("hidden").value;
 		if(_v == 0){
-			<!-- 邮箱合规可提交 -->
+			// <!-- 邮箱合规可提交 -->
 			formSubmit('insert.action','_self');
 			return true;
 		}else {

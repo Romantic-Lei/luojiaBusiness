@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getByEmail" parameterType="String" resultMap="userLoginRM">
-		select USER_ID,USERNAME,PASSWORD,EMAIL,DEPARTMENT 
+		select USERNAME,EMAIL,DEPARTMENT 
 		from USER_LOGIN_C
 		where email=#{email,jdbcType=VARCHAR}
 	</select>
