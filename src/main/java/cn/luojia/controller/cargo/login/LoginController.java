@@ -134,7 +134,7 @@ public class LoginController {
 	}
 	
 	// 装箱员工修改
-	@RequestMapping("/sysadmin/user/userUpdate.action")
+	@RequestMapping("/sysadmin/user/toupdate.action")
 	public String toupdate() {
 		
 		return "/sysadmin/user/userUpdate.jsp";
@@ -145,7 +145,7 @@ public class LoginController {
 	public String update(UserLogin userLogin, Model model) {
 		userLoginService.update(userLogin);
 		
-		return "redirect:/sysadmin/user/tocreate.action";
+		return "redirect:/sysadmin/user/toupdate.action";
 	}
 	
 	@RequestMapping("/sysadmin/user/updateByEmail.action")

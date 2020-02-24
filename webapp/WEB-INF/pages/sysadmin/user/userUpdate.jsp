@@ -32,6 +32,16 @@
 		});
 	}
 	
+	function updatePwd(){
+	   var b = confirm("确认重置密码？");
+	   if(b){
+		   	var num =123456;
+	   	   	document.getElementById("ni").innerHTML="<input type=\"text\" name=\"passWord\" value=\""+num+"\">";
+	   		alert("事务回滚，请点击提交确定重置！");
+	   }else{
+		   alert("重置失败！");
+	   }
+	}
 </script>
 <body class="curbody">
 	<form name="icform" method="post">
@@ -90,8 +100,10 @@
 						<td class="tableHeader">员工密码：</td>
 						<td>
 							<input type="text" name="pwd" value="******" />
+							<input type="button" onclick="updatePwd()" value="重置密码">
 						</td>
 					</tr>
+					<div id="ni"></div>
 				</table>
 			</div>
 		</div>
