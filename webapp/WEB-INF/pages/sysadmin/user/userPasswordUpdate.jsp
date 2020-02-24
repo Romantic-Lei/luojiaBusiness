@@ -7,20 +7,6 @@
 <title>员工部门修改</title>
 <script type="text/javascript" src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
 <script type="text/javascript">
-	
-	function checkUser(){
-		var flag = document.getElementById("flag").value;
-		if (flag == 0){
-			// 允许提交
-			formSubmit('update.action','_self');
-			return true;
-		}else {
-			// 提交失败
-			alert("请先查询合规用户");
-			return false;
-		}
-	}
-	
 	function getByEmail(){
 		var email = document.getElementsByName("email")[0].value;
 		$.ajax({
@@ -32,15 +18,11 @@
 				data = JSON.parse(data)
 				if(null == data){
 					alert("员工邮箱不存在");
-					// 不允许提交
-					document.getElementById("flag").value = 1;
 				} else {
 					console.log(data);
 					document.getElementsByName("uid")[0].value = data.uid;
 					document.getElementsByName("userName")[0].value = data.userName;
 					document.getElementsByName("department")[0].value = data.department;
-					// 允许提交
-					document.getElementById("flag").value = 0;
 					
 				}
 		    },
@@ -54,10 +36,9 @@
 	   var b = confirm("确认重置密码？");
 	   if(b){
 		   	var num =123456;
-	   	   	document.getElementById("upwd").innerHTML="<input type=\"hidden\" name=\"passWord\" value=\""+num+"\">";
+	   	   	document.getElementById("ni").innerHTML="<input type=\"text\" name=\"passWord\" value=\""+num+"\">";
 	   		alert("事务回滚，请点击提交确定重置！");
 	   }else{
-		   document.getElementById("upwd").innerHTML=" ";
 		   alert("重置失败！");
 	   }
 	}
@@ -70,7 +51,7 @@
 					<div id="navMenubar">
 						<ul>
 							<li id="update"><a href="#"
-								onclick="return checkUser();this.blur();">确定</a></li>
+								onclick="formSubmit('update.action','_self');this.blur();">确定</a></li>
 							<li id="back"><a href="#"
 								onclick="formSubmit('${ctx}/sysadminMain.action','_self');this.blur();">返回</a></li>
 						</ul>
@@ -96,7 +77,6 @@
 						<td class="tableHeader">员工邮箱：</td>
 						<td class="tableHeader">
 							&nbsp;<input type="text" name="email" onchange="getByEmail();"/>
-							<input type="hidden" id="flag" value="1">
 						</td>
 					</tr>
 					<tr>
@@ -123,7 +103,7 @@
 							<input type="button" onclick="updatePwd()" value="重置密码">
 						</td>
 					</tr>
-					<div id="upwd"></div>
+					<div id="ni"></div>
 				</table>
 			</div>
 		</div>
