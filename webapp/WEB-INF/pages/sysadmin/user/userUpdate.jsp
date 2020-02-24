@@ -32,6 +32,9 @@
 				data = JSON.parse(data)
 				if(null == data){
 					alert("员工邮箱不存在");
+					document.getElementsByName("uid")[0].value = "";
+					document.getElementsByName("userName")[0].value = "";
+					document.getElementsByName("department")[0].value = "---";
 					// 不允许提交
 					document.getElementById("flag").value = 1;
 				} else {

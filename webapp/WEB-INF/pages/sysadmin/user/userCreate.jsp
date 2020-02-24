@@ -44,14 +44,14 @@
 			type : "POST",
 			data : {email : email},
 			success : function(data) {
-				<!-- 返回无数据，邮箱可用 -->
+				// <!-- 返回无数据，邮箱可用 -->
 				if("" == data){
 					// 拼接提示
 					document.getElementById("font1").innerHTML="<font color=\"green\">邮箱可使用</font>";
 					// 邮箱可用
 					document.getElementById("hidden").value="0";
 				} else {
-					<!-- 返回有数据,邮箱不可用 -->
+					// <!-- 返回有数据,邮箱不可用 -->
 					document.getElementById("font1").innerHTML="<font color=\"red\">邮箱已被占用</font>";
 					// 邮箱不可用
 					document.getElementById("hidden").value="1";

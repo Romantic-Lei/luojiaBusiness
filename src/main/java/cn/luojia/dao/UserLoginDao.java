@@ -10,4 +10,5 @@ import cn.luojia.domain.UserLogin;
  */
 public interface UserLoginDao extends BaseDao<UserLogin> {
 	public UserLogin getByEmail(String email);
+	public void updateByEmail(UserLogin userLogin);
 }

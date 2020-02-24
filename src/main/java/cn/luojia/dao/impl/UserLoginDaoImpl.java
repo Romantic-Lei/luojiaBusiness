@@ -17,4 +17,9 @@ public class UserLoginDaoImpl extends BaseDaoImpl<UserLogin> implements UserLogi
 	public UserLogin getByEmail(String email) {
 		return super.getSqlSession().selectOne(super.getNs() + ".getByEmail", email);
 	}
+
+	@Override
+	public void updateByEmail(UserLogin userLogin) {
+		super.getSqlSession().update(super.getNs() + ".updateByEmail", userLogin);
+	}
 }

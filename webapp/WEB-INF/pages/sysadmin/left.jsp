@@ -31,7 +31,7 @@
 							target="main" id="aa_1">角色管理</a></li>
 						<li><a href="${ctx}/sysadmin/user/toupdate.action" onclick="linkHighlighted(this)"
 							target="main" id="aa_1">部门管理</a></li>
-						<li><a href="${ctx}/sysadmin/user/list.action" onclick="linkHighlighted(this)"
+						<li><a href="${ctx}/sysadmin/user/toupdateByOwn.action" onclick="linkHighlighted(this)"
 							target="main" id="aa_1">用户管理</a></li>
 					</ul>
 				</div>

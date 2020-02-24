@@ -29,7 +29,7 @@ import net.sf.json.JSONArray;
 
 @Controller
 // 只能作用在类上，作用是将指定的Model中的键值对添加至session中
-@SessionAttributes(value = { "name", "dept", "ip" })
+@SessionAttributes(value = { "name", "dept", "ip", "email"})
 public class LoginController {
 
 	@Autowired
@@ -52,6 +52,7 @@ public class LoginController {
 				// 用户存在
 				model.addAttribute("name", userLogin.getUserName());
 				model.addAttribute("dept", userLogin.getDepartment());
+				model.addAttribute("email", userLogin.getEmail());
 
 				// 解析用户ip
 				// 只有在通过了 HTTP 代理或者负载均衡服务器时才会添加该项,一般情况下，第一个ip为客户端真实ip，后面的为经过的代理服务器ip
@@ -125,7 +126,7 @@ public class LoginController {
 		return "/sysadmin/user/userCreate.jsp";
 	}
 	
-	// 员工新增
+	// 员工新增(人事部权限)
 	@RequestMapping("/sysadmin/user/insert.action")
 	public String insert(UserLogin userLogin) {
 		userLoginService.insert(userLogin);
@@ -133,19 +134,45 @@ public class LoginController {
 		return "redirect:/sysadmin/user/tocreate.action";
 	}
 	
-	// 装箱员工修改
+	// 转向员工修改
 	@RequestMapping("/sysadmin/user/toupdate.action")
-	public String toupdate() {
+	public String toupdate(HttpServletRequest request) {
 		
 		return "/sysadmin/user/userUpdate.jsp";
 	}
 	
-	// 员工信息修改
+	// 员工信息修改(人事部权限)
 	@RequestMapping("/sysadmin/user/update.action")
 	public String update(UserLogin userLogin, Model model) {
 		userLoginService.update(userLogin);
 		
 		return "redirect:/sysadmin/user/toupdate.action";
+	}
+	
+	// 个人密码修改(员工权限)
+	@RequestMapping("/sysadmin/user/toupdateByOwn.action")
+	public String toupdateByOwn() {
+		
+		return "/sysadmin/user/userPasswordUpdate.jsp";
+	}
+	
+	// 个人密码修改(员工权限)
+	@RequestMapping("/sysadmin/user/updateByOwn.action")
+	public String updateByOwn(UserLogin userLogin, HttpServletRequest request) {
+		String pwd = request.getParameter("passWord");
+		String rePwd = request.getParameter("rePwd");
+		if(pwd.trim().equals("")) {
+			String tips = "请输新密码";
+			request.setAttribute("tip", tips);
+			return "/sysadmin/user/userPasswordUpdate.jsp";
+		}else if(pwd.equals(rePwd)) {
+			userLoginService.updateByEmail(userLogin);
+			return "redirect:/sysadmin/user/toupdateByOwn.action";
+		} else {
+			String tips = "请检查两次密码是否一致";
+			request.setAttribute("tips", tips);
+			return "/sysadmin/user/userPasswordUpdate.jsp";
+		}
 	}
 	
 	@RequestMapping("/sysadmin/user/updateByEmail.action")

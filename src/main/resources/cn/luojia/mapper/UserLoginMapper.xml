@@ -47,7 +47,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="passWord != null">PASSWORD=#{passWord,jdbcType=VARCHAR},</if>
             <if test="department != null">DEPARTMENT=#{department,jdbcType=VARCHAR},</if>
         </set>
-        where USER_ID=#{uid}
+        where USER_ID=#{uid,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByEmail" parameterType="cn.luojia.domain.UserLogin">
+		update USER_LOGIN_C
+        <set>
+            <if test="userName != null">USERNAME=#{userName,jdbcType=VARCHAR},</if>
+            <if test="passWord != null">PASSWORD=#{passWord,jdbcType=VARCHAR},</if>
+        </set>
+        where EMAIL=#{email,jdbcType=VARCHAR}
 	</update>
 	
 	<delete id="delete" parameterType="string">

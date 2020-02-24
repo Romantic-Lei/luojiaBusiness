@@ -51,4 +51,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 		return userLoginDao.getByEmail(email);
 	}
 
+	@Override
+	public void updateByEmail(UserLogin userLogin) {
+		userLoginDao.updateByEmail(userLogin);
+	}
+
 }
