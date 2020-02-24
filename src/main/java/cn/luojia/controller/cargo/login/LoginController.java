@@ -183,8 +183,6 @@ public class LoginController {
 	public String updateByEmail(String email, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		UserLogin userLogin = userLoginService.getByEmail(email);
 		
-//		JSONArray json = JSONArray.fromObject(userLogin);
-		System.out.println("JSONArray数据---" + JSON.toJSONString(userLogin) );
 		request.setCharacterEncoding("utf-8");  //这里不设置编码会有乱码
         response.setContentType("text/html;charset=utf-8");
         response.setHeader("Cache-Control", "no-cache");  
