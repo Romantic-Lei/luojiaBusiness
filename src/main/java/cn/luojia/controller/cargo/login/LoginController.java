@@ -142,7 +142,7 @@ public class LoginController {
 	
 	// 员工信息修改
 	@RequestMapping("/sysadmin/user/update.action")
-	public String update(UserLogin userLogin) {
+	public String update(UserLogin userLogin, Model model) {
 		userLoginService.update(userLogin);
 		
 		return "redirect:/sysadmin/user/tocreate.action";

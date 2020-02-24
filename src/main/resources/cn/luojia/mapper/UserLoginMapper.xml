@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getByEmail" parameterType="String" resultMap="userLoginRM">
-		select USERNAME,EMAIL,DEPARTMENT 
+		select USER_ID, USERNAME,EMAIL,DEPARTMENT 
 		from USER_LOGIN_C
 		where email=#{email,jdbcType=VARCHAR}
 	</select>
@@ -43,10 +43,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update" parameterType="cn.luojia.domain.UserLogin">
 		update USER_LOGIN_C
         <set>
-            <if test="userName != null">USERNAME=#{passWord,jdbcType=VARCHAR},</if>
+            <if test="userName != null">USERNAME=#{userName,jdbcType=VARCHAR},</if>
             <if test="passWord != null">PASSWORD=#{passWord,jdbcType=VARCHAR},</if>
             <if test="department != null">DEPARTMENT=#{department,jdbcType=VARCHAR},</if>
         </set>
+        where USER_ID=#{uid}
 	</update>
 	
 	<delete id="delete" parameterType="string">

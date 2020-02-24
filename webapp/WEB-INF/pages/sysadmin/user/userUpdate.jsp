@@ -20,10 +20,10 @@
 					alert("员工邮箱不存在");
 				} else {
 					console.log(data);
-					document.getElementsByName("userName")[0].value = data.userName,
-					document.getElementsByName("department")[0].value = data.department,
+					document.getElementsByName("uid")[0].value = data.uid;
+					document.getElementsByName("userName")[0].value = data.userName;
+					document.getElementsByName("department")[0].value = data.department;
 					
-					alert(data.email);
 				}
 		    },
 		    error : function(msg) {
@@ -31,6 +31,7 @@
 		    }
 		});
 	}
+	
 </script>
 <body class="curbody">
 	<form name="icform" method="post">
@@ -52,11 +53,12 @@
 		<div class="textbox" id="centerTextbox">
 			<div class="textbox-header">
 				<div class="textbox-inner-header">
-					<div class="textbox-title">添加员工信息</div>
+					<div class="textbox-title">修改员工信息</div>
 				</div>
 			</div>
 			<div class="eXtremeTable">
 				<table id="ec_table" class="tableRegion" width="98%">
+					<input type="hidden" name="uid" /></td>
 					<tr>
 						<td class="tableHeader">员工姓名：</td>
 						<td class="tableHeader">&nbsp;<input type="text" name="userName" /></td>
@@ -86,7 +88,9 @@
 					<tr>
 						<!--  人事添加员工信息时，会有初始密码，只允许员工自己修改自己密码 -->
 						<td class="tableHeader">员工密码：</td>
-						<td><input type="text" name="passWord" value="******" readonly="readonly" /></td>
+						<td>
+							<input type="text" name="pwd" value="******" />
+						</td>
 					</tr>
 				</table>
 			</div>
