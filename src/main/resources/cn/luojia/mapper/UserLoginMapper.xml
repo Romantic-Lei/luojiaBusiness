@@ -15,9 +15,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 查找用户, 根据邮箱和密码查找 -->
 	<select id="find" parameterType="map" resultMap="userLoginRM">
-		select UID, USERNAME, PASSWORD, EMAIL, DEPARTMENT
+		select USER_ID, USERNAME, PASSWORD, EMAIL, DEPARTMENT
 		from USER_LOGIN_C
 		where EMAIL=#{email,jdbcType=VARCHAR} and PASSWORD=#{passWord,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findAll" parameterType="map" resultMap="userLoginRM">
+		select USER_ID, USERNAME, EMAIL, DEPARTMENT
+		from USER_LOGIN_C
+		where 1=1
+		<if test="email != null"> and EMAIL=#{email}</if>
+		<if test="passWord != null"> and PASSWORD=#{passWord}</if>
 	</select>
 	
 	<select id="getByEmail" parameterType="String" resultMap="userLoginRM">
@@ -59,9 +67,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where EMAIL=#{email,jdbcType=VARCHAR}
 	</update>
 	
-	<delete id="delete" parameterType="string">
+	<delete id="deleteById" parameterType="string">
 		delete USER_LOGIN_C
-		where uid = #{pid}
+		where USER_ID = #{pid}
 	</delete>
 	
 	

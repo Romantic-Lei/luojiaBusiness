@@ -42,7 +42,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 	}
 
 	@Override
-	public void delete(Serializable id) {
+	public void deleteById(Serializable id) {
 		userLoginDao.deleteById(id);
 	}
 
@@ -54,6 +54,11 @@ public class UserLoginServiceImpl implements UserLoginService {
 	@Override
 	public void updateByEmail(UserLogin userLogin) {
 		userLoginDao.updateByEmail(userLogin);
+	}
+
+	@Override
+	public List<UserLogin> findAll(Map paraMap) {
+		return userLoginDao.findAll(paraMap);
 	}
 
 }

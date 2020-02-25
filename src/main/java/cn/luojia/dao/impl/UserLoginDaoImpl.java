@@ -1,5 +1,8 @@
 package cn.luojia.dao.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 import cn.luojia.dao.UserLoginDao;
@@ -21,5 +24,10 @@ public class UserLoginDaoImpl extends BaseDaoImpl<UserLogin> implements UserLogi
 	@Override
 	public void updateByEmail(UserLogin userLogin) {
 		super.getSqlSession().update(super.getNs() + ".updateByEmail", userLogin);
+	}
+
+	@Override
+	public List<UserLogin> findAll(Map paraMap) {
+		return super.getSqlSession().selectList(super.getNs() + ".findAll", paraMap);
 	}
 }

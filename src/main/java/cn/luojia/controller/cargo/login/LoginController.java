@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -167,6 +168,24 @@ public class LoginController {
 		
 		return "redirect:/sysadmin/user/toupdate.action";
 	}
+	
+	// 员工信息查询(人事部权限)
+	@RequestMapping("/sysadmin/user/list.action")
+	public String list(Model model) {
+		List<UserLogin> dataList = userLoginService.findAll(null);
+		model.addAttribute("dataList", dataList);
+		
+		return "/sysadmin/user/userList.jsp";
+	}
+	
+	// 员工信息查询(人事部权限)
+	@RequestMapping("/sysadmin/user/deleteById.action")
+	public String deleteById(String id) {
+		userLoginService.deleteById(id);
+		
+		return "redirect:/sysadmin/user/list.action";
+	}
+	
 	
 	// 个人密码修改(员工权限)
 	@RequestMapping("/sysadmin/user/toupdateByOwn.action")

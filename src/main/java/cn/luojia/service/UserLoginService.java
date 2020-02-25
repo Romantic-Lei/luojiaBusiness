@@ -11,6 +11,7 @@ public interface UserLoginService {
 	public UserLogin getByEmail(String email);
 	public void insert(UserLogin userLogin);			//插入，用实体作为参数
 	public void update(UserLogin userLogin);			//修改，用实体作为参数
-	public void delete(Serializable id);				//按id删除，删除一条；支持整数型和字符串类型ID
+	public void deleteById(Serializable id);			//按id删除，删除一条；支持整数型和字符串类型ID
 	public void updateByEmail(UserLogin userLogin);		//按id删除，删除一条；支持整数型和字符串类型ID
+	public List<UserLogin> findAll(Map paraMap);		//查询出所有用户
 }

@@ -1,5 +1,8 @@
 package cn.luojia.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import cn.luojia.domain.UserLogin;
 
 /**
@@ -11,4 +14,5 @@ import cn.luojia.domain.UserLogin;
 public interface UserLoginDao extends BaseDao<UserLogin> {
 	public UserLogin getByEmail(String email);
 	public void updateByEmail(UserLogin userLogin);
+	public List<UserLogin> findAll(Map paraMap);
 }

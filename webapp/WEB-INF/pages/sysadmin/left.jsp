@@ -31,6 +31,8 @@
 							target="main" id="aa_1">员工新增管理</a></li>
 						<li><a href="${ctx}/sysadmin/user/toupdate.action" onclick="linkHighlighted(this)"
 							target="main" id="aa_1">员工信息管理</a></li>
+						<li><a href="${ctx}/sysadmin/user/list.action" onclick="linkHighlighted(this)"
+							target="main" id="aa_1">员工查询管理</a></li>
 						<li><a href="${ctx}/sysadmin/user/toupdateByOwn.action" onclick="linkHighlighted(this)"
 							target="main" id="aa_1">员工个人管理</a></li>
 					</ul>
