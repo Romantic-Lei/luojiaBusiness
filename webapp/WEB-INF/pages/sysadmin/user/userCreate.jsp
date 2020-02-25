@@ -45,7 +45,7 @@
 		if (!reg.test(email)) {
 			document.getElementById("font1").innerHTML = "<font color=\"#eb6b12\">邮箱格式不正确，请重新输入！</font>";
 			// 邮箱不可用标识符，如果不加，我们在校验成功合格后，改掉邮箱名依旧可以“骗”过浏览器，提交错误的邮箱
-			document.getElementById("hidden").value = "1";
+			document.getElementById("hiddenEmail").value = "1";
 			return;
 		}
 		$.ajax({
@@ -60,12 +60,12 @@
 					// 拼接提示
 					document.getElementById("font1").innerHTML = "<font color=\"green\">邮箱可使用</font>";
 					// 邮箱可用
-					document.getElementById("hidden").value = "0";
+					document.getElementById("hiddenEmail").value = "0";
 				} else {
 					// <!-- 返回有数据,邮箱不可用 -->
 					document.getElementById("font1").innerHTML = "<font color=\"red\">邮箱已被占用</font>";
 					// 邮箱不可用
-					document.getElementById("hidden").value = "1";
+					document.getElementById("hiddenEmail").value = "1";
 				}
 			},
 			error : function(msg) {
@@ -75,7 +75,14 @@
 	}
 
 	function checkEmail() {
-		var _v = document.getElementById("hidden").value;
+		// 检查员工姓名是否填写
+		var name = document.getElementsByName("userName")[0].value;
+		console.log("name" + name + "-");
+		if(name == ""){
+			alert("请填写员工姓名");
+			return false;
+		}
+		var _v = document.getElementById("hiddenEmail").value;
 		if (_v == 0) {
 			// <!-- 邮箱合规可提交 -->
 			formSubmit('insert.action', '_self');
@@ -122,7 +129,7 @@
 							<td class="tableHeader">员工邮箱：</td>
 							<td class="tableHeader">&nbsp;<input type="text"
 								name="email" onchange="getByEmail()" /> <input type="hidden"
-								id="hidden" value="2" /> <font id="font1"></font>
+								id="hiddenEmail" value="2" /> <font id="font1"></font>
 							</td>
 						</tr>
 						<tr>
