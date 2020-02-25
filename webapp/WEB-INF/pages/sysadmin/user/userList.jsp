@@ -30,6 +30,8 @@
 						+ "<td>" + data.email + "</td>"
 						+ "<td>" + data.department + "</td>"
 						+ "</tr>";
+				} else {
+					alert("员工不存在");
 				}
 			},
 			error : function(msg) {
