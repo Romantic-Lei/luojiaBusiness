@@ -44,7 +44,7 @@ body{
 						</div>
 					</div>
 					<div class="dl">
-						<input class="loginImgOut" value="" type="submit" name="btnsubmit"
+						<input class="loginImgOut" value="" type="button" name="btnsubmit"
 							onclick="formSubmit('${ctx}/login.action','_self');"
 							onmouseover="this.className='loginImgOver'"
 							onmouseout="this.className='loginImgOut'" />
@@ -85,7 +85,7 @@ body{
 	  }
 	}
 	function clearInput(){
-		document.getElementById('userName').value = "";
+		document.getElementById('email').value = "";
 		document.getElementById('passWord').value = "";
 	}
 </script>

@@ -102,7 +102,7 @@ public class LoginController {
 
 		} else {
 			// 用户没有输入密码
-			return "/login.action";
+			return "redirect:/login.action";
 		}
 	}
 
