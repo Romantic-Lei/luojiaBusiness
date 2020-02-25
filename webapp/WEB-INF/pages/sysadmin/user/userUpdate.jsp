@@ -58,9 +58,15 @@
 	   if(b){
 		   	var num =123456;
 	   	   	document.getElementById("upwd").innerHTML="<input type=\"hidden\" name=\"passWord\" value=\""+num+"\">";
+	   	   	// 让用户有直观的初始化密码的感受
+	   	 	document.getElementsByName("pwd")[0].value = '123456';
+	   	   	// 将输入框变成隐藏框
+	   	 	// document.getElementsByName("pwd")[0].type = "hidden";
 	   		alert("事务回滚，请点击提交确定重置！");
 	   }else{
+		   // 取消重置
 		   document.getElementById("upwd").innerHTML=" ";
+		   document.getElementsByName("pwd")[0].value = '******';
 		   alert("重置失败！");
 	   }
 	}
@@ -122,7 +128,7 @@
 						<!--  人事添加员工信息时，会有初始密码，只允许员工自己修改自己密码 -->
 						<td class="tableHeader">员工密码：</td>
 						<td>
-							<input type="text" name="pwd" value="******" />
+							<input type="text" name="pwd" value="******" readonly="readonly"/>
 							<input type="button" onclick="updatePwd()" value="重置密码">
 						</td>
 					</tr>
