@@ -23,6 +23,7 @@
 			<mvc:mapping path="/**"/>
 			<!-- 对指定页面不拦截 -->
 			<mvc:exclude-mapping path="/login.action"/>
+			<mvc:exclude-mapping path="/tologin.action"/>
 			<mvc:exclude-mapping path="/home.action"/>
 			<bean class="cn.luojia.interceptor.Interceptor"></bean>
 		</mvc:interceptor>

@@ -34,11 +34,27 @@ public class LoginController {
 
 	@Autowired
 	UserLoginService userLoginService;
-
+	
 	@RequestMapping("/login.action")
+	public String test(String email, @RequestParam(value = "passWord", required = false) String passWord,
+			Model model, HttpServletRequest request) throws IOException {
+		String name = (String)request.getSession().getAttribute("name");
+		System.out.println(name);
+		if(name == null) {
+//			model.addAttribute("name", "1");
+//			request.getSession().setAttribute("name", "1");
+			
+			return "redirect:/tologin.action";
+		}else {
+			String checkUser = checkUser(email, passWord, model, request);
+			return checkUser;
+		}
+	}
+
+	@RequestMapping("/tologin.action")
 	public String checkUser(String email, @RequestParam(value = "passWord", required = false) String passWord,
 			Model model, HttpServletRequest request) throws IOException {
-
+		request.getSession().setAttribute("name", "1");
 		if (!"".equals(email) && !"".equals(passWord)) {
 			// 用户输入了用户名和密码
 			Map paraMap = new HashMap();
@@ -92,6 +108,7 @@ public class LoginController {
 				}
 				
 				model.addAttribute("ip", ip);
+				model.addAttribute("his", "his");
 
 				return "/home/fmain.jsp";
 
