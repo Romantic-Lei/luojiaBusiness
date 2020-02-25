@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>用户新增</title>
+<title>员工新增</title>
 <script type="text/javascript"
 	src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
 <style>

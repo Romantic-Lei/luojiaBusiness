@@ -5,6 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>员工部门修改</title>
+<style>
+.curbody {
+	CURSOR: url(${ctx}/images/olmsg/pic738x57.jpg);
+	background: url(${ctx}/images/22.png);
+}
+</style>
 <script type="text/javascript" src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
 <script type="text/javascript">
 	
@@ -37,13 +43,22 @@
 					document.getElementsByName("department")[0].value = "---";
 					// 不允许提交
 					document.getElementById("flag").value = 1;
+					document.getElementById("department").innerHTML = "";
 				} else {
 					console.log(data);
 					document.getElementsByName("uid")[0].value = data.uid;
 					document.getElementsByName("userName")[0].value = data.userName;
+					if(data.department == "人事部"){
+						document.getElementById("flag").value = 1;
+						document.getElementsByName("department")[0].value = data.department;
+						document.getElementById("department").innerHTML = "<font color=\"red\">对不起，您无法操作同级员工！</font>";
+					} else {
+						
 					document.getElementsByName("department")[0].value = data.department;
 					// 允许提交
 					document.getElementById("flag").value = 0;
+					document.getElementById("department").innerHTML = "";
+					}
 					
 				}
 		    },
@@ -72,6 +87,7 @@
 	}
 </script>
 <body class="curbody">
+	<c:if test="${dept == '人事部'}">
 	<form name="icform" method="post">
 		<div id="menubar">
 			<div id="middleMenubar">
@@ -120,8 +136,9 @@
 								<option value="人事部">人事部</option>
 								<option value="客服部">客服部</option>
 								<option value="后勤部">后勤部</option>
-								<option value="软件开发部">软件开发部</option>
+								<option value="软件开发部">开发部</option>
 						</select>
+						<font id="department"></font>
 						</td>
 					</tr>
 					<tr>
@@ -137,4 +154,8 @@
 			</div>
 		</div>
 	</form>
+	</c:if>
+	<c:if test="${dept != '人事部' }">
+   		 <font style="color: orange" size="6px">对不起，您没有权限修改您的部门，请联系人事部修改！</font>
+	</c:if>
 </body>
