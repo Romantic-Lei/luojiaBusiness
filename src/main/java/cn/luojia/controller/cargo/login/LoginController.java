@@ -97,12 +97,14 @@ public class LoginController {
 
 			} else {
 				// 用户不存在
+				model.addAttribute("loginFailed", 1);
 				return "/index.jsp";
 			}
 
 		} else {
-			// 用户没有输入密码
-			return "redirect:/login.action";
+			// 用户没有输入密码或密码
+			model.addAttribute("loginFailed", 2);
+			return "/index.jsp";
 		}
 	}
 

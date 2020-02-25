@@ -33,6 +33,17 @@ body{
 		<div id="warpbox">
 			<div class="main">
 				<div class="zck">
+					<logic:notEmpty name="loginFailed">
+						<c:if test="${loginFailed==1}">
+							<c:set var="errorInfo" value="邮箱或密码错误, 请重新输入!" />
+						</c:if>
+						<c:if test="${loginFailed==2}">
+							<c:set var="errorInfo" value="邮箱不存在, 请重新输入!" />
+						</c:if>
+						<div class="erro" id="erro">
+							<div class="erro_intro" align="center" style="color: orange">${errorInfo}</div>
+						</div>
+					</logic:notEmpty>
 					<div class="zc">
 						<div class="zc_line">
 							邮 &nbsp;&nbsp;箱： <input type="text" value="" name="email" id="email" />
@@ -59,17 +70,7 @@ body{
 				</div>
 
 				<div class="mirro"></div>
-				<logic:notEmpty name="loginFailed">
-					<c:if test="${loginFailed==1}">
-						<c:set var="errorInfo" value="用户名或密码错误, 请重新输入!" />
-					</c:if>
-					<c:if test="${loginFailed==2}">
-						<c:set var="errorInfo" value="用户名不存在, 请重新输入!" />
-					</c:if>
-					<div class="erro" id="erro">
-						<div class="erro_intro">${errorInfo}</div>
-					</div>
-				</logic:notEmpty>
+				
 			</div>
 		</div>
 	</form>
