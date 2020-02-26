@@ -37,14 +37,16 @@ public class ZxingQRCode {
 	 * @param width 宽度
 	 * @param height 高度
 	 * @param imgPath 路径
+	 * @param path 系统当前路径
 	 */
-	public void encode(String contents, int width, int height, String imgPath) {
+	public void encode(String contents, int width, int height, String imgPath, String path) {
+		
 		Hashtable<EncodeHintType, Object> hints = new Hashtable();
 		// 设置纠错等级
 		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
 		// 设置编码格式
 		hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-		// 设置白边,其实没有完全去除的效果
+		// 设置白边,其实没有去除的效果
 		hints.put(EncodeHintType.MARGIN, 0);
 		// 设置二维码颜色
 		// MatrixToImageConfig config = new MatrixToImageConfig(0xFF00CCCC, 0xFFFFFFFF);
@@ -52,7 +54,7 @@ public class ZxingQRCode {
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height,
 					hints);
 			// 删除白边
-			BufferedImage image = deleteWhite(bitMatrix);
+			BufferedImage image = deleteWhite(bitMatrix, path);
 			// bitMatrix = deleteWhite(bitMatrix);
 			ImageIO.write(image, "png", new FileOutputStream(imgPath));
 			// MatrixToImageWriter.writeToStream(bitMatrix, "png", new FileOutputStream(imgPath), config);
@@ -63,7 +65,7 @@ public class ZxingQRCode {
 	}
 
 	// 删除二维码白边
-	public BufferedImage deleteWhite(BitMatrix matrix) throws Exception {
+	public BufferedImage deleteWhite(BitMatrix matrix, String path) throws Exception {
 		int[] rec = matrix.getEnclosingRectangle();
 		int resWidth = rec[2] + 1;
 		int resHeight = rec[3] + 1;
@@ -85,10 +87,11 @@ public class ZxingQRCode {
 				image.setRGB(x, y, resMatrix.get(x, y) ?  Color.BLACK.getRGB():Color.WHITE.getRGB());
 			}
 		}
-		image = createPhotoAtCenter(image,"C:\\Users\\asus\\Desktop\\1.jpg");
+		// 二维码图片logo
+		image = createPhotoAtCenter(image, path + "make/xlsprint/logo.jpg");
 		return image;
 	}
-	
+
 	private BufferedImage createPhotoAtCenter(BufferedImage bufImg,String imgFile) throws Exception {
 		Image im = ImageIO.read(new File(imgFile));
 		Graphics2D g = bufImg.createGraphics();

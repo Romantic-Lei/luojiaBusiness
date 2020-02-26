@@ -158,7 +158,7 @@ public class ContractPrintTemplate {
 			HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
 			
 			// 把二维码存起来 ，要做大一点，否则读图片的时候会模糊
-			ORCode.encode(contents, 400, 400, path + "make/xlsprint/二维码1.png");
+			ORCode.encode(contents, 400, 400, path + "make/xlsprint/二维码1.png", path);
 			poiUtil.setPicture(wb, patriarch, path + "make/xlsprint/二维码1.png", rowNo-1, 8, rowNo + 3, 8);
 			
 			nRow = sheet.getRow(rowNo++);
