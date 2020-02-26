@@ -31,7 +31,7 @@ import cn.luojia.util.PinYinUtil;
 
 @Controller
 // 只能作用在类上，作用是将指定的Model中的键值对添加至session中
-@SessionAttributes(value = { "name", "dept", "ip", "email"})
+@SessionAttributes(value = { "name", "dept", "ip", "email", "birthday"})
 public class LoginController extends BaseController {
 
 	@Autowired
@@ -201,7 +201,7 @@ public class LoginController extends BaseController {
 	public String updateByOwn(UserLogin userLogin, HttpServletRequest request, SessionStatus sessionStatus) {
 		String pwd = request.getParameter("passWord");
 		String rePwd = request.getParameter("rePwd");
-		if(pwd.trim().equals("")) {
+		if(pwd == null || pwd.trim().equals("")) {
 			String tips = "请输新密码";
 			request.setAttribute("tip", tips);
 			return "/sysadmin/user/userPasswordUpdate.jsp";

@@ -60,11 +60,11 @@
 								<td class="tableHeader">&nbsp;<input type="text"
 								style="width: 130px;" name="birthday"
 								value="<fmt:formatDate value="${birthday }" pattern="yyyy-MM-dd"/>"
-								onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});" /></td>
+								onclick="WdatePicker({el:this,isShowOthers:false,dateFmt:'yyyy-MM-dd HH:mm:ss'});" /></td>
 							</tr>
 							<tr>
 								<td class="tableHeader">新&nbsp;&nbsp;密&nbsp;码：</td>
-								<td class="tableHeader">&nbsp;<input type="password" name="birthday"/>${tip }</td>
+								<td class="tableHeader">&nbsp;<input type="password" name="passWord"/>${tip }</td>
 							</tr>
 							<tr>
 								<td class="tableHeader">确认密码：</td>

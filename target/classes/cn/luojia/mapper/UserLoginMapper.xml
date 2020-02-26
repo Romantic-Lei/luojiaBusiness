@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="findAll" parameterType="map" resultMap="userLoginRM">
 		select  floor(to_number(sysdate-to_date(to_char(create_time,'yyyy-mm-dd'),'yyyy-mm-dd'))) as seniority,
-			 floor(TO_NUMBER(add_months(birthday , ceil(months_between(sysdate,birthday) / 12) * 12) -sysdate)) as nextbirthday, 
+			 floor(TO_NUMBER(add_months(birthday , ceil(months_between(sysdate,birthday) / 12) * 12) -sysdate)+1) as nextbirthday, 
       		USER_ID, USERNAME, EMAIL, DEPARTMENT, CREATE_TIME, BIRTHDAY
     	from USER_LOGIN_C
     	where 1=1
