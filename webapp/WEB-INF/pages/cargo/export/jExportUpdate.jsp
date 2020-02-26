@@ -26,7 +26,7 @@
     	}
     }
 
-	/* 实现表格序号列自动调整 created by tony 20081219 */
+	/* 实现表格序号列自动调整  */
 	function sortnoTR(){
 		sortno('mRecordTable', 2, 1);
 	}

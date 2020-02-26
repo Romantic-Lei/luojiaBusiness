@@ -24,7 +24,7 @@
 							<li id="update"><a href="#"
 								onclick="formSubmit('updateByOwn.action','_self');this.blur();">确定</a></li>
 							<li id="back"><a href="#"
-								onclick="formSubmit('${ctx}/sysadmin/user/list.action','_self');this.blur();">重置</a></li>
+								onclick="formSubmit('${ctx}/sysadminMain.action','_self');this.blur();">重置</a></li>
 						</ul>
 					</div>
 				</div>
