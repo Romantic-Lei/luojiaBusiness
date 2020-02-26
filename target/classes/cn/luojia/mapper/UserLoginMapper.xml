@@ -11,25 +11,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="passWord" column="PASSWORD"/>
 		<result property="email" column="EMAIL"/>
 		<result property="department" column="DEPARTMENT"/>
+		<result property="createTime" column="CREATE_TIME"/>
+		<result property="seniority" column="SENIORITY"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="nextBirthday" column="NEXTBIRTHDAY"/>
 	</resultMap>
 	
 	<!-- 查找用户, 根据邮箱和密码查找 -->
 	<select id="find" parameterType="map" resultMap="userLoginRM">
-		select USER_ID, USERNAME, PASSWORD, EMAIL, DEPARTMENT
+		select USER_ID, USERNAME, PASSWORD, EMAIL, DEPARTMENT, CREATE_TIME
 		from USER_LOGIN_C
 		where EMAIL=#{email,jdbcType=VARCHAR} and PASSWORD=#{passWord,jdbcType=VARCHAR}
 	</select>
 	
 	<select id="findAll" parameterType="map" resultMap="userLoginRM">
-		select USER_ID, USERNAME, EMAIL, DEPARTMENT
-		from USER_LOGIN_C
-		where 1=1
+		select  floor(to_number(sysdate-to_date(to_char(create_time,'yyyy-mm-dd'),'yyyy-mm-dd'))) as seniority,
+			 floor(TO_NUMBER(add_months(birthday , ceil(months_between(sysdate,birthday) / 12) * 12) -sysdate)) as nextbirthday, 
+      		USER_ID, USERNAME, EMAIL, DEPARTMENT, CREATE_TIME, BIRTHDAY
+    	from USER_LOGIN_C
+    	where 1=1
 		<if test="email != null"> and EMAIL=#{email}</if>
 		<if test="passWord != null"> and PASSWORD=#{passWord}</if>
 	</select>
 	
 	<select id="getByEmail" parameterType="String" resultMap="userLoginRM">
-		select USER_ID, USERNAME,EMAIL,DEPARTMENT 
+		select USER_ID, USERNAME,EMAIL,DEPARTMENT, CREATE_TIME
 		from USER_LOGIN_C
 		where email=#{email,jdbcType=VARCHAR}
 	</select>
@@ -37,14 +43,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 新增用户 -->
 	<insert id="insert" parameterType="cn.luojia.domain.UserLogin">
 		insert into USER_LOGIN_C
-        (USER_ID,USERNAME,PASSWORD,EMAIL,DEPARTMENT)
+        (USER_ID,USERNAME,PASSWORD,EMAIL,DEPARTMENT, CREATE_TIME)
         values
         (
             #{uid,jdbcType=VARCHAR},
             #{userName,jdbcType=VARCHAR},
             #{passWord,jdbcType=VARCHAR},
             #{email,jdbcType=VARCHAR},
-            #{department,jdbcType=VARCHAR}
+            #{department,jdbcType=VARCHAR},
+            #{createTime,jdbcType=TIMESTAMP}
         )
 	</insert>
 	

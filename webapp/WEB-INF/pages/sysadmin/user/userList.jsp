@@ -8,6 +8,11 @@
 
 <script type="text/javascript" src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
 <script type="text/javascript">
+	function setDay(){
+		console.log("123");
+	}
+	
+	
 	function getUser(){
 		var email = document.getElementsByName("email")[0].value;
 		$.ajax({
@@ -21,6 +26,7 @@
 				// 查询到了符合条件的员工就去操作
 				if (null != data) {
 					console.log(data);
+					// 拼接查询到的员工信息，默认勾选，用户直接点击删除即可
 					document.getElementById("innerEmp").innerHTML = "<tr class=\"odd\" onmouseover=\"this.className='highlight'\" onmouseout=\"this.className='odd'\">"
 						+ "<td><input type=\"checkbox\" checked=\"checked\" name=\"id\" value= "+data.uid+" /></td>"
 						+ "<td>1</td>"
@@ -28,7 +34,7 @@
 						+ "<td>" + data.userName + "</td>"
 						+ "<td>******</td>"
 						+ "<td>" + data.email + "</td>"
-						+ "<td>" + data.department + "</td>"
+						+ "<td>" + data.seniority + "</td>"
 						+ "</tr>";
 				} else {
 					alert("员工不存在");
@@ -39,7 +45,6 @@
 			}
 		});
 	}
-	
 </script>
 
 <body class="curbody">
@@ -77,10 +82,13 @@
 							<td class="tableHeader"><input type="checkbox" name="selid"
 								onclick="checkAll('id',this)"/></td>
 							<td class="tableHeader">序号</td>
-							<td class="tableHeader">UID</td>
 							<td class="tableHeader">员工姓名</td>
 							<td class="tableHeader">员工密码</td>
 							<td class="tableHeader">员工邮箱</td>
+							<td class="tableHeader">入职日期</td>
+							<td class="tableHeader">员工工龄</td>
+							<td class="tableHeader">员工生日</td>
+							<td class="tableHeader">下次生日</td>
 							<td class="tableHeader">所属部门</td>
 						</tr>
 					</thead>
@@ -88,13 +96,21 @@
 						<c:forEach items="${dataList}" var="o" varStatus="status" >
 							<tr class="odd" onmouseover="this.className='highlight'"
 								onmouseout="this.className='odd'">
-							<td><input type="checkbox" name="id" value="${o.uid}" /></td>
+							<td><input type="checkbox" name="id" value="${o.uid}"/></td>
 							<!-- 序号是当前索引加1 -->
-							<td>${status.index+1}</td>
-							<td>${o.uid}</td>
+							<td onchange="setDay();">${status.index+1}</td>
 							<td>${o.userName}</td>
 							<td>******</td>
 							<td>${o.email}</td>
+							<td><fmt:formatDate value="${o.createTime}" pattern="yyyy-MM-dd" /></td>
+							<td>${o.seniority}天</td>
+							<td><fmt:formatDate value="${o.birthday}" pattern="yyyy-MM-dd"/></td>
+							<td>
+								<c:choose >
+									<c:when test="${o.nextBirthday<=30}"><b><font color="gren" >${o.nextBirthday}天</font></b></c:when>
+									<c:otherwise>${o.nextBirthday}天</c:otherwise>
+								</c:choose>
+							</td>
 							<td>${o.department}</td>
 							</tr>
 						</c:forEach>
@@ -107,4 +123,5 @@
 	<c:if test="${dept != '人事部' }">
    		 <font style="color: orange" size="6px">对不起，您没有权限修改您的部门，请联系人事部修改！</font>
 	</c:if>
+	
 </body>

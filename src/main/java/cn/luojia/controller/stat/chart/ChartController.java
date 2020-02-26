@@ -140,7 +140,7 @@ public class ChartController {
 		return sb.toString();
 	}
 	
-	// 
+	// 柱状图
 	public String getColumnXml(List<String> dataList) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -219,7 +219,7 @@ public class ChartController {
 		return sb.toString();
 	}
 	
-	// 拼接饼形图的json
+	// 拼接柱状图的json
 	public String getColumnJson(List<String> dataList) {
 		// 拼接数据到一个json 字符串
 		StringBuffer sb = new StringBuffer();

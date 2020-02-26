@@ -1,12 +1,18 @@
 package cn.luojia.service.impl;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,6 +39,8 @@ public class UserLoginServiceImpl implements UserLoginService {
 	@Override
 	public void insert(UserLogin userLogin) {
 		userLogin.setUid(UUID.randomUUID().toString());
+		
+		userLogin.setCreateTime(new Date());
 		userLoginDao.insert(userLogin);
 	}
 
@@ -60,5 +68,5 @@ public class UserLoginServiceImpl implements UserLoginService {
 	public List<UserLogin> findAll(Map paraMap) {
 		return userLoginDao.findAll(paraMap);
 	}
-
+	
 }

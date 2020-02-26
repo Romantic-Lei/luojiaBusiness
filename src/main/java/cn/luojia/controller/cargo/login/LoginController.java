@@ -24,6 +24,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.luojia.controller.BaseController;
 import cn.luojia.domain.UserLogin;
 import cn.luojia.service.UserLoginService;
 import cn.luojia.util.PinYinUtil;
@@ -31,7 +32,7 @@ import cn.luojia.util.PinYinUtil;
 @Controller
 // 只能作用在类上，作用是将指定的Model中的键值对添加至session中
 @SessionAttributes(value = { "name", "dept", "ip", "email"})
-public class LoginController {
+public class LoginController extends BaseController {
 
 	@Autowired
 	UserLoginService userLoginService;
