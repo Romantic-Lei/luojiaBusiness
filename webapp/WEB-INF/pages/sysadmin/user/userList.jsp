@@ -8,10 +8,14 @@
 
 <script type="text/javascript" src="${ctx }/components/jquery-ui/jquery-1.2.6.js"></script>
 <script type="text/javascript">
-	function setDay(){
-		console.log("123");
+	function getGMT(date){
+		var date = new Date(parseInt(date));
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+		var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+		date = year + "-" + month + "-" + currentDate;
+		return date;
 	}
-	
 	
 	function getUser(){
 		var email = document.getElementsByName("email")[0].value;
@@ -26,16 +30,22 @@
 				// 查询到了符合条件的员工就去操作
 				if (null != data) {
 					console.log(data);
+					
 					// 拼接查询到的员工信息，默认勾选，用户直接点击删除即可
 					document.getElementById("innerEmp").innerHTML = "<tr class=\"odd\" onmouseover=\"this.className='highlight'\" onmouseout=\"this.className='odd'\">"
 						+ "<td><input type=\"checkbox\" checked=\"checked\" name=\"id\" value= "+data.uid+" /></td>"
 						+ "<td>1</td>"
-						+ "<td>" + data.uid + "</td>"
 						+ "<td>" + data.userName + "</td>"
 						+ "<td>******</td>"
 						+ "<td>" + data.email + "</td>"
-						+ "<td>" + data.seniority + "</td>"
+						+ "<td>" + getGMT(data.createTime) + "</td>"
+						+ "<td>" + data.seniority + "天</td>"
+						+ "<td>" + getGMT(data.birthday) + "</td>"
+						+ "<td>" + data.nextBirthday + "</td>"
+						+ "<td>" + data.department + "</td>"
 						+ "</tr>";
+
+						//	                <fmt:formatDate value="${releaseTime}" pattern="yyyy-MM-dd"/>
 				} else {
 					alert("员工不存在");
 				}
@@ -98,7 +108,7 @@
 								onmouseout="this.className='odd'">
 							<td><input type="checkbox" name="id" value="${o.uid}"/></td>
 							<!-- 序号是当前索引加1 -->
-							<td onchange="setDay();">${status.index+1}</td>
+							<td>${status.index+1}</td>
 							<td>${o.userName}</td>
 							<td>******</td>
 							<td>${o.email}</td>

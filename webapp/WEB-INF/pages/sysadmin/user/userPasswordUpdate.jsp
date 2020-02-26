@@ -55,8 +55,8 @@
 								<td class="tableHeader">&nbsp;<input type="text" name="email" value="${email }" readonly="readonly" /></td>
 							</tr>
 							<tr>
-								<td class="tableHeader">新&nbsp;&nbsp;密&nbsp;码：</td>
-								<td class="tableHeader">&nbsp;<input type="password" name="passWord"/>${tip }</td>
+								<td class="tableHeader">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：</td>
+								<td class="tableHeader">&nbsp;<input type="text" name="email" value="${email }" readonly="readonly" /></td>
 							</tr>
 							<tr>
 								<td class="tableHeader">确认密码：</td>
