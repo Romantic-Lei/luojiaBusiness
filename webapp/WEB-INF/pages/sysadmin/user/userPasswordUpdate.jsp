@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title></title>
+<script type="text/javascript" src="../../js/datepicker/WdatePicker.js"></script>
 <style>
 .curbody {
 	CURSOR: url(${ctx}/images/olmsg/pic738x57.jpg);
@@ -56,7 +57,14 @@
 							</tr>
 							<tr>
 								<td class="tableHeader">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：</td>
-								<td class="tableHeader">&nbsp;<input type="text" name="email" value="${email }" readonly="readonly" /></td>
+								<td class="tableHeader">&nbsp;<input type="text"
+								style="width: 130px;" name="birthday"
+								value="<fmt:formatDate value="${birthday }" pattern="yyyy-MM-dd"/>"
+								onclick="WdatePicker({el:this,isShowOthers:true,dateFmt:'yyyy-MM-dd HH:mm:ss'});" /></td>
+							</tr>
+							<tr>
+								<td class="tableHeader">新&nbsp;&nbsp;密&nbsp;码：</td>
+								<td class="tableHeader">&nbsp;<input type="password" name="birthday"/>${tip }</td>
 							</tr>
 							<tr>
 								<td class="tableHeader">确认密码：</td>

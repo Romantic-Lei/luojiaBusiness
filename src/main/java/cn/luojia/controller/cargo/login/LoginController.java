@@ -71,6 +71,7 @@ public class LoginController extends BaseController {
 				model.addAttribute("name", userLogin.getUserName());
 				model.addAttribute("dept", userLogin.getDepartment());
 				model.addAttribute("email", userLogin.getEmail());
+				model.addAttribute("birthday", userLogin.getBirthday());
 
 				// 解析用户ip
 				// 只有在通过了 HTTP 代理或者负载均衡服务器时才会添加该项,一般情况下，第一个ip为客户端真实ip，后面的为经过的代理服务器ip
