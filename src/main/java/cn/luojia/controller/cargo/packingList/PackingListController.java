@@ -1,4 +1,4 @@
-package cn.luojia.controller.cargo.packinglist;
+package cn.luojia.controller.cargo.packingList;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
